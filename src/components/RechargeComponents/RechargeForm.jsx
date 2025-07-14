@@ -4,7 +4,7 @@ const RechargeForm = () => {
           e.preventDefault()
   }
   return (
-    <div className="m-4 mt-10">
+    <div className=" mt-10">
       <form className="flex flex-col gap-4 w-full max-w-md mx-auto p-6 bg-white border border-gray-200 rounded-2xl shadow-lg">
         {/* User ID */}
         <div className="flex flex-col gap-1">

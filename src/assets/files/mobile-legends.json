@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "diamonds": 1,
+    "price": 1,
+    "rupees": 1,
+    "falseRupees": 2,
+    "img": "small",
+    "group": 1,
+    "name": "1 Diamonds"
+  },
+  {
+    "id": 2,
+    "diamonds": 5,
+    "price": 5,
+    "rupees": 5,
+    "falseRupees": 10,
+    "img": "small",
+    "group": 1,
+    "name": "5 Diamonds"
+  },
+  {
+    "id": 3,
+    "diamonds": 10,
+    "price": 10,
+    "rupees": 10,
+    "falseRupees": 15,
+    "img": "small",
+    "group": 1,
+    "name": "10 Diamonds"
+  },
+  {
+    "id": 4,
+    "diamonds": 20,
+    "price": 19,
+    "rupees": 20,
+    "falseRupees": 25,
+    "img": "small",
+    "group": 1,
+    "name": "20 Diamonds"
+  },
+  {
+    "id": 5,
+    "diamonds": 36,
+    "price": 35,
+    "rupees": 36,
+    "falseRupees": 40,
+    "img": "weekly",
+    "group": 3,
+    "name": "36 Diamonds"
+  },
+  {
+    "id": 6,
+    "diamonds": 50,
+    "price": 49,
+    "rupees": 50,
+    "falseRupees": 60,
+    "img": "medium",
+    "group": 2,
+    "name": "50+50 Diamonds"
+  },
+  {
+    "id": 7,
+    "diamonds": 74,
+    "price": 70,
+    "rupees": 74,
+    "falseRupees": 90,
+    "img": "medium",
+    "group": 1,
+    "name": "74 Diamonds"
+  },
+  {
+    "id": 8,
+    "diamonds": 100,
+    "price": 99,
+    "rupees": 100,
+    "falseRupees": 120,
+    "img": "medium",
+    "group": 1,
+    "name": "100 Diamonds"
+  },
+  {
+    "id": 9,
+    "diamonds": 150,
+    "price": 149,
+    "rupees": 150,
+    "falseRupees": 170,
+    "img": "large",
+    "group": 1,
+    "name": "150 Diamonds"
+  },
+  {
+    "id": 10,
+    "diamonds": 200,
+    "price": 199,
+    "rupees": 200,
+    "falseRupees": 230,
+    "img": "large",
+    "group": 1,
+    "name": "200 Diamonds"
+  }
+]

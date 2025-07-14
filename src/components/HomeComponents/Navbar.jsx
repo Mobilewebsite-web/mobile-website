@@ -9,12 +9,15 @@ import { BiSupport } from "react-icons/bi";
 import { IoShieldCheckmarkSharp, IoDocumentTextOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import clsx from "clsx"; // install clsx for clean conditional classes
-
+import { useUser } from "../../context/UserContext";
+import { auth } from "../../configs/firebase";
+import { signOut } from "firebase/auth";
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
   const navRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const {user, userData} = useUser()
 
   const ulList = [
     { name: "Home", icon: <FaHome />, path: "/" },
@@ -53,19 +56,33 @@ const Navbar = () => {
     navigate(path);
     setShowNav(false);
   };
+const handleLogout = async () => {
+  const confirmLogout = window.confirm("Are you sure you want to logout?");
+  if (!confirmLogout) return; // 👈 cancel if user says no
+
+  try {
+    await signOut(auth);
+    console.log("User logged out");
+    setShowNav(false); // Optional: depends on your layout/UI
+    // Optionally navigate("/login") or update state
+  } catch (error) {
+    console.error("Logout failed:", error);
+    alert("Failed to logout. Please try again.");
+  }
+};
 
   return (
     <div className="flex items-center justify-between px-3 shadow-md py-4 ">
            <div className="size-12 flex items-center">
         <img
           className="w-full h-full object-cover rounded-full border border-blue-500"
-          src={defaultProfile}
+          src={userData?.photoURL || defaultProfile}
           alt="Profile"
         />
       </div>
       <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
-                    <button className="bg-zinc-400 text-white p-2 py-1 rounded-[24px]">Sign in</button>
+            {!user && (<button onClick={()=>navigate('/login')} className="bg-zinc-400 text-white p-2 py-1 rounded-[24px]">Sign in</button>)}
                     <GiHamburgerMenu onClick={() => setShowNav(true)} size={28} className="cursor-pointer" />
           </div>
 
@@ -81,9 +98,9 @@ const Navbar = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-zinc-500">Welcome back</p>
-                <h1 className="text-lg font-bold">Username</h1>
+                <h1 className="text-lg font-bold">{userData?.username || "No user"}</h1>
               </div>
-              <div className="p-2 bg-red-500 text-white rounded-xl shadow-md cursor-pointer">
+              <div onClick={()=> {if(user){handleLogout ()} else {navigate('/login')}}}className="p-2 bg-red-500 text-white rounded-xl shadow-md cursor-pointer">
                 <IoMdLogOut size={22} />
               </div>
             </div>

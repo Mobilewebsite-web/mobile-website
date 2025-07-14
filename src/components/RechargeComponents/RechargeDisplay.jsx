@@ -11,7 +11,7 @@ const RechargeDisplay = () => {
   );
 
   return (
-    <div className="relative w-full min-h-[200px] flex items-center justify-center p-6">
+    <div className="relative w-full min-h-[180px] flex items-center justify-center p-6">
       <div
         className="absolute inset-0 bg-cover bg-center  brightness-[0.4] z-0"
         style={{
@@ -31,7 +31,6 @@ const RechargeDisplay = () => {
         <h2 className="mt-4 text-xl font-bold text-center text-zinc-100">
           {selectedGame?.name || "Unknown Game"}
         </h2>
-        <p className="text-sm text-zinc-500">Top-up available</p>
       </div>
     </div>
   );

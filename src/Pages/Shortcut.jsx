@@ -13,7 +13,7 @@ const Shortcut = () => {
     { name: 'Account', path: '/profile', icon: <MdManageAccounts /> },
     { name: 'Home', path: '/', icon: <FaHome /> },
     { name: 'Reports', path: '/orders', icon: <MdPrivacyTip /> },
-    { name: 'Contact Dev', path: '/dev-contact', icon: <MdArchitecture /> },
+    { name: 'More', path: '/dev-contact', icon: <MdArchitecture /> },
   ];
 
   const handleClick = (i, path) => {
