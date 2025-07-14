@@ -12,7 +12,7 @@ const HomeUtils = ()=> {
                     {name: "Support", link: "/", icon:<BiSupport/>},
           ]
           return (
-                    <div className="flex flex-row justify-between items-center mt-10">
+                    <div className="flex flex-row justify-evenly gap-10 items-center mt-10">
                               {utilList.map((item,i)=>(
                                         <div key={i} className="flex  flex-col items-center gap-2 cursor-pointer">
                                                   <div className="bg-white p-3 text-blue-600 shadow-md rounded-lg text-[50px]">
