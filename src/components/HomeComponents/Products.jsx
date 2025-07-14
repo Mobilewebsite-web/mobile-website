@@ -1,26 +1,33 @@
-import logoMl from "../../assets/images/logo-ml.webp"
-import logoMl2 from "../../assets/images/logo-ml.jpg"
-import React from "react"
-const Products = ()=>{
-          const productUl = [
-                    {name:"Mobile Legends", path: '', img:logoMl2},
-                    {name:"Moba Legends", path: '', img:logoMl},
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import {games} from "../../assets/files/games"
 
-          ]
-          return(
-                    <div className="flex items-center mt-10 ">
-                              <div className="grid grid-cols-4 gap-3">
-                                        {productUl.map((item, i)=>(
-                                                  <div key={i} className="items-center justify-center flex flex-col gap-2">
-                                                            <div className="flex items-center overflow-hidden rounded-[14px] border-2 border-white shadow-lg">
-                                                                      <img src={item.img} className="object-cover" alt="" />
-                                                            </div>
-                                                            <p className="text-[10px] font-bold text-center">{item.name}</p>
-                                                  </div>
-                                        ))}
-                              </div>
-                    </div>
-          )
-}
+const Products = () => {
+
+  const navigate = useNavigate();
+
+  return (
+    <div className="mt-10">
+      <div className="grid grid-cols-4 gap-4">
+        {games.map((item, i) => (
+          <div
+            key={i}
+            onClick={()=>navigate(item.path)}
+            className="bg-sky-50 p-1 border-1 border-gray-200 rounded-md flex flex-col items-center shadow-md "
+          >
+            <div className="rounded-xl overflow-hidden border-2 border-white shadow">
+              <img
+                src={item.img}
+                className="w-full h-full object-cover"
+                alt={item.name}
+              />
+            </div>
+            <p className="text-[9px] font-semibold text-center mt-2">{item.name}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default Products;
