@@ -4,10 +4,10 @@ const Display = () => {
   const disList = [display1, display1, display1];
 
   return (
-    <div className="overflow-x-auto mt-10 shadow-md border-1 border-gray-200">
+    <div className="overflow-x-auto mt-10">
       <div className="flex snap-x snap-mandatory overflow-x-scroll scrollbar-hide space-x-4">
         {disList.map((item, i) => (
-          <div key={i} className="flex-shrink-0 snap-center w-full sm:w-[80%] md:w-[60%] lg:w-[40%]">
+          <div key={i} className="flex-shrink-0 snap-center w-full lg:w-[40%]">
             <img
               src={item}
               alt={`slide-${i}`}
