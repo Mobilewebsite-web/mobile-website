@@ -55,9 +55,19 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between px-4 py-2 ">
+    <div className="flex items-center justify-between px-3 shadow-md py-4 ">
+           <div className="size-12 flex items-center">
+        <img
+          className="w-full h-full object-cover rounded-full border border-blue-500"
+          src={defaultProfile}
+          alt="Profile"
+        />
+      </div>
       <div className="flex items-center gap-4">
-        <GiHamburgerMenu onClick={() => setShowNav(true)} size={28} className="cursor-pointer" />
+          <div className="flex items-center gap-3">
+                    <button className="bg-zinc-400 text-white p-2 py-1 rounded-[24px]">Sign in</button>
+                    <GiHamburgerMenu onClick={() => setShowNav(true)} size={28} className="cursor-pointer" />
+          </div>
 
         {/* Sidebar */}
         <div
@@ -111,13 +121,7 @@ const Navbar = () => {
         )}
       </div>
 
-      <div className="size-12 flex items-center">
-        <img
-          className="w-full h-full object-cover rounded-full border border-blue-500"
-          src={defaultProfile}
-          alt="Profile"
-        />
-      </div>
+     
     </div>
   );
 };

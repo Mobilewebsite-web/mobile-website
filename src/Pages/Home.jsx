@@ -8,9 +8,9 @@ import About from "../components/HomeComponents/About";
 import React from "react";
 const Home = ()=> {
           return (
-                    <div className="pt-5">
+                    <div className="">
+                              <Navbar />
                               <div className="px-4">
-                                        <Navbar />
                                         <Display />
                                         <HomeUtils/>
                                         <FloatingApps />

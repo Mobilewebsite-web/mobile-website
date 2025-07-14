@@ -1,24 +1,21 @@
-import { FaCartShopping } from "react-icons/fa6";
-import { BiSupport } from "react-icons/bi";
-import { IoMdTrophy } from "react-icons/io";
-import { BsPlusCircleDotted } from "react-icons/bs";
-import React from "react";
+import { MdHistory, MdCreditCard  } from "react-icons/md";
+import { FaQuestionCircle, FaPlus } from "react-icons/fa";
 
 const HomeUtils = ()=> {
           const utilList = [
-                    {name: "Add money", link: "/", icon:<BsPlusCircleDotted/>},
-                    {name: "Leaderboard", link: "/", icon:<IoMdTrophy/>},
-                    {name: "Orders", link: "/", icon:<FaCartShopping/>},
-                    {name: "Support", link: "/", icon:<BiSupport/>},
+                    {name: "Add coin", link: "/", icon:<FaPlus/>},
+                    {name: "Payments", link: "/", icon:<MdCreditCard/>},
+                    {name: "Orders", link: "/", icon:<MdHistory/>},
+                    {name: "Queries", link: "/", icon:<FaQuestionCircle/>},
           ]
           return (
                     <div className="flex flex-row justify-evenly gap-10 items-center mt-10">
                               {utilList.map((item,i)=>(
                                         <div key={i} className="flex  flex-col items-center gap-2 cursor-pointer">
-                                                  <div className="bg-white p-3 text-blue-600 shadow-md rounded-lg text-[50px]">
+                                                  <div className="bg-white border-1 border-gray-100 p-4 shadow-md rounded-lg text-[40px]">
                                                             {item.icon}
                                                   </div>
-                                                  <p className="text-xs font-semibold">{item.name}</p>
+                                                  <p className="text-xs font-md">{item.name}</p>
                                         </div>
                               ))}
                     </div>
