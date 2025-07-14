@@ -1,10 +1,12 @@
 import RechargeDisplay from "../components/RechargeComponents/RechargeDisplay";
+import RechargeForm from "../components/RechargeComponents/RechargeForm";
 
 const Recharge = ()=>{
           return (
                     <div>
                               <div>
-                                        <RechargeDisplay/>  
+                                        <RechargeDisplay/> 
+                                        <RechargeForm/> 
                               </div>
                     </div>
           )
