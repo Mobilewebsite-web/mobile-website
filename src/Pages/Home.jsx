@@ -8,12 +8,14 @@ import About from "../components/HomeComponents/About";
 import React from "react";
 const Home = ()=> {
           return (
-                    <div className="p-4">
-                              <Navbar />
-                              <Display />
-                              <HomeUtils/>
-                              <FloatingApps />
-                              <Products/>
+                    <div className="pt-5">
+                              <div className="px-4">
+                                        <Navbar />
+                                        <Display />
+                                        <HomeUtils/>
+                                        <FloatingApps />
+                                        <Products/>
+                              </div>
                               <Why/>
                               <About/>
                     </div>

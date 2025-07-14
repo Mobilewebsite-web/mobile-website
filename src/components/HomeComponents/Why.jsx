@@ -37,8 +37,8 @@ const Why = () => {
             key={i}
             className="bg-sky-50  p-6 rounded-xl shadow transition-all hover:scale-[1.01] hover:shadow-2xl"
           >
-            <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-            <p className="text-sm text-zinc-600 dark:text-zinc-300">{item.desc}</p>
+            <h3 className="text-md font-bold mb-2">{item.title}</h3>
+            <p className="text-sm text-zinc-800">{item.desc}</p>
           </div>
         ))}
       </div>

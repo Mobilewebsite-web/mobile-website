@@ -11,7 +11,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
-        <div className="relative h-20">
+        <div className="relative h-12">
           <Shortcut />
         </div>
       </Router>

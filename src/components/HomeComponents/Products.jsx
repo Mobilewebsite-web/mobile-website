@@ -9,13 +9,13 @@ const Products = ()=>{
           ]
           return(
                     <div className="flex items-center mt-10 ">
-                              <div className="grid grid-cols-4 gap-10">
+                              <div className="grid grid-cols-4 gap-3">
                                         {productUl.map((item, i)=>(
                                                   <div key={i} className="items-center justify-center flex flex-col gap-2">
                                                             <div className="flex items-center overflow-hidden rounded-[14px] border-2 border-white shadow-lg">
                                                                       <img src={item.img} className="object-cover" alt="" />
                                                             </div>
-                                                            <p className="text-xs font-bold">{item.name}</p>
+                                                            <p className="text-[10px] font-bold text-center">{item.name}</p>
                                                   </div>
                                         ))}
                               </div>
