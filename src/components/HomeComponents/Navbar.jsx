@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import defaultProfile from "../../assets/images/default-profile.jpeg"
 import { IoMdLogOut, IoMdTrophy } from "react-icons/io";
@@ -6,6 +6,7 @@ import { FaHome } from "react-icons/fa";
 import { MdManageAccounts,MdPrivacyTip,MdKeyboardArrowRight } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
 import { IoShieldCheckmarkSharp,IoDocumentTextOutline } from "react-icons/io5";
+
 
 const Navbar = ()=> {
           const [showNav, setShowNav] = useState(false)

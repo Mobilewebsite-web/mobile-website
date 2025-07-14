@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { MdManageAccounts, MdPrivacyTip, MdArchitecture } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";

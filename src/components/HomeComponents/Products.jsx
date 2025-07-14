@@ -1,5 +1,6 @@
 import logoMl from "../../assets/images/logo-ml.webp"
 import logoMl2 from "../../assets/images/logo-ml.jpg"
+import React from "react"
 const Products = ()=>{
           const productUl = [
                     {name:"Mobile Legends", path: '', img:logoMl2},

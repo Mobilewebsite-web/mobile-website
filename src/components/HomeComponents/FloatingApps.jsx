@@ -1,4 +1,5 @@
 import ml from "../../assets/images/mlbb-logo.webp"
+import React from "react"
 const FloatingApps = ()=>{
           const floatingList = [
                     {name:'Mobile Legends', path: "", img:ml, tag: 'Popular'}

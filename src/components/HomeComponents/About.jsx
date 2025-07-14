@@ -1,3 +1,4 @@
+import React from "react";
 const About = () => {
   return (
     <footer className="bg-gradient-to-br from-sky-600 to-blue-700 text-white px-6 py-12">

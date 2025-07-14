@@ -1,5 +1,5 @@
 import display1 from "../../assets/images/mlbb.webp";
-
+import React from "react";
 const Display = () => {
   const disList = [display1, display1, display1];
 

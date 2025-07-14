@@ -2,6 +2,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { BiSupport } from "react-icons/bi";
 import { IoMdTrophy } from "react-icons/io";
 import { BsPlusCircleDotted } from "react-icons/bs";
+import React from "react";
 
 const HomeUtils = ()=> {
           const utilList = [
