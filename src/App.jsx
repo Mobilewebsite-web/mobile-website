@@ -13,7 +13,7 @@ const App = () => {
 
   if (loading) return (<div>Loading..</div>)
   return (
-    <div className="bg-white min-h-[100vh]">
+    <div className="bg-gray-100 min-h-[100vh]">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />

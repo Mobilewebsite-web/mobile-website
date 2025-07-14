@@ -9,7 +9,7 @@ const HomeUtils = ()=> {
                     {name: "Queries", link: "/", icon:<FaQuestionCircle/>},
           ]
           return (
-                    <div className="flex flex-row justify-between items-center mt-10">
+                    <div className="flex flex-row justify-evenly gap-10 items-center mt-10">
                               {utilList.map((item,i)=>(
                                         <div key={i} className="flex  flex-col items-center gap-2 cursor-pointer">
                                                   <div className="bg-white border-1 border-gray-100 p-4 shadow-md rounded-lg text-[40px]">
