@@ -34,7 +34,7 @@ const Shortcut = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md flex justify-between px-4 py-2 z-50">
+    <div className="fixed sm:hidden bottom-0 left-0 right-0 bg-white shadow-md flex justify-between px-4 py-2 z-50">
       {shortcutList.map((item, i) => (
         <div
           key={i}

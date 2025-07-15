@@ -23,7 +23,7 @@ const statusFilters = [
 ];
 
 const WalletHistory = () => {
-  const { user } = useUser();
+  const { user, isDarkMode } = useUser();
   const [topups, setTopups] = useState([]);
   const [filteredStatus, setFilteredStatus] = useState("completed");
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,7 @@ const WalletHistory = () => {
       }
     );
 
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, [user]);
 
   const filteredTopups = topups.filter(
@@ -63,19 +63,29 @@ const WalletHistory = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4 text-zinc-800">Wallet Top-up History</h1>
+    <div
+      className={` px-4 py-8 rounded-lg border-1 ${
+        isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
+      }`}
+    >
+      <h1 className="text-2xl font-bold mb-4">
+        Wallet Top-up History
+      </h1>
 
       {/* Filter buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
         {statusFilters.map(({ key, label, icon }) => (
           <button
             key={key}
-            className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full border transition ${
-              filteredStatus === key
-                ? "bg-blue-600 text-white"
-                : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
-            }`}
+            className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full border transition
+              ${
+                filteredStatus === key
+                  ? "bg-blue-600 text-white border-blue-600"
+                  : isDarkMode
+                  ? "bg-zinc-700 text-zinc-300 border-zinc-600 hover:bg-zinc-600 hover:text-white"
+                  : "bg-zinc-100 text-zinc-700 border-zinc-300 hover:bg-zinc-200"
+              }
+            `}
             onClick={() => setFilteredStatus(key)}
           >
             {icon}
@@ -86,9 +96,13 @@ const WalletHistory = () => {
 
       {/* Topup Records */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading top-up history...</p>
+        <p className={`${isDarkMode ? "text-gray-400" : "text-gray-500"} text-center`}>
+          Loading top-up history...
+        </p>
       ) : filteredTopups.length === 0 ? (
-        <p className="text-center text-gray-500">No records found.</p>
+        <p className={`${isDarkMode ? "text-gray-400" : "text-gray-500"} text-center`}>
+          No records found.
+        </p>
       ) : (
         <ul className="space-y-4">
           {filteredTopups.map((topup) => (
@@ -97,38 +111,52 @@ const WalletHistory = () => {
               onClick={() =>
                 setExpandedId(expandedId === topup.id ? null : topup.id)
               }
-              className="border border-gray-100 rounded-xl p-2 px-4 bg-white shadow-sm"
+              className={`border rounded-xl p-2 px-4 shadow-sm cursor-pointer transition
+                ${
+                  isDarkMode
+                    ? "border-zinc-700 bg-zinc-800 hover:bg-zinc-700"
+                    : "border-gray-100 bg-white hover:bg-gray-50"
+                }
+              `}
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="font-semibold text-zinc-800">Top-up</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="font-semibold">
+                    Top-up
+                  </p>
+                  <p className={`${isDarkMode ? "text-gray-400" : "text-gray-400"} text-xs mt-1`}>
                     {topup.timestamp?.toDate().toLocaleString() || "—"}
                   </p>
                 </div>
                 <div className="text-sm font-medium text-right">
                   <p
-                    className={`capitalize px-2 py-1 rounded text-xs inline-block ${
-                      topup.status === "completed"
-                        ? "bg-green-100 text-green-600"
-                        : topup.status === "pending"
-                        ? "bg-yellow-100 text-yellow-600"
-                        : topup.status === "failed"
-                        ? "bg-red-100 text-red-600"
-                        : "bg-blue-100 text-blue-600"
-                    }`}
+                    className={`capitalize px-2 py-1 rounded text-xs inline-block
+                      ${
+                        topup.status === "completed"
+                          ? "bg-green-100 text-green-600"
+                          : topup.status === "pending"
+                          ? "bg-yellow-100 text-yellow-600"
+                          : topup.status === "failed"
+                          ? "bg-red-100 text-red-600"
+                          : "bg-blue-100 text-blue-600"
+                      }
+                    `}
                   >
                     {topup.status}
                   </p>
-                  <p className="text-sm text-zinc-800 mr-1">₹{topup.amount}</p>
+                  <p className="text-sm mr-1 mt-1">
+                    ₹{topup.amount}
+                  </p>
                 </div>
               </div>
 
               {expandedId === topup.id && (
-                <div className="mt-3 text-sm text-zinc-600 space-y-1">
+                <div className={`${isDarkMode ? "text-gray-300" : "text-zinc-600"} mt-3 text-sm space-y-1`}>
                   <p className="flex items-center gap-2">
                     <strong>Order ID:</strong>
-                    <span className="text-sm text-zinc-700">{topup.id}</span>
+                    <span className={`${isDarkMode ? "text-gray-200" : "text-zinc-700"}`}>
+                      {topup.id}
+                    </span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

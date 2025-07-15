@@ -3,12 +3,14 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "../configs/firebase";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
+import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
+import { useUser } from "../context/UserContext";
 
 const Signup = () => {
+  const { isDarkMode } = useUser();
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
-    const randomName = uniqueNamesGenerator({
+  const randomName = uniqueNamesGenerator({
     dictionaries: [adjectives, colors, animals],
     separator: '-',
     style: 'lowerCase',
@@ -19,11 +21,9 @@ const Signup = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Reference to user doc
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
-      // If user doc doesn't exist, create it
       if (!userSnap.exists()) {
         await setDoc(userRef, {
           uid: user.uid,
@@ -35,7 +35,7 @@ const Signup = () => {
       }
 
       console.log("User signed up or already exists:", user);
-      navigate(-1); // Redirect after signup
+      navigate(-1);
     } catch (error) {
       console.error("Signup failed:", error);
       alert("Failed to sign up: " + error.message);
@@ -43,18 +43,40 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-purple-700 to-blue-600 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 ${
+        isDarkMode
+          ? "bg-gradient-to-tr from-zinc-900 via-purple-900 to-blue-900"
+          : "bg-gradient-to-tr from-purple-700 to-blue-600"
+      }`}
+    >
+      <div
+        className={`max-w-md w-full rounded-2xl shadow-xl p-8 ${
+          isDarkMode ? "bg-zinc-800" : "bg-white"
+        }`}
+      >
+        <h1
+          className={`text-3xl font-extrabold mb-6 text-center ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
           Create Your Account
         </h1>
-        <p className="text-center text-gray-600 mb-8">
+        <p
+          className={`text-center mb-8 ${
+            isDarkMode ? "text-gray-300" : "text-gray-600"
+          }`}
+        >
           Sign up with Google to get started
         </p>
 
         <button
           onClick={handleGoogleSignup}
-          className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg py-3 text-gray-800 font-semibold hover:shadow-md transition"
+          className={`w-full flex items-center justify-center gap-3 border rounded-lg py-3 font-semibold transition ${
+            isDarkMode
+              ? "bg-zinc-700 border-zinc-600 text-white hover:brightness-110"
+              : "bg-white border-gray-300 text-gray-800 hover:shadow-md"
+          }`}
           aria-label="Sign up with Google"
         >
           <svg
@@ -83,11 +105,18 @@ const Signup = () => {
           Sign up with Google
         </button>
 
-        <p className="mt-6 text-center text-gray-700">
+        <p
+          className={`mt-6 text-center ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 font-semibold hover:underline">
+          <span
+            onClick={()=>navigate('/login')}
+            className="text-blue-600 font-semibold hover:underline"
+          >
             Log In
-          </a>
+          </span>
         </p>
       </div>
     </div>

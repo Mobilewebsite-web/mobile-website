@@ -1,11 +1,12 @@
 import { useState } from "react";
 import CustomerContactForm from "../components/CustomerSupportComponents/CustomerContactForm";
+import { useUser } from "../context/UserContext";
 
 const faqs = [
   {
     question: "How do I reset my password?",
     answer:
-      "All logins and signup are handled by google so there are no passwords involved. Please make sure you sign up with goole and beware of site that impersonate us and ask for sensitive information",
+      "All logins and signup are handled by google so there are no passwords involved. Please make sure you sign up with google and beware of sites that impersonate us and ask for sensitive information.",
   },
   {
     question: "How do I track my order?",
@@ -21,15 +22,26 @@ const faqs = [
 
 const CustomerSupport = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const { isDarkMode } = useUser();
 
   const toggleFaq = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold mb-4 text-center text-blue-600">Customer Support</h1>
-      <p className="text-gray-600 text-center mb-8">
+    <div
+      className={`mx-auto px-4 sm:px-10 py-10 ${
+        isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
+      }`}
+    >
+      <h1 className="text-4xl font-bold mb-4 text-center text-blue-600">
+        Customer Support
+      </h1>
+      <p
+        className={`text-center mb-8 ${
+          isDarkMode ? "text-gray-400" : "text-gray-600"
+        }`}
+      >
         We're here to help. Check out the FAQ below or contact us directly.
       </p>
 
@@ -40,16 +52,30 @@ const CustomerSupport = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border border-gray-200 rounded-lg overflow-hidden"
+              className={`border rounded-lg overflow-hidden ${
+                isDarkMode
+                  ? "border-zinc-700 bg-zinc-800"
+                  : "border-gray-200 bg-gray-50"
+              }`}
             >
               <button
                 onClick={() => toggleFaq(index)}
-                className="w-full text-left px-4 py-3 bg-gray-100 font-medium hover:bg-gray-200"
+                className={`w-full text-left px-4 py-3 font-medium hover:bg-opacity-80 transition ${
+                  isDarkMode
+                    ? "bg-zinc-700 hover:bg-zinc-600"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
               >
                 {faq.question}
               </button>
               {activeIndex === index && (
-                <div className="px-4 py-3 text-gray-700 bg-white border-t border-gray-200">
+                <div
+                  className={`px-4 py-3 border-t ${
+                    isDarkMode
+                      ? "border-zinc-700 bg-zinc-900 text-gray-300"
+                      : "border-gray-200 bg-white text-gray-700"
+                  }`}
+                >
                   {faq.answer}
                 </div>
               )}
@@ -59,11 +85,11 @@ const CustomerSupport = () => {
       </div>
 
       {/* Contact Form */}
-      <CustomerContactForm/>
+      <CustomerContactForm isDarkMode={isDarkMode} />
 
       {/* Optional Live Chat */}
       {/* <div className="text-center mt-10">
-        <p className="text-sm text-gray-500">Need urgent help?</p>
+        <p className={`${isDarkMode ? "text-gray-400" : "text-gray-500"} text-sm`}>Need urgent help?</p>
         <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
           Start Live Chat
         </button>

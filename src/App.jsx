@@ -1,6 +1,6 @@
 import './App.css';
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './Pages/Home';
 import Shortcut from './Pages/Shortcut';
 import Recharge from './Pages/Recharge';
@@ -11,43 +11,66 @@ import Profile from './Pages/Profile';
 import CustomerSupport from './Pages/CustomerCare';
 import Admin from './Pages/Admin';
 import UsersPanel from './components/AdminComponent/UsersPanel';
-import OrdersPanel from "./components/AdminComponent/OrdersPanel"
+import OrdersPanel from "./components/AdminComponent/OrdersPanel";
 import AdminDashboard from './components/AdminComponent/AdminDashboard';
 import Orders from './Pages/Orders';
 import Wallet from './Pages/Wallet';
 import Queries from './Pages/Queries';
 import TopupPanel from './components/AdminComponent/TopupsPanel';
-const App = () => {
-  const {loading} = useUser()
+import Navbar from './components/HomeComponents/Navbar';
+import Terms from './Pages/Terms';
+import Refund from './Pages/Refund';
+import Privacy from './Pages/Privacy';
 
-  if (loading) return (<div>Loading..</div>)
+const AppContent = () => {
+  const location = useLocation();
+  const { loading, isDarkMode } = useUser();
+
+  // Check if path starts with /admin
+  const isAdminPage = location.pathname.startsWith('/admin');
+
   return (
-    <div className="bg-gray-100 min-h-[100vh]">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} >
-            <Route index element={<AdminDashboard />} />
-            <Route path="users" element={<UsersPanel />} /> 
-            <Route path="orders" element={<OrdersPanel />} /> 
-            <Route path="topups" element={<TopupPanel />} /> 
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/customer-support" element={<CustomerSupport />} />
-          <Route path="/recharge/:gamename" element={<Recharge />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/queries" element={<Queries />} />
-
-        </Routes>
-        <div className="relative h-12">
-          <Shortcut />
+    <div className={`${!isAdminPage ? " sm:pt-0 sm:pl-70 lg:pl-85" : ""} ${isDarkMode ? "bg-zinc-950 text-white" : "bg-white text-zinc-900"} min-h-[100vh]`}>
+      {/* Show Navbar only if not admin */}
+      {!isAdminPage && (
+        <div className="block bg-black fixed top-0 bottom-0 z-40 left-0">
+          <Navbar />
         </div>
+      )}
 
-      </Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Admin />} >
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<UsersPanel />} />
+          <Route path="orders" element={<OrdersPanel />} />
+          <Route path="topups" element={<TopupPanel />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/customer-support" element={<CustomerSupport />} />
+        <Route path="/recharge/:gamename" element={<Recharge />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/wallet" element={<Wallet />} />
+        <Route path="/queries" element={<Queries />} />
+        <Route path="/terms&condition" element={<Terms />} />
+        <Route path="/refund_policy" element={<Refund />} />
+        <Route path="/privacy&policy" element={<Privacy />} />
+      </Routes>
+
+      <div className="relative h-12">
+        <Shortcut />
+      </div>
     </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 };
 

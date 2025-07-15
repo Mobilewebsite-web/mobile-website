@@ -9,9 +9,31 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Firebase auth user
   const [userData, setUserData] = useState(null); // Firestore user document
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [loading, setLoading] = useState(true); // ✅ loading state
+ const [darkModeLoaded, setDarkModeLoaded] = useState(false);
+  // 🔥 Load dark mode preference
+ useEffect(() => {
+    const stored = localStorage.getItem("darkMode");
+    if (stored === null) {
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDarkMode(systemPrefersDark);
+      localStorage.setItem("darkMode", systemPrefersDark);
+    } else {
+      setIsDarkMode(stored === "true");
+    }
+    setDarkModeLoaded(true);
+  }, []);
 
+  // 🔥 Keep localStorage in sync
+   useEffect(() => {
+    if (darkModeLoaded && isDarkMode !== null) {
+      localStorage.setItem("darkMode", isDarkMode);
+    }
+  }, [isDarkMode, darkModeLoaded]);
+
+
+  // 🔥 Firebase auth listener
   useEffect(() => {
     let unsubscribeSnap = null;
 
@@ -29,12 +51,12 @@ export const UserProvider = ({ children }) => {
             setUserData(null);
             setIsAdmin(false);
           }
-          setLoading(false); // ✅ data loaded
+          setLoading(false);
         });
       } else {
         setUserData(null);
         setIsAdmin(false);
-        setLoading(false); // ✅ no user
+        setLoading(false);
       }
     });
 
@@ -44,18 +66,8 @@ export const UserProvider = ({ children }) => {
     };
   }, []);
 
-  useEffect(() => {
-    const local = localStorage.getItem("dark");
-    if (local !== null) {
-      setIsDarkMode(local === "true");
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDarkMode(prefersDark);
-    }
-  }, []);
-
   return (
-    <UserContext.Provider value={{ user, userData, isAdmin, isDarkMode, loading }}>
+    <UserContext.Provider value={{ user, userData, isAdmin, isDarkMode, loading, setIsDarkMode }}>
       {children}
     </UserContext.Provider>
   );

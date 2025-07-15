@@ -1,21 +1,60 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+
 const About = () => {
-  const navigate = useNavigate()
-  const {user} = useUser()
+  const navigate = useNavigate();
+  const { user, isDarkMode } = useUser();
+
   return (
-    <footer className="bg-gradient-to-br from-sky-600 to-blue-700 text-white px-6 py-12">
+    <footer
+      className={`px-6 py-12 ${
+        isDarkMode
+          ? "bg-gradient-to-br from-zinc-800 to-zinc-900 text-gray-200"
+          : "bg-gradient-to-br from-sky-600 to-blue-700 text-white"
+      }`}
+    >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
-        
         {/* Quick Links */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold mb-2">Quick Links</h2>
+          <h2
+            className={`text-2xl font-bold mb-2 ${
+              isDarkMode ? "text-white" : ""
+            }`}
+          >
+            Quick Links
+          </h2>
           <div className="flex items-center gap-4">
-            <button onClick={()=>{if(!user){navigate('/login')}else{navigate('/profile')}}} className="bg-white text-blue-700 font-semibold w-1/2 py-2 rounded-md shadow hover:bg-gray-100 transition-all">
+            <button
+              onClick={() => {
+                if (!user) {
+                  navigate("/login");
+                } else {
+                  navigate("/profile");
+                }
+              }}
+              className={`font-semibold w-1/2 py-2 rounded-md shadow hover:opacity-90 transition-all ${
+                isDarkMode
+                  ? "bg-zinc-700 text-white hover:bg-zinc-600"
+                  : "bg-white text-blue-700 hover:bg-gray-100"
+              }`}
+            >
               Login
             </button>
-            <button onClick={()=>{if(!user){navigate('/signup')}else{navigate('/profile')}}} className="bg-white text-blue-700 font-semibold w-1/2 py-2 rounded-md shadow hover:bg-gray-100 transition-all">
+            <button
+              onClick={() => {
+                if (!user) {
+                  navigate("/signup");
+                } else {
+                  navigate("/profile");
+                }
+              }}
+              className={`font-semibold w-1/2 py-2 rounded-md shadow hover:opacity-90 transition-all ${
+                isDarkMode
+                  ? "bg-zinc-700 text-white hover:bg-zinc-600"
+                  : "bg-white text-blue-700 hover:bg-gray-100"
+              }`}
+            >
               Register
             </button>
           </div>
@@ -23,13 +62,25 @@ const About = () => {
 
         {/* Stay Updated */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold mb-2">Stay Updated With Us 📬</h2>
-          <ul className="space-y-2 text-sm md:text-base text-blue-100">
-            <li className="hover:text-white transition">Developers Page</li>
-            <li className="hover:text-white transition">Terms & Conditions</li>
-            <li className="hover:text-white transition">Privacy Policy</li>
-            <li className="hover:text-white transition">Refund Policy</li>
-            <li className="text-blue-200 text-xs pt-2">© {new Date().getFullYear()} All rights reserved</li>
+          <h2
+            className={`text-2xl font-bold mb-2 ${
+              isDarkMode ? "text-white" : ""
+            }`}
+          >
+            Stay Updated With Us 📬
+          </h2>
+          <ul
+            className={`space-y-2 text-sm md:text-base ${
+              isDarkMode ? "text-zinc-400" : "text-blue-100"
+            }`}
+          >
+            <li className="hover:text-white transition cursor-pointer">Developers Page</li>
+            <li className="hover:text-white transition cursor-pointer">Terms & Conditions</li>
+            <li className="hover:text-white transition cursor-pointer">Privacy Policy</li>
+            <li className="hover:text-white transition cursor-pointer">Refund Policy</li>
+            <li className={`text-xs pt-2 ${isDarkMode ? "text-zinc-500" : "text-blue-200"}`}>
+              © {new Date().getFullYear()} All rights reserved
+            </li>
           </ul>
         </div>
       </div>

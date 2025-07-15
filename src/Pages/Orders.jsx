@@ -23,7 +23,7 @@ const statusFilters = [
 ];
 
 const Orders = () => {
-  const { user } = useUser();
+  const { user, isDarkMode } = useUser();
   const [orders, setOrders] = useState([]);
   const [filteredStatus, setFilteredStatus] = useState("completed");
   const [loading, setLoading] = useState(true);
@@ -61,8 +61,18 @@ const Orders = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4 text-zinc-800">My Orders</h1>
+    <div
+      className={`max-w-5xl mx-auto px-4 py-8 ${
+        isDarkMode ? "bg-zinc-900" : "bg-white"
+      } min-h-screen`}
+    >
+      <h1
+        className={`text-2xl font-bold mb-4 ${
+          isDarkMode ? "text-white" : "text-zinc-800"
+        }`}
+      >
+        My Orders
+      </h1>
 
       {/* Filter buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -71,8 +81,10 @@ const Orders = () => {
             key={key}
             className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full border transition ${
               filteredStatus === key
-                ? "bg-blue-600 text-white"
-                : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+                ? "bg-blue-600 text-white border-blue-600"
+                : isDarkMode
+                ? "bg-zinc-700 text-zinc-300 border-zinc-600 hover:bg-zinc-600"
+                : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200 border-gray-300"
             }`}
             onClick={() => setFilteredStatus(key)}
           >
@@ -84,22 +96,30 @@ const Orders = () => {
 
       {/* Orders */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading orders...</p>
+        <p className={`text-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+          Loading orders...
+        </p>
       ) : filteredOrders.length === 0 ? (
-        <p className="text-center text-gray-500">No orders found.</p>
+        <p className={`text-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+          No orders found.
+        </p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredOrders.map((order) => (
             <li
               key={order.id}
-               onClick={() =>
-                      setExpandedId(expandedId === order.id ? null : order.id)
-                    }
-              className="border border-gray-100 rounded-xl p-2 px-4 bg-white shadow-sm"
+              onClick={() =>
+                setExpandedId(expandedId === order.id ? null : order.id)
+              }
+              className={`border rounded-xl p-4 shadow-sm cursor-pointer transition ${
+                isDarkMode
+                  ? "bg-zinc-800 border-zinc-700 hover:bg-zinc-700"
+                  : "bg-white border-gray-100 hover:bg-gray-50"
+              }`}
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="font-semibold text-zinc-800">
+                  <p className={`${isDarkMode ? "text-white" : "text-zinc-800"} font-semibold`}>
                     {order.productName}
                   </p>
                   <p className="text-xs text-gray-400 mt-1">
@@ -120,14 +140,18 @@ const Orders = () => {
                   >
                     {order.status}
                   </p>
-                   <p className="text-sm text-zinc-800 mr-1">₹{order.rupees}</p>
-
-         
+                  <p className={`${isDarkMode ? "text-white" : "text-zinc-800"} text-sm mt-1`}>
+                    ₹{order.rupees}
+                  </p>
                 </div>
               </div>
 
               {expandedId === order.id && (
-                <div className="mt-3 text-sm text-zinc-600 space-y-1">
+                <div
+                  className={`mt-3 text-sm space-y-1 ${
+                    isDarkMode ? "text-zinc-300" : "text-zinc-600"
+                  }`}
+                >
                   <p>
                     <strong>Order ID:</strong> {order.id}
                   </p>
@@ -137,10 +161,9 @@ const Orders = () => {
                   <p>
                     <strong>Zone ID:</strong> {order.zoneId || "N/A"}
                   </p>
-                     <p>
+                  <p>
                     <strong>IGN:</strong> {order.mlUsername || "N/A"}
                   </p>
-                  {/* Add other details if needed */}
                 </div>
               )}
             </li>

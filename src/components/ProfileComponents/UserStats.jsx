@@ -4,7 +4,7 @@ import { db } from "../../configs/firebase";
 import { useUser } from "../../context/UserContext";
 
 const UserStats = () => {
-  const { userData } = useUser();
+  const { userData, isDarkMode } = useUser();
   const [counts, setCounts] = useState({
     completed: 0,
     pending: 0,
@@ -17,11 +17,9 @@ const UserStats = () => {
 
     const fetchOrderCounts = async () => {
       try {
-        // Query all orders for this user
         const q = query(collection(db, "orders"), where("userUid", "==", userData.uid));
         const snapshot = await getDocs(q);
 
-        // Count orders by status
         const statusCounts = {
           completed: 0,
           pending: 0,
@@ -46,24 +44,25 @@ const UserStats = () => {
     fetchOrderCounts();
   }, [userData?.uid]);
 
+  const cardBg = isDarkMode ? "bg-zinc-800 text-white shadow-zinc-700" : "bg-blue-50 text-black";
+  const labelText = isDarkMode ? "text-gray-400" : "text-gray-600";
+
   return (
-    <div className="grid p-4 grid-cols-2 gap-7 mt-10">
-      <div className="flex shadow-md flex-col items-center justify-center aspect-square bg-blue-50 rounded-xl text-xl font-semibold shadow">
-        <p className="text-4xl font-bold">{counts.completed}</p>
-        <p className="text-sm mt-3">Completed</p>
-      </div>
-      <div className="flex shadow-md flex-col items-center justify-center aspect-square bg-blue-50 rounded-xl text-xl font-semibold shadow">
-        <p className="text-4xl font-bold">{counts.pending}</p>
-        <p className="text-sm mt-3">Pending</p>
-      </div>
-      <div className="flex shadow-md flex-col items-center justify-center aspect-square bg-blue-50 rounded-xl text-xl font-semibold shadow">
-        <p className="text-4xl font-bold">{counts.refunded}</p>
-        <p className="text-sm mt-3">Refunded</p>
-      </div>
-      <div className="flex shadow-md flex-col items-center justify-center aspect-square bg-blue-50 rounded-xl text-xl font-semibold shadow">
-        <p className="text-4xl font-bold">{counts.failed}</p>
-        <p className="text-sm mt-3">Failed</p>
-      </div>
+    <div className="grid p-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-6  gap-7 mt-10">
+      {[
+        { label: "Completed", value: counts.completed },
+        { label: "Pending", value: counts.pending },
+        { label: "Refunded", value: counts.refunded },
+        { label: "Failed", value: counts.failed },
+      ].map((item) => (
+        <div
+          key={item.label}
+          className={`flex flex-col items-center justify-center aspect-square rounded-xl text-xl font-semibold shadow-md transition ${cardBg}`}
+        >
+          <p className="text-4xl font-bold">{item.value}</p>
+          <p className={`text-sm mt-3 ${labelText}`}>{item.label}</p>
+        </div>
+      ))}
     </div>
   );
 };

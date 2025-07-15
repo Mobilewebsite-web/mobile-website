@@ -4,7 +4,7 @@ import UserStats from "../components/ProfileComponents/UserStats";
 const Profile = () => {
 
   return (
-<div className="p-4">
+<div className="p-4 pt-15">
           <UserData/>
           <UserStats/>
 </div>

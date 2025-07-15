@@ -1,4 +1,5 @@
 import React from 'react';
+import { useUser } from '../../context/UserContext';
 
 const reasons = [
   {
@@ -28,17 +29,27 @@ const reasons = [
 ];
 
 const Why = () => {
+  const { isDarkMode } = useUser();
+
   return (
-    <section className="py-10 mt-10 px-4 bg-white text-zinc-800">
+    <section
+      className={`py-10 mt-10 px-4 ${
+        isDarkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-800'
+      }`}
+    >
       <h2 className="text-3xl font-bold text-center mb-8">Why Choose Us?</h2>
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {reasons.map((item, i) => (
           <div
             key={i}
-            className="bg-sky-50  p-6 rounded-xl shadow transition-all hover:scale-[1.01] hover:shadow-2xl"
+            className={`p-6 rounded-xl shadow transition-all hover:scale-[1.01] hover:shadow-2xl ${
+              isDarkMode
+                ? 'bg-zinc-800 text-white'
+                : 'bg-sky-50 text-zinc-800'
+            }`}
           >
             <h3 className="text-md font-bold mb-2">{item.title}</h3>
-            <p className="text-sm text-zinc-800">{item.desc}</p>
+            <p className="text-sm">{item.desc}</p>
           </div>
         ))}
       </div>

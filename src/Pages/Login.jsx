@@ -2,28 +2,29 @@ import React from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from "../configs/firebase";
 import { useNavigate } from "react-router-dom";
-import {  doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
+  const { isDarkMode } = useUser();
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const randomName = uniqueNamesGenerator({
-  dictionaries: [adjectives, colors, animals],
-  separator: '-',
-  style: 'lowerCase',
-});
- const handleGoogleLogin = async () => {
+    dictionaries: [adjectives, colors, animals],
+    separator: '-',
+    style: 'lowerCase',
+  });
+
+  const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if user doc exists in Firestore
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {
-        // User not in db, create new document (signup)
         await setDoc(userRef, {
           uid: user.uid,
           username: user.displayName || randomName,
@@ -37,25 +38,48 @@ const Login = () => {
       }
 
       console.log("User logged in:", user);
-      navigate(-1); 
+      navigate(-1);
     } catch (error) {
       console.error("Login failed:", error);
       alert("Failed to login: " + error.message);
     }
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-600 to-purple-700 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 ${
+        isDarkMode
+          ? "bg-gradient-to-tr from-zinc-900 via-blue-900 to-purple-900"
+          : "bg-gradient-to-tr from-blue-600 to-purple-700"
+      }`}
+    >
+      <div
+        className={`max-w-md w-full rounded-2xl p-8 shadow-xl ${
+          isDarkMode ? "bg-zinc-800" : "bg-white"
+        }`}
+      >
+        <h1
+          className={`text-3xl font-extrabold mb-6 text-center ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
           Welcome Back
         </h1>
-        <p className="text-center text-gray-600 mb-8">
+        <p
+          className={`text-center mb-8 ${
+            isDarkMode ? "text-gray-300" : "text-gray-600"
+          }`}
+        >
           Sign in to continue to your account
         </p>
 
         <button
           onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg py-3 text-gray-800 font-semibold hover:shadow-md transition"
+          className={`w-full flex items-center justify-center gap-3 rounded-lg border py-3 font-semibold transition ${
+            isDarkMode
+              ? "bg-zinc-700 border-zinc-600 text-white hover:brightness-110"
+              : "bg-white border-gray-300 text-gray-800 hover:shadow-md"
+          }`}
           aria-label="Sign in with Google"
         >
           <svg
@@ -84,14 +108,18 @@ const Login = () => {
           Sign in with Google
         </button>
 
-        <p className="mt-6 text-center text-gray-700">
+        <p
+          className={`mt-6 text-center ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
           Don't have an account?{" "}
-          <a
-            href="/signup"
+          <span
+          onClick={()=>{navigate('/signup')}}
             className="text-blue-600 font-semibold hover:underline"
           >
             Sign Up
-          </a>
+          </span>
         </p>
       </div>
     </div>
