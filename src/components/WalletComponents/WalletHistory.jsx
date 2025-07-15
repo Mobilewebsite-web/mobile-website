@@ -3,8 +3,8 @@ import {
   collection,
   query,
   where,
-  getDocs,
   orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../configs/firebase";
 import { useUser } from "../../context/UserContext";
@@ -32,28 +32,30 @@ const WalletHistory = () => {
   useEffect(() => {
     if (!user) return;
 
-    const fetchTopups = async () => {
-      setLoading(true);
-      try {
-        const q = query(
-          collection(db, "topup"),
-          where("userUid", "==", user.uid),
-          orderBy("timestamp", "desc")
-        );
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({
+    setLoading(true);
+    const q = query(
+      collection(db, "topup"),
+      where("userUid", "==", user.uid),
+      orderBy("timestamp", "desc")
+    );
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setTopups(data);
-      } catch (err) {
-        console.error("Error fetching topups:", err);
-      } finally {
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error fetching topups:", error);
         setLoading(false);
       }
-    };
+    );
 
-    fetchTopups();
+    return () => unsubscribe(); // Cleanup on unmount
   }, [user]);
 
   const filteredTopups = topups.filter(
@@ -124,21 +126,21 @@ const WalletHistory = () => {
 
               {expandedId === topup.id && (
                 <div className="mt-3 text-sm text-zinc-600 space-y-1">
-<p className="flex items-center gap-2">
-  <strong>Order ID:</strong> 
-  <span className="text-sm text-zinc-700">{topup.id}</span>
-  <button
-    onClick={(e) => {
-          e.stopPropagation();
-          alert("Copied")
-      navigator.clipboard.writeText(topup.id);
-    }}
-    className="text-blue-500 text-xs hover:underline"
-    title="Copy Order ID"
-  >
-    Copy
-  </button>
-</p>
+                  <p className="flex items-center gap-2">
+                    <strong>Order ID:</strong>
+                    <span className="text-sm text-zinc-700">{topup.id}</span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        alert("Copied");
+                        navigator.clipboard.writeText(topup.id);
+                      }}
+                      className="text-blue-500 text-xs hover:underline"
+                      title="Copy Order ID"
+                    >
+                      Copy
+                    </button>
+                  </p>
                   <p>
                     <strong>Email:</strong> {topup.email || "N/A"}
                   </p>
