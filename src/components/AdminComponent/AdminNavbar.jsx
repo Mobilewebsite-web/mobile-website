@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import defaultProfile from "../../assets/images/default-profile.jpeg";
-import { IoMdLogOut, IoMdTrophy } from "react-icons/io";
-import { FaHome } from "react-icons/fa";
-import { MdManageAccounts, MdPrivacyTip, MdKeyboardArrowRight } from "react-icons/md";
+import {  IoMdTrophy } from "react-icons/io";
+import { FaUsers  } from "react-icons/fa";
+import { MdManageAccounts, MdWorkHistory , MdKeyboardArrowRight } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
 import { IoShieldCheckmarkSharp, IoDocumentTextOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -11,7 +11,9 @@ import clsx from "clsx"; // install clsx for clean conditional classes
 import { useUser } from "../../context/UserContext";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
-const Navbar = () => {
+import { RiAdminFill } from "react-icons/ri";
+
+const AdminNavbar = () => {
   const [showNav, setShowNav] = useState(false);
   const navRef = useRef(null);
   const navigate = useNavigate();
@@ -19,13 +21,9 @@ const Navbar = () => {
   const {user,isAdmin, userData} = useUser()
 
   const ulList = [
-    { name: "Home", icon: <FaHome />, path: "/" },
-    { name: "My Account", icon: <MdManageAccounts />, path: "/profile" },
-    { name: "Help & Support", icon: <BiSupport />, path: "/help&support" },
-    { name: "Leaderboard", icon: <IoMdTrophy />, path: "/leaderboard" },
-    { name: "Privacy & Policy", icon: <MdPrivacyTip />, path: "/privacy&policy" },
-    { name: "Terms & Conditions", icon: <IoShieldCheckmarkSharp />, path: "/terms&condition" },
-    { name: "Refund Policy", icon: <IoDocumentTextOutline />, path: "/refund_policy" },
+    { name: "Dashboard", icon: <RiAdminFill  />, path: "/admin" },
+    { name: "Users", icon: <FaUsers  />, path: "/admin/users" },
+    { name: "All Orders", icon: <MdWorkHistory  />, path: "/admin/orders" },
   ];
 
   // disable page scroll when sidebar is open
@@ -96,11 +94,8 @@ const handleLogout = async () => {
           <div className="p-5 space-y-4 h-full overflow-y-auto">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-zinc-500">Welcome back</p>
+                <p className="text-sm text-zinc-500">Admin</p>
                 <h1 className="text-lg font-bold">{userData?.username || "No user"}</h1>
-              </div>
-              <div onClick={()=> {if(user){handleLogout ()} else {navigate('/login')}}}className="p-2 bg-red-500 text-white rounded-xl shadow-md cursor-pointer">
-                <IoMdLogOut size={22} />
               </div>
             </div>
             <hr className="border-zinc-200" />
@@ -127,17 +122,6 @@ const handleLogout = async () => {
             </ul>
                 <div>
             <hr className="border-zinc-200" />
-              <div className="mb-20">
-                <h1>Quick Links</h1>
-                <ul>
-               
-                  <li onClick={()=>navigate('/login')} className=  "flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors duration-200 font-semibold">Login</li>
-                  <li onClick={()=>navigate('/signup')} className=  "flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors duration-200 font-semibold">Sign up</li>
-                  {user && isAdmin && (
-                    <li onClick={()=>navigate('/admin')} className=  "flex items-center bg-orange-400 justify-between p-3 rounded-xl cursor-pointer transition-colors duration-200 font-semibold">Admin</li>
-                  )}
-                </ul>
-              </div>
       </div>
           </div>
         </div>
@@ -158,4 +142,4 @@ const handleLogout = async () => {
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

@@ -1,8 +1,32 @@
-const RechargeForm = () => {
+import { useState } from "react";
+import { useUser } from "../../context/UserContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../configs/firebase";
+const RechargeForm = ({userId, setUserId, zoneId, setZoneId, mlUsername, setMlUsername}) => {
+ const [usernameExists, setUsernameExists] = useState(false)
+ const {user} = useUser()
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(!userId || !zoneId) {
+      alert("No userid or zoneid");
+      return
+    }
+    try {
+      const docRef = doc(db, "users", user.uid); 
+      const userSnap = await getDoc(docRef);
 
-  const handleSubmit = (e)=>{
-          e.preventDefault()
-  }
+      if (userSnap.exists()) {
+        const username = userSnap.data().username || "No username";
+        setMlUsername(username); // 👈 send back to parent
+        setUsernameExists(true)
+      } else {
+        setMlUsername("User not found");
+      }
+    } catch (err) {
+      console.error("Error fetching user:", err);
+      setMlUsername("Error fetching user");
+    }
+  };
   return (
     <div className=" mt-10">
       <form className="flex flex-col gap-4 w-full max-w-md mx-auto p-6 bg-white border border-gray-200 rounded-2xl shadow-lg">
@@ -13,6 +37,9 @@ const RechargeForm = () => {
           </label>
           <input
             type="number"
+            value={userId}
+            required
+            onChange={(e)=>setUserId(e.target.value)}
             id="userId"
             placeholder="Enter your User ID"
             className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -27,6 +54,9 @@ const RechargeForm = () => {
           <input
             type="number"
             id="zoneId"
+            required
+            value={zoneId}
+            onChange={(e)=>setZoneId(e.target.value)}
             placeholder="Enter your Zone ID"
             className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -40,6 +70,9 @@ const RechargeForm = () => {
         >
           Check Username
         </button>
+        {usernameExists && (
+          <p className="border-1 border-gray-100 p-2 bg-gray-100 rounded-lg font-semibold">Username: {mlUsername}</p>
+        )}
       </form>
     </div>
   );

@@ -7,7 +7,13 @@ import Recharge from './Pages/Recharge';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import { useUser } from './context/UserContext';
-
+import Profile from './Pages/Profile';
+import CustomerSupport from './Pages/CustomerCare';
+import Admin from './Pages/Admin';
+import UsersPanel from './components/AdminComponent/UsersPanel';
+import OrdersPanel from "./components/AdminComponent/OrdersPanel"
+import AdminDashboard from './components/AdminComponent/AdminDashboard';
+import Orders from './Pages/Orders';
 const App = () => {
   const {loading} = useUser()
 
@@ -17,9 +23,18 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<Admin />} >
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<UsersPanel />} /> 
+            <Route path="orders" element={<OrdersPanel />} /> 
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/customer-support" element={<CustomerSupport />} />
           <Route path="/recharge/:gamename" element={<Recharge />} />
+          <Route path="/orders" element={<Orders />} />
+
         </Routes>
         <div className="relative h-12">
           <Shortcut />

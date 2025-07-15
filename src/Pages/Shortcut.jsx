@@ -1,20 +1,32 @@
-import React,{ useState } from "react";
+import React,{ useState, useEffect } from "react";
 import { FaHome } from "react-icons/fa";
-import { MdManageAccounts, MdPrivacyTip, MdArchitecture } from "react-icons/md";
+import { MdManageAccounts, MdHistory  } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
-import { useNavigate } from "react-router-dom"; // optional if you want routing
+import { IoMdWallet } from "react-icons/io";
+import { useNavigate, useLocation } from "react-router-dom"; // optional if you want routing
 
 const Shortcut = () => {
-  const [activeIndex, setActiveIndex] = useState(2); // default: "Home"
   const navigate = useNavigate()
+  const location = useLocation()
 
   const shortcutList = [
-    { name: 'Support', path: '/contact', icon: <BiSupport /> },
+    { name: 'Support', path: '/customer-support', icon: <BiSupport /> },
     { name: 'Account', path: '/profile', icon: <MdManageAccounts /> },
     { name: 'Home', path: '/', icon: <FaHome /> },
-    { name: 'Reports', path: '/orders', icon: <MdPrivacyTip /> },
-    { name: 'More', path: '/dev-contact', icon: <MdArchitecture /> },
+    { name: 'Orders', path: '/orders', icon: <MdHistory /> },
+    { name: 'Wallet', path: '/wallet', icon: <IoMdWallet /> },
   ];
+
+    const getActiveIndex = () => {
+    const currentPath = location.pathname;
+    return shortcutList.findIndex(item => item.path === currentPath);
+  };
+
+  const [activeIndex, setActiveIndex] = useState(getActiveIndex());
+
+  useEffect(() => {
+    setActiveIndex(getActiveIndex());
+  }, [location.pathname]);
 
   const handleClick = (i, path) => {
     setActiveIndex(i);
