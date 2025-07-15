@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 const HomeUtils = ()=> {
           const utilList = [
-                    {name: "Add coin", link: "/", icon:<FaPlus/>},
-                    {name: "Payments", link: "/", icon:<MdCreditCard/>},
+                    {name: "Add coin", link: "/wallet", icon:<FaPlus/>},
+                    {name: "Payments", link: "/wallet", icon:<MdCreditCard/>},
                     {name: "Orders", link: "/orders", icon:<MdHistory/>},
-                    {name: "Queries", link: "/", icon:<FaQuestionCircle/>},
+                    {name: "Queries", link: "/queries", icon:<FaQuestionCircle/>},
           ]
           const navigate = useNavigate()
           return (

@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../configs/firebase";
+import { Copy } from "lucide-react"; // If you're using Lucide icons
+
+const copyToClipboard = (text) => {
+  alert("Copied")
+  navigator.clipboard.writeText(text);
+};
 
 const OrdersPanel = () => {
   const [orders, setOrders] = useState([]);
@@ -14,10 +20,13 @@ const OrdersPanel = () => {
       setLoading(true);
       try {
         const snapshot = await getDocs(collection(db, "orders"));
-        const orderList = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+  const orderList = snapshot.docs
+  .map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }))
+  .sort((a, b) => b.timestamp?.seconds - a.timestamp?.seconds);
+
         setOrders(orderList);
         setFilteredOrders(orderList);
       } catch (error) {
@@ -41,7 +50,7 @@ const OrdersPanel = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-200">
+    <div className="max-w-5xl relative mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-200">
       <h2 className="text-2xl font-bold mb-4 text-center">Orders</h2>
 
       <div className="flex gap-2 mb-4">
@@ -77,30 +86,53 @@ const OrdersPanel = () => {
                   Order ID: <span className="text-blue-700">{order.id}</span>
                 </div>
                 <div className="text-sm text-gray-600">
-                  User: {order.userId} | Status: {order.status}
+                  User: {order.username} | Status: {order.status}
                 </div>
+                 <p><strong>Date:</strong> {order.timestamp?.toDate().toLocaleString() || "N/A"}</p>
+
               </li>
             ))}
           </ul>
 
           {selectedOrder && (
-            <div className="mt-6 p-4 border border-gray-300 rounded-lg bg-gray-50">
-              <h3 className="text-xl font-semibold mb-3">Order Details</h3>
-              <p><strong>Order ID:</strong> {selectedOrder.id}</p>
-              <p><strong>User ID:</strong> {selectedOrder.userId}</p>
-              <p><strong>Status:</strong> {selectedOrder.status || "N/A"}</p>
-              <p><strong>Type:</strong> {selectedOrder.type || "N/A"}</p>
-              <p><strong>Amount:</strong> {selectedOrder.amount || "N/A"}</p>
-              <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod || "N/A"}</p>
-              <p><strong>Created At:</strong> {selectedOrder.createdAt?.toDate().toLocaleString() || "N/A"}</p>
-              {/* Add more fields as needed */}
-              <button
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-                onClick={() => setSelectedOrder(null)}
-              >
-                Close Details
-              </button>
-            </div>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  <div className="m-4 p-6 text-sm w-full max-w-md bg-white rounded-2xl shadow-xl">
+    <h3 className="text-xl font-semibold mb-4">Order Details</h3>
+<div className="flex items-center gap-2">
+  <p className="break-all ">
+    <strong>Order ID:</strong> <span className="text-blue-600 font-semibold">{selectedOrder.id}</span>
+  </p>
+  <button onClick={() => copyToClipboard(selectedOrder.id)} >
+    <Copy size={16} />
+  </button>
+</div>
+
+<div className="flex items-center gap-2">
+  <p className="break-all">
+    <strong>User:</strong> <span className="text-blue-600 font-semibold">{selectedOrder.userUid}</span>
+  </p>
+  <button onClick={() => copyToClipboard(selectedOrder.userUid)}>
+    <Copy size={16} />
+  </button>
+</div>
+    <p><strong>Username:</strong> {selectedOrder.username}</p>
+    <p><strong>User ID:</strong> {selectedOrder.userId}</p>
+    <p><strong>Zone ID:</strong> {selectedOrder.zoneId}</p>
+    <p><strong>IGN:</strong> {selectedOrder.mlUsername}</p>
+    <p><strong>Status:</strong> {selectedOrder.status || "N/A"}</p>
+    <p><strong>Product:</strong> {selectedOrder.productName || "N/A"}</p>
+    <p><strong>Cost:</strong> ₹{selectedOrder.rupees || "N/A"}</p>
+    <p><strong>Date:</strong> {selectedOrder.timestamp?.toDate().toLocaleString() || "N/A"}</p>
+
+    <button
+      className="mt-6 w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+      onClick={() => setSelectedOrder(null)}
+    >
+      Close
+    </button>
+  </div>
+</div>
+
           )}
         </div>
       )}

@@ -14,6 +14,9 @@ import UsersPanel from './components/AdminComponent/UsersPanel';
 import OrdersPanel from "./components/AdminComponent/OrdersPanel"
 import AdminDashboard from './components/AdminComponent/AdminDashboard';
 import Orders from './Pages/Orders';
+import Wallet from './Pages/Wallet';
+import Queries from './Pages/Queries';
+import TopupPanel from './components/AdminComponent/TopupsPanel';
 const App = () => {
   const {loading} = useUser()
 
@@ -27,6 +30,7 @@ const App = () => {
             <Route index element={<AdminDashboard />} />
             <Route path="users" element={<UsersPanel />} /> 
             <Route path="orders" element={<OrdersPanel />} /> 
+            <Route path="topups" element={<TopupPanel />} /> 
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -34,6 +38,8 @@ const App = () => {
           <Route path="/customer-support" element={<CustomerSupport />} />
           <Route path="/recharge/:gamename" element={<Recharge />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/queries" element={<Queries />} />
 
         </Routes>
         <div className="relative h-12">

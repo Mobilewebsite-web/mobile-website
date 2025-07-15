@@ -73,61 +73,73 @@ const UserPanel = () => {
                   <p className="font-semibold text-lg">{user.username || "Unknown"}</p>
                   <p className="text-sm text-gray-600">
                     Balance:{" "}
-                    {user.balance !== undefined ? `$${user.balance}` : "N/A"}
+                    {user.balance !== undefined ? `₹${user.balance}` : "N/A"}
                   </p>
                 </div>
               </li>
+              
             ))}
           </ul>
+{selectedUser && (
+  <div
+    className="fixed inset-0 z-50 flex text-sm items-center justify-center bg-black/50"
+    onClick={() => setSelectedUser(null)} // close on overlay click
+  >
+    <div
+      className="m-4 p-6 w-full max-w-md bg-white rounded-2xl shadow-inner"
+      onClick={(e) => e.stopPropagation()} // prevent close on modal click
+    >
+      <h3 className="text-xl font-semibold mb-4">User Details</h3>
+      <div className="flex items-center mb-4">
+        <img
+          src={selectedUser.photoURL || "/default-avatar.png"}
+          alt={selectedUser.username}
+          className="w-16 h-16 rounded-full object-cover mr-6"
+        />
+        <div>
+          <p className="text-2xl font-bold">{selectedUser.username}</p>
+          <p className="text-gray-600">{selectedUser.email || "No email"}</p>
+        </div>
+      </div>
 
-          {/* 📋 Selected User Details */}
-          {selectedUser && (
-            <div className="mt-2 p-4 border border-gray-300 rounded-lg bg-gray-50">
-              <h3 className="text-xl font-semibold mb-4">User Details</h3>
-              <div className="flex items-center mb-4">
-                <img
-                  src={selectedUser.photoURL || "/default-avatar.png"}
-                  alt={selectedUser.username}
-                  className="w-16 h-16 rounded-full object-cover mr-6"
-                />
-                <div>
-                  <p className="text-2xl font-bold">{selectedUser.username}</p>
-                  <p className="text-gray-600">{selectedUser.email || "No email"}</p>
-                </div>
-              </div>
+      <p><strong>Balance:</strong> {selectedUser.balance !== undefined ? `₹${selectedUser.balance}` : "N/A"}</p>
+      <p><strong>Bio:</strong> {selectedUser.bio || "No bio provided."}</p>
+      <p>
+        <strong>CreatedAt:</strong>{" "}
+        {selectedUser.createdAt?.toDate
+          ? selectedUser.createdAt.toDate().toLocaleString()
+          : "No created date provided."}
+      </p>
+      <p
+        className="cursor-pointer group"
+        onClick={() => {
+          navigator.clipboard.writeText(selectedUser.uid);
+          alert("Copied!");
+        }}
+      >
+        <strong>Uid:</strong>{" "}
+        <span
+          className="text-blue-600 group-hover:underline"
+          title="Click to copy"
+        >
+          {selectedUser.uid || "No UID"}
+        </span>
+      </p>
 
-              <p><strong>Balance:</strong> {selectedUser.balance !== undefined ? `$${selectedUser.balance}` : "N/A"}</p>
-              <p><strong>Bio:</strong> {selectedUser.bio || "No bio provided."}</p>
-              <p>
-                <strong>CreatedAt:</strong>{" "}
-                {selectedUser.createdAt?.toDate
-                  ? selectedUser.createdAt.toDate().toLocaleString()
-                  : "No created date provided."}
-              </p>
-              <p
-                className="cursor-pointer group"
-                onClick={() => {
-                  navigator.clipboard.writeText(selectedUser.uid);
-                  alert("Copied!");
-                }}
-              >
-                <strong>Uid:</strong>{" "}
-                <span
-                  className="text-blue-600 group-hover:underline"
-                  title="Click to copy"
-                >
-                  {selectedUser.uid || "No UID"}
-                </span>
-              </p>
+      <button
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+        onClick={() => setSelectedUser(null)}
+      >
+        Close Details
+      </button>
+    </div>
+  </div>
+)}
 
-              <button
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-                onClick={() => setSelectedUser(null)}
-              >
-                Close Details
-              </button>
-            </div>
-          )}
+
+
+
+         
         </div>
       )}
     </div>

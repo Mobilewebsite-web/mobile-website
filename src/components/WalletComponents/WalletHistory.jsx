@@ -6,14 +6,14 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../configs/firebase";
-import { useUser } from "../context/UserContext";
+import { db } from "../../configs/firebase";
+import { useUser } from "../../context/UserContext";
 import {
   CheckCircle,
   Clock,
   XCircle,
   RotateCcw,
-} from "lucide-react"; // Icons for statuses
+} from "lucide-react";
 
 const statusFilters = [
   { key: "completed", label: "Completed", icon: <CheckCircle className="w-4 h-4" /> },
@@ -22,9 +22,9 @@ const statusFilters = [
   { key: "failed", label: "Failed", icon: <XCircle className="w-4 h-4" /> },
 ];
 
-const Orders = () => {
+const WalletHistory = () => {
   const { user } = useUser();
-  const [orders, setOrders] = useState([]);
+  const [topups, setTopups] = useState([]);
   const [filteredStatus, setFilteredStatus] = useState("completed");
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
@@ -32,11 +32,11 @@ const Orders = () => {
   useEffect(() => {
     if (!user) return;
 
-    const fetchOrders = async () => {
+    const fetchTopups = async () => {
       setLoading(true);
       try {
         const q = query(
-          collection(db, "orders"),
+          collection(db, "topup"),
           where("userUid", "==", user.uid),
           orderBy("timestamp", "desc")
         );
@@ -45,24 +45,24 @@ const Orders = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setOrders(data);
+        setTopups(data);
       } catch (err) {
-        console.error("Error fetching orders:", err);
+        console.error("Error fetching topups:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOrders();
+    fetchTopups();
   }, [user]);
 
-  const filteredOrders = orders.filter(
-    (order) => order.status === filteredStatus
+  const filteredTopups = topups.filter(
+    (topup) => topup.status === filteredStatus
   );
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4 text-zinc-800">My Orders</h1>
+      <h1 className="text-2xl font-bold mb-4 text-zinc-800">Wallet Top-up History</h1>
 
       {/* Filter buttons */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -82,65 +82,72 @@ const Orders = () => {
         ))}
       </div>
 
-      {/* Orders */}
+      {/* Topup Records */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading orders...</p>
-      ) : filteredOrders.length === 0 ? (
-        <p className="text-center text-gray-500">No orders found.</p>
+        <p className="text-center text-gray-500">Loading top-up history...</p>
+      ) : filteredTopups.length === 0 ? (
+        <p className="text-center text-gray-500">No records found.</p>
       ) : (
         <ul className="space-y-4">
-          {filteredOrders.map((order) => (
+          {filteredTopups.map((topup) => (
             <li
-              key={order.id}
-               onClick={() =>
-                      setExpandedId(expandedId === order.id ? null : order.id)
-                    }
+              key={topup.id}
+              onClick={() =>
+                setExpandedId(expandedId === topup.id ? null : topup.id)
+              }
               className="border border-gray-100 rounded-xl p-2 px-4 bg-white shadow-sm"
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="font-semibold text-zinc-800">
-                    {order.productName}
-                  </p>
+                  <p className="font-semibold text-zinc-800">Top-up</p>
                   <p className="text-xs text-gray-400 mt-1">
-                    {order.timestamp?.toDate().toLocaleString() || "—"}
+                    {topup.timestamp?.toDate().toLocaleString() || "—"}
                   </p>
                 </div>
                 <div className="text-sm font-medium text-right">
                   <p
                     className={`capitalize px-2 py-1 rounded text-xs inline-block ${
-                      order.status === "completed"
+                      topup.status === "completed"
                         ? "bg-green-100 text-green-600"
-                        : order.status === "pending"
+                        : topup.status === "pending"
                         ? "bg-yellow-100 text-yellow-600"
-                        : order.status === "failed"
+                        : topup.status === "failed"
                         ? "bg-red-100 text-red-600"
                         : "bg-blue-100 text-blue-600"
                     }`}
                   >
-                    {order.status}
+                    {topup.status}
                   </p>
-                   <p className="text-sm text-zinc-800 mr-1">₹{order.rupees}</p>
-
-         
+                  <p className="text-sm text-zinc-800 mr-1">₹{topup.amount}</p>
                 </div>
               </div>
 
-              {expandedId === order.id && (
+              {expandedId === topup.id && (
                 <div className="mt-3 text-sm text-zinc-600 space-y-1">
+<p className="flex items-center gap-2">
+  <strong>Order ID:</strong> 
+  <span className="text-sm text-zinc-700">{topup.id}</span>
+  <button
+    onClick={(e) => {
+          e.stopPropagation();
+          alert("Copied")
+      navigator.clipboard.writeText(topup.id);
+    }}
+    className="text-blue-500 text-xs hover:underline"
+    title="Copy Order ID"
+  >
+    Copy
+  </button>
+</p>
                   <p>
-                    <strong>Order ID:</strong> {order.id}
+                    <strong>Email:</strong> {topup.email || "N/A"}
                   </p>
                   <p>
-                    <strong>User ID:</strong> {order.userId || "N/A"}
+                    <strong>Status:</strong> {topup.status}
                   </p>
                   <p>
-                    <strong>Zone ID:</strong> {order.zoneId || "N/A"}
+                    <strong>Amount:</strong> ₹{topup.amount}
                   </p>
-                     <p>
-                    <strong>IGN:</strong> {order.mlUsername || "N/A"}
-                  </p>
-                  {/* Add other details if needed */}
                 </div>
               )}
             </li>
@@ -151,4 +158,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default WalletHistory;

@@ -5,7 +5,7 @@ import {  IoMdTrophy } from "react-icons/io";
 import { FaUsers  } from "react-icons/fa";
 import { MdManageAccounts, MdWorkHistory , MdKeyboardArrowRight } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
-import { IoShieldCheckmarkSharp, IoDocumentTextOutline } from "react-icons/io5";
+import { PiHandDepositFill } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import clsx from "clsx"; // install clsx for clean conditional classes
 import { useUser } from "../../context/UserContext";
@@ -24,6 +24,7 @@ const AdminNavbar = () => {
     { name: "Dashboard", icon: <RiAdminFill  />, path: "/admin" },
     { name: "Users", icon: <FaUsers  />, path: "/admin/users" },
     { name: "All Orders", icon: <MdWorkHistory  />, path: "/admin/orders" },
+    { name: "All Topups", icon: <PiHandDepositFill  />, path: "/admin/topups" },
   ];
 
   // disable page scroll when sidebar is open

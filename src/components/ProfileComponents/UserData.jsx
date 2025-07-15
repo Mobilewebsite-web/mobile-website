@@ -2,6 +2,8 @@ import { useUser } from "../../context/UserContext";
 import { useState, useEffect } from "react";
 import { db } from "../../configs/firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import defaultProfile from "../../assets/images/default-profile.jpeg";
+
 const UserData = () => {
   const { user, userData } = useUser();
 
@@ -11,19 +13,7 @@ const UserData = () => {
   const [username, setUsername] = useState(userData?.username || "");
   const [bio, setBio] = useState(userData?.bio || "");
 
-  // fetch random quote if no bio
-  useEffect(() => {
-    if (!userData?.bio) {
-      fetch("https://zenquotes.io/api/random")
-        .then((res) => res.json())
-        .then((data) => {
-          setQuote(`"${data[0].q}" — ${data[0].a}`);
-        })
-        .catch(() => {
-          setQuote("Could not load quote.");
-        });
-    }
-  }, [userData]);
+
 
   // update local editable values when userData loads
   useEffect(() => {
@@ -35,7 +25,13 @@ const UserData = () => {
 
   // handle save (mocked here — plug into Firestore or Firebase update logic)
   const handleSave = () => {
+   
     console.log("Save clicked:", { username, bio });
+    if(!user) {
+          setEditMode(false)
+          return
+    }
+          
     updateDoc(doc(db, "users", user.uid), { username, bio })
     setEditMode(false);
   };
@@ -44,7 +40,7 @@ const UserData = () => {
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md border-gray-100 border-2 rounded-2xl transition-colors">
       <div className="flex items-center gap-4">
         <img
-          src={userData?.photoURL}
+          src={userData?.photoURL || defaultProfile}
           alt="Profile"
           className="w-20 h-20 rounded-full border-4 border-blue-500"
         />
@@ -62,10 +58,10 @@ const UserData = () => {
     </div>
   ) : (
     <div className="flex items-center gap-2">
-      <h1 className="text-2xl font-bold">{username}</h1>
+      <h1 className="text-2xl font-bold">{username || "User"}</h1>
     </div>
   )}
-          <p className="text-gray-500">{userData?.email}</p>
+          <p className="text-gray-500">{userData?.email || "demo@gmail.com"}</p>
         </div>
       </div>
 
