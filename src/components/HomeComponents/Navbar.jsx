@@ -24,6 +24,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAdmin, userData, isDarkMode, setIsDarkMode } = useUser();
+  console.log(userData?.photoURL);
+
+
 
   const ulList = [
     { name: "Home", icon: <FaHome />, path: "/" },
@@ -192,14 +195,14 @@ onClick={() => {
 
 <header
   className={clsx(
-    "fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-4 shadow-md",
+    "fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1 shadow-md",
     isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-black",
     "sm:hidden" // <- Move it here
   )}
 >
 
 
-        <div className="size-12 flex items-center">
+        <div className="size-10 flex items-center">
           <img
             className="w-full h-full object-cover rounded-full border border-blue-500"
             src={userData?.photoURL || defaultProfile}

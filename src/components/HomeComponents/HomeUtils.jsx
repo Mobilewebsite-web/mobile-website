@@ -30,7 +30,7 @@ const HomeUtils = () => {
         rounded-xl
         shadow-md
         py-6
-        ${isDarkMode ? "bg-zinc-900" : "bg-white"}
+        ${isDarkMode ? "bg-zinc-900" : "bg-webGreen"}
       `}
     >
       {utilList.map((item, i) => (
@@ -42,7 +42,7 @@ const HomeUtils = () => {
             transition-colors duration-200
             rounded-lg p-3
             ${i >= 4 ? "hidden sm:flex" : "flex"}
-            ${isDarkMode ? "bg-zinc-800 hover:bg-zinc-700 text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-900"}
+            ${isDarkMode ? "bg-zinc-800 hover:bg-zinc-700 text-white" : "bg-green-200 hover:bg-gray-200 text-gray-600"}
           `}
           role="button"
           tabIndex={0}

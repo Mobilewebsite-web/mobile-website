@@ -30,7 +30,11 @@ const AppContent = () => {
   const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
-    <div className={`${!isAdminPage ? " sm:pt-0 sm:pl-70 lg:pl-85" : ""} ${isDarkMode ? "bg-zinc-950 text-white" : "bg-white text-zinc-900"} min-h-[100vh]`}>
+<div
+  className={`${!isAdminPage ? "sm:pt-0 sm:pl-70 lg:pl-85" : ""} ${
+    isDarkMode ? "bg-zinc-950 text-white" : "bg-webGreen text-white"
+  } min-h-[100vh]`}
+>
       {/* Show Navbar only if not admin */}
       {!isAdminPage && (
         <div className="block bg-black fixed top-0 bottom-0 z-40 left-0">

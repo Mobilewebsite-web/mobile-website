@@ -36,7 +36,7 @@ const Display = () => {
   return (
    <div
   className={`mt-10 sm:mt-0 shadow-md border rounded-xl overflow-hidden ${
-    isDarkMode ? "bg-zinc-800 border-zinc-700" : "bg-white border-gray-200"
+    isDarkMode ? "bg-zinc-800 border-zinc-700" : " border-gray-200"
   }`}
 >
   <div
@@ -47,13 +47,13 @@ const Display = () => {
     {disList.map((item, i) => (
       <div
         key={i}
-        className="flex-shrink-0 w-full snap-center"
+        className="flex-shrink-0 w-full h-50 sm:h-70 lg:h-100 snap-center"
         style={{ scrollSnapAlign: "center" }}
       >
         <img
           src={item}
           alt={`slide-${i}`}
-          className="w-full h-50 sm:h-70 lg:h-100 object-cover"
+          className="w-full h-full  object-cover"
         />
       </div>
     ))}
