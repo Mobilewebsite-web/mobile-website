@@ -22,7 +22,7 @@ const HomeUtils = () => {
     <div
       className={`
         mt-10 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-md
-        ${isDarkMode ? "bg-zinc-900" : "bg-[#066658]"}
+        ${isDarkMode ? "bg-zinc-900" : "bg-[#1a8a72]"}
       `}
     >
       {utilList.map((item, i) => (
@@ -36,7 +36,7 @@ const HomeUtils = () => {
             focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
             ${isDarkMode
               ? "bg-zinc-800 text-white hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-              : "bg-green-200 text-green-900 hover:bg-green-300 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
+              : "bg-webGreen hover:bg-green-600/40 hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
           `}
           type="button"
         >

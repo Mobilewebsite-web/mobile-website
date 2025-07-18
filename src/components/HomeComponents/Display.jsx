@@ -35,7 +35,7 @@ const Display = () => {
   return (
     <div
       className={`mt-10 sm:mt-0 shadow-md border rounded-xl overflow-hidden ${
-        isDarkMode ? "bg-zinc-800 border-zinc-700" : "border-gray-100 bg-white"
+        isDarkMode ? "bg-zinc-800 border-zine-700" : "border-gray-100 bg-white"
       }`}
     >
       <div

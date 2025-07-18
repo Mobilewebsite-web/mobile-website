@@ -33,12 +33,12 @@ const Why = () => {
 
   return (
     <section
-      className={`py-10 mt-10 px-4 ${
-        isDarkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-800'
+      className={`py-10 mt-10 px-4 rounded-md ${
+        isDarkMode ? 'bg-zinc-900 text-white' : 'bg-[#c9e3e3] text-zinc-800'
       }`}
     >
       <h2 className="text-3xl font-bold text-center mb-8">Why Choose Us?</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {reasons.map((item, i) => (
           <div
             key={i}

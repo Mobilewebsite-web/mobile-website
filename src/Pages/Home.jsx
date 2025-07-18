@@ -11,7 +11,7 @@ const Home = () => {
     <div className="min-h-screen">
 
       {/* Main content with correct padding-top to offset fixed navbar */}
-      <div className=" px-4 sm:px-5 md:px-10 lg:px-20">
+      <div className=" px-4 sm:px-4 md:px-10 lg:px-20">
         <div className="pt-10">
         <Display />
         </div>

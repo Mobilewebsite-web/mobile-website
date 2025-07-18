@@ -8,7 +8,7 @@ const Products = () => {
   const { isDarkMode } = useUser();
 
   return (
-    <div className={`mt-10 p-4 ${isDarkMode ? "bg-zinc-900" : "bg-white"}`}>
+    <div className={`mt-10 rounded-[8px] p-4 ${isDarkMode ? "bg-zinc-900" : "bg-[#cfbea3]/30"}`}>
       <div
         className={`
           grid 
@@ -18,6 +18,7 @@ const Products = () => {
           lg:grid-cols-6
           xl:grid-cols-8
           gap-4
+          
         `}
       >
         {games.map((item, i) => (
@@ -41,12 +42,12 @@ const Products = () => {
               focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
               ${isDarkMode
                 ? "bg-zinc-800 border border-zinc-700 text-white focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-                : "bg-sky-50 border border-gray-200 text-gray-900 focus-visible:ring-sky-500 focus-visible:ring-offset-white"}
+                : "bg-[#c9e3e3] text-gray-900 focus-visible:ring-sky-500 focus-visible:ring-offset-white"}
             `}
           >
             <div
-              className={`rounded-xl overflow-hidden border-2 shadow w-full aspect-[1/1] ${
-                isDarkMode ? "border-zinc-700" : "border-white"
+              className={`rounded-xl overflow-hidden shadow w-full aspect-[1/1] ${
+                isDarkMode ? "border-zinc-700" : "border-[#c9e3e3]"
               }`}
             >
               <img
@@ -56,7 +57,7 @@ const Products = () => {
                 draggable={false}
               />
             </div>
-            <p className="text-[10px] md:text-xs lg:text-md font-semibold text-center mt-2 truncate w-full">
+            <p className="text-[10px] md:text-xs lg:text-md font-bold text-center font-poppins mt-2 truncate w-full">
               {item.name}
             </p>
           </div>

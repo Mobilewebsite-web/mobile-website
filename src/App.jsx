@@ -31,7 +31,7 @@ const AppContent = () => {
 
   return (
 <div
-  className={`${!isAdminPage ? "sm:pt-0 sm:pl-70 lg:pl-85" : ""} ${
+  className={`${!isAdminPage ? "sm:pt-0 sm:pl-70 lg:pl-85 " : ""} ${
     isDarkMode ? "bg-zinc-950 text-white" : "bg-webGreen text-white"
   } min-h-[100vh]`}
 >

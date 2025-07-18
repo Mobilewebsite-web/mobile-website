@@ -1,169 +1,222 @@
 import { useNavigate } from "react-router-dom";
 import ml from "../../assets/images/mlbb-logo.jpeg";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useUser } from "../../context/UserContext";
 
 const FloatingApps = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useUser();
-  const scrollContainerRef = useRef(null);
+  const scrollRef = useRef(null);
+  const isProgrammatic = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartScroll = useRef(0);
+  const isDragging = useRef(false);
+  const dims = useRef({ cardW: 0, containerW: 0 });
+  const autoScrollInterval = useRef(null);
+  const didDrag = useRef(false);
+
 
   const floatingList = [
-    { name: "Mobile Legends", path: "/recharge/mobile-legends", img: ml, tag: "Popular" },
-    { name: "Game 2", path: "/recharge/game2", img: ml, tag: "New" },
-    { name: "Game 3", path: "/recharge/game3", img: ml, tag: "New" },
+    { name: "Mobile Legends", path: "/recharge/mobile-legends", img: ml },
+    { name: "Game 2", path: "/recharge/game2", img: ml },
+    { name: "Game 3", path: "/recharge/game3", img: ml },
   ];
 
-  // Prevent body scroll when interacting with the slider
+  const N = floatingList.length;
+  const list = [...floatingList, ...floatingList, ...floatingList]; // triple array
+
+  // Preload images
   useEffect(() => {
-    document.body.style.overflowX = "hidden";
+    list.forEach(item => new Image().src = item.img);
+  }, [list]);
+
+  // Prevent horizontal overflow
+  useEffect(() => {
+    document.body.style.overflowX = 'hidden';
+    return () => { document.body.style.overflowX = ''; };
+  }, []);
+
+  // Resize listener
+  useEffect(() => {
+    const measure = () => {
+      const c = scrollRef.current;
+      const cards = c?.querySelectorAll('.card');
+      if (cards?.length) {
+        dims.current = {
+          cardW: cards[0].offsetWidth,
+          containerW: c.offsetWidth,
+        };
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  // Center on mount
+  useEffect(() => {
+    setTimeout(() => {
+      const { cardW } = dims.current;
+      const gap = 16;
+      const targetIdx = N + 1; // middle second card
+      const scrollX = targetIdx * (cardW + gap);
+      const c = scrollRef.current;
+      isProgrammatic.current = true;
+      c.scrollTo({ left: scrollX, behavior: 'auto' });
+      requestAnimationFrame(() => isProgrammatic.current = false);
+    }, 100);
+  }, [N]);
+
+  // Infinite loop + snap logic
+  const handleSnap = useCallback(() => {
+    if (isProgrammatic.current) return;
+    const c = scrollRef.current;
+    const { cardW } = dims.current;
+    const gap = 16;
+    const idx = Math.round(c.scrollLeft / (cardW + gap));
+
+    // Snap
+    const x = idx * (cardW + gap);
+    isProgrammatic.current = true;
+    c.scrollTo({ left: x, behavior: 'smooth' });
+    requestAnimationFrame(() => isProgrammatic.current = false);
+
+    // Loop reset
+    const midStart = N;
+    if (idx < midStart - 1 || idx > midStart * 2) {
+      const mod = ((idx % N) + N) % N;
+      const newX = (midStart + mod) * (cardW + gap);
+      isProgrammatic.current = true;
+      setTimeout(() => {
+        c.scrollTo({ left: newX, behavior: 'auto' });
+        requestAnimationFrame(() => isProgrammatic.current = false);
+      }, 300);
+    }
+  }, [N]);
+
+  // Scroll handler
+  useEffect(() => {
+    const c = scrollRef.current;
+    let timeout;
+    const onScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        handleSnap();
+      }, 50);
+    };
+    c?.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      document.body.style.overflowX = "";
+      c?.removeEventListener('scroll', onScroll);
+      clearTimeout(timeout);
     };
-  }, []);
+  }, [handleSnap]);
 
-  // Center the second card on mount
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      const cardWidth = 366; // w-[366px] = 366px
-      const gap = 16; // gap-x-4 = 16px
-      const containerWidth = scrollContainerRef.current.offsetWidth;
-      const secondCardIndex = 1; // Second card
-      const targetScroll = secondCardIndex * (cardWidth + gap) - (containerWidth - cardWidth) / 2; // Center the card
-      scrollContainerRef.current.scrollLeft = targetScroll;
-      console.log("Initial scroll:", { containerWidth, targetScroll, cardWidth });
-    }
-  }, []);
+  // Auto-scroll
+ useEffect(() => {
+  autoScrollInterval.current = setInterval(() => {
+    const c = scrollRef.current;
+    const { cardW } = dims.current;
+    c?.scrollBy({ left: cardW + 16, behavior: 'smooth' });
+  }, 3500);
 
-  // Snap to the closest card on scroll
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const cardWidth = 366; // w-[366px] = 366px
-      const gap = 16; // gap-x-4 = 16px
-      const containerWidth = container.offsetWidth;
-      const scrollLeft = container.scrollLeft;
-
-      // Calculate the index of the closest card
-      const cardIndex = Math.round((scrollLeft + containerWidth / 2 - cardWidth / 2) / (cardWidth + gap));
-      const targetScroll = cardIndex * (cardWidth + gap) - (containerWidth - cardWidth) / 2; // Center the card
-
-      // Smoothly scroll to the closest card
-      container.scrollTo({
-        left: targetScroll,
-        behavior: "smooth",
-      });
-
-      console.log("Snap scroll:", { scrollLeft, cardIndex, targetScroll, containerWidth });
-    };
-
-    container.addEventListener("scrollend", handleScroll);
-    return () => container.removeEventListener("scrollend", handleScroll);
-  }, []);
-
-  // Mouse drag functionality
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    isDragging.current = true;
-    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
-    scrollLeft.current = scrollContainerRef.current.scrollLeft;
-    scrollContainerRef.current.style.cursor = "grabbing";
+  return () => {
+    clearInterval(autoScrollInterval.current);
+    autoScrollInterval.current = null;
   };
+}, []);
 
-  const handleMouseLeave = () => {
-    isDragging.current = false;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = "grab";
-    }
-  };
 
-  const handleMouseUp = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    isDragging.current = false;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = "grab";
-    }
-  };
+  // Drag handlers
+const onDown = (e) => {
+  clearInterval(autoScrollInterval.current);
+  autoScrollInterval.current = null;
 
-  const handleMouseMove = (e) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    e.stopPropagation();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-  };
+  isDragging.current = true;
+  didDrag.current = false;
+  dragStartX.current = (e.touches?.[0]?.pageX || e.pageX) - scrollRef.current.offsetLeft;
+  dragStartScroll.current = scrollRef.current.scrollLeft;
+  scrollRef.current.style.cursor = 'grabbing';
+};
+
+
+
+const onMove = (e) => {
+  if (!isDragging.current) return;
+  didDrag.current = true;
+
+  const x = (e.touches?.[0]?.pageX || e.pageX) - scrollRef.current.offsetLeft;
+  scrollRef.current.scrollLeft = dragStartScroll.current - (x - dragStartX.current) * 1.4;
+};
+
+
+const onUp = () => {
+  isDragging.current = false;
+  scrollRef.current.style.cursor = 'grab';
+
+  // Only restart auto-scroll if user dragged
+  if (didDrag.current && !autoScrollInterval.current) {
+    autoScrollInterval.current = setInterval(() => {
+      const { cardW } = dims.current;
+      scrollRef.current?.scrollBy({ left: cardW + 16, behavior: 'smooth' });
+    }, 3500);
+  }
+
+  didDrag.current = false; // Reset
+};
+
+
 
   return (
-    <div className="relative mt-10 z-10 w-full overflow-x-hidden">
-      <div
-        ref={scrollContainerRef}
-        className={`
-          relative flex overflow-x-auto min-w-[430px] max-w-full
-          snap-x snap-mandatory px-4 py-4 rounded-xl shadow-md gap-x-4
-          ${isDarkMode ? "bg-zinc-900 border border-zinc-700" : "bg-[#066658] border border-green-300"}
-          scrollbar-hide cursor-grab select-none
-        `}
-        onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-        role="list"
-      >
+    <div className="relative w-full overflow-x-hidden mt-10">
+      <div className="relative w-full overflow-x-hidden">
         <div
-          className="flex gap-x-4 sm:pl-[calc(50vw-183px)] sm:pr-[calc(50vw-183px)] pl-4 pr-4"
+          ref={scrollRef}
+          className={`
+            relative flex overflow-x-auto snap-x snap-mandatory gap-x-4 px-4 py-4 rounded-xl shadow-md
+            ${isDarkMode ? 'bg-zinc-900 border border-zinc-700' : 'bg-[#066658] border border-green-300'}
+            cursor-grab select-none scrollbar-none
+          `}
+          onMouseDown={onDown}
+          onMouseMove={onMove}
+          onMouseUp={onUp}
+          onMouseLeave={onUp}
+          onTouchStart={onDown}
+          onTouchMove={onMove}
+          onTouchEnd={onUp}
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+          }}
         >
-          {floatingList.map((item, i) => (
-            <div
-              key={i}
-              onClick={() => navigate(item.path)}
-              onKeyDown={(e) => handleKeyDown(e, item.path)}
-              role="button"
-              tabIndex={0}
-              aria-label={`Open ${item.name}`}
-              className={`
-                snap-center cursor-pointer rounded-xl shadow-lg h-[206px] w-[366px]
-                bg-center bg-cover bg-no-repeat transition-transform duration-300
-                hover:scale-105 focus:scale-105 focus:outline-none relative
-                min-w-[366px] min-h-[206px]
-                ${isDarkMode ? "border border-zinc-700" : "border border-white"}
-              `}
-              style={{ backgroundImage: `url(${item.img || 'https://via.placeholder.com/366x206'})`, backgroundPosition: 'center' }}
-              title={item.name}
-            >
+          <div className="flex gap-x-4 pl-[calc(50vw-140px)] pr-[calc(50vw-140px)]">
+            {list.map((item, i) => (
               <div
+                key={i}
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate(item.path)}
+                onKeyDown={(e) => e.key === 'Enter' && navigate(item.path)}
+                title={item.name}
                 className={`
-                  absolute bottom-0 left-0 right-0 rounded-b-xl p-2 z-20
-                  ${isDarkMode ? "bg-black bg-opacity-50" : "bg-green-800 bg-opacity-60"}
+                  snap-center w-72 h-40 rounded-xl shadow-lg bg-cover bg-center cursor-pointer
+                  transition-transform duration-500 hover:scale-105 card
+                  ${isDarkMode ? 'border border-zinc-700' : 'border border-white'}
                 `}
+                style={{ backgroundImage: `url(${item.img})` }}
               >
-                <p className="text-white font-semibold text-sm truncate">{item.name}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-b from-transparent to-webGreen bg-opacity-50 rounded-b-xl">
+                  <p className="text-white font-semibold text-sm text-center truncate">{item.name}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-      {/* Vignette overlays */}
-      <div
-        className={`
-          absolute inset-y-0 left-0 w-24 bg-gradient-to-r z-10
-          ${isDarkMode ? "from-zinc-900 to-transparent" : "from-[#066658] to-transparent"}
-        `}
-      ></div>
-      <div
-        className={`
-          absolute inset-y-0 right-0 w-24 bg-gradient-to-l z-10
-          ${isDarkMode ? "from-zinc-900 to-transparent" : "from-[#066658] to-transparent"}
-        `}
-      ></div>
+
+      {/* Green fade vignette overlays */}
+      <div className="absolute inset-y-0 left-0 w-16 z-30 bg-gradient-to-r from-webGreen to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-32 z-30 bg-gradient-to-l from-webGreen to-transparent pointer-events-none" />
     </div>
   );
 };
