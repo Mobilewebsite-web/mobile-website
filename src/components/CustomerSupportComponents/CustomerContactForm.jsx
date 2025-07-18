@@ -12,22 +12,28 @@ const CustomerContactForm = () => {
   };
 
   const inputBaseClasses =
-    "w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition";
+    "w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 transition";
 
-  const inputLight =
-    "border border-gray-300 bg-white text-gray-900 placeholder-gray-400";
+  // Dark mode stays the same as before
   const inputDark =
     "border border-zinc-700 bg-zinc-800 text-white placeholder-zinc-400";
+
+  // Light mode changed to use your custom green colors
+  const inputLight =
+    "border border-webGreenLight bg-webGreenLight text-webGreen placeholder-webGreen/70";
+
+  // For readonly inputs in light mode, use slightly different bg so user sees it's disabled
+  const readOnlyLight = "bg-webGreen cursor-not-allowed";
 
   return (
     <div
       className={`rounded-lg p-6 shadow-md border ${
-        isDarkMode ? "bg-zinc-900 border-zinc-700" : "bg-white border-gray-200"
+        isDarkMode ? "bg-zinc-900 border-zinc-700" : "bg-webGreen  border-webGreenLight"
       }`}
     >
       <h2
         className={`text-2xl font-semibold mb-4 ${
-          isDarkMode ? "text-white" : "text-gray-900"
+          isDarkMode ? "text-white" : "text-webLightGreen"
         }`}
       >
         Contact Us
@@ -43,7 +49,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
+              isDarkMode ? "text-gray-300" : "text-webLightGreen"
             }`}
           >
             Username
@@ -54,8 +60,8 @@ const CustomerContactForm = () => {
             value={userData?.username || ""}
             readOnly
             className={`${inputBaseClasses} ${
-              isDarkMode ? inputDark : inputLight
-            } bg-gray-100 cursor-not-allowed`}
+              isDarkMode ? inputDark : `${inputLight} ${readOnlyLight}`
+            }`}
           />
         </div>
 
@@ -63,7 +69,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
+              isDarkMode ? "text-gray-300" : "text-weLightbGreen"
             }`}
           >
             User ID (UID)
@@ -74,8 +80,8 @@ const CustomerContactForm = () => {
             value={user?.uid || ""}
             readOnly
             className={`${inputBaseClasses} ${
-              isDarkMode ? inputDark : inputLight
-            } bg-gray-100 cursor-not-allowed`}
+              isDarkMode ? inputDark : `${inputLight} ${readOnlyLight}`
+            }`}
           />
         </div>
 
@@ -83,7 +89,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
+              isDarkMode ? "text-gray-300" : "text-webLightGreen"
             }`}
           >
             Your Email
@@ -94,7 +100,7 @@ const CustomerContactForm = () => {
             required
             className={`${inputBaseClasses} ${
               isDarkMode ? inputDark : inputLight
-            }`}
+            } focus:ring-webGreen`}
             placeholder="your.email@example.com"
           />
         </div>
@@ -103,7 +109,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
+              isDarkMode ? "text-gray-300" : "text-webLightGreen"
             }`}
           >
             Order ID (if any)
@@ -114,7 +120,7 @@ const CustomerContactForm = () => {
             placeholder="e.g., 5X94KD39... (optional)"
             className={`${inputBaseClasses} ${
               isDarkMode ? inputDark : inputLight
-            }`}
+            } focus:ring-webGreen`}
           />
         </div>
 
@@ -122,7 +128,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
+              isDarkMode ? "text-gray-300" : "text-webLightGreen"
             }`}
           >
             Subject
@@ -133,7 +139,7 @@ const CustomerContactForm = () => {
             required
             className={`${inputBaseClasses} ${
               isDarkMode ? inputDark : inputLight
-            }`}
+            } focus:ring-webGreen`}
           />
         </div>
 
@@ -141,7 +147,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
+              isDarkMode ? "text-gray-300" : "text-webLightGreen"
             }`}
           >
             Message
@@ -152,13 +158,13 @@ const CustomerContactForm = () => {
             required
             className={`${inputBaseClasses} ${
               isDarkMode ? inputDark : inputLight
-            } resize-none`}
+            } focus:ring-webGreen resize-none`}
           />
         </div>
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition"
+          className="bg-webGreenLight text-webGreen px-5 py-2 rounded-md hover:bg-webGreen/90 transition font-semibold"
         >
           Send Message
         </button>

@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { handleCheckout } from "../../utils/handleCheckout";
 
-const RechargeCheckout = ({ selectedProduct, mlUsername, orderId, setOrderId, userId, zoneId, resetAll }) => {
+const RechargeCheckout = ({
+  selectedProduct,
+  mlUsername,
+  orderId,
+  setOrderId,
+  userId,
+  zoneId,
+  resetAll,
+}) => {
   const { user, userData, isDarkMode } = useUser();
   const [leizou, setLeizou] = useState(false);
   const balance = userData?.balance || 0;
@@ -18,13 +26,12 @@ const RechargeCheckout = ({ selectedProduct, mlUsername, orderId, setOrderId, us
     return `ORD-${timestamp}-${randomSuffix}`;
   };
 
-  const cardBase = "p-6 max-w-md mx-auto mt-10 rounded shadow-md border-2 transition";
+  const cardBase = "p-6 max-w-md mx-auto mt-10 rounded-xl shadow-md border transition";
   const cardColor = isDarkMode
     ? "bg-zinc-900 text-white border-zinc-700"
-    : "bg-white text-black border-gray-100";
-
-  const lineColor = isDarkMode ? "border-zinc-700" : "border-gray-300";
-  const mutedText = isDarkMode ? "text-gray-400" : "text-gray-600";
+    : "bg-webGreenLight text-black border-webGreen/30"; // uses light green
+  const lineColor = isDarkMode ? "border-zinc-700" : "border-webGreen/50";
+  const mutedText = isDarkMode ? "text-gray-400" : "text-gray-700";
 
   if (!selectedProduct) {
     return (
@@ -44,7 +51,7 @@ const RechargeCheckout = ({ selectedProduct, mlUsername, orderId, setOrderId, us
 
   return (
     <div className={`${cardBase} ${cardColor}`}>
-      <h2 className="text-xl font-semibold mb-4">Checkout</h2>
+      <h2 className="text-xl font-semibold mb-4 text-webGreen">Checkout</h2>
 
       <div className="flex justify-between mb-2">
         <span className="font-medium">{selectedProduct?.name}</span>
@@ -60,7 +67,7 @@ const RechargeCheckout = ({ selectedProduct, mlUsername, orderId, setOrderId, us
 
       <div className="flex justify-between font-semibold text-lg">
         <span>Total:</span>
-        <span className={`${leizou ? "text-green-500" : "text-red-500"}`}>
+        <span className={`${leizou ? "text-green-600" : "text-red-500"}`}>
           ₹{selectedProduct?.rupees}
         </span>
       </div>
@@ -80,7 +87,7 @@ const RechargeCheckout = ({ selectedProduct, mlUsername, orderId, setOrderId, us
               resetAll
             )
           }
-          className="mt-6 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="mt-6 w-full bg-webGreen text-white py-2 rounded hover:bg-green-700 transition"
         >
           Buy Now
         </button>
