@@ -119,10 +119,10 @@ const FloatingApps = () => {
               tabIndex={0}
               aria-label={`Open ${item.name}`}
               className={`
-                snap-center cursor-pointer rounded-xl shadow-lg h-44
-                w-48
+                snap-center cursor-pointer rounded-xl shadow-lg h-48
+                w-70
                 bg-center bg-cover bg-no-repeat transition-transform duration-300
-                hover:scale-105 focus:scale-105 focus:outline-none relative
+                hover:scale-110 focus:scale-115 focus:outline-none relative
                 ${isDarkMode ? "border border-zinc-700" : "border border-white"}
               `}
               style={{ backgroundImage: `url(${item.img})` }}
