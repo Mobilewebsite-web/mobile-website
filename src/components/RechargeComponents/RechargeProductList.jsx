@@ -7,15 +7,16 @@ import UploadProductsButton from "../../utils/UploadProductsButton";
 import { games } from "../../assets/files/games";
 import small from "../../assets/images/logo-ml.jpg";
 
-const RechargeProductList = ({selectedProduct, setSelectedProduct}) => {
+const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
   const { gamename } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { isAdmin, isDarkMode } = useUser();
-  const [editingProduct, setEditingProduct] = useState(null); // product object or null
-  const [editForm, setEditForm] = useState({}); 
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editForm, setEditForm] = useState({});
   const [groupFilter, setGroupFilter] = useState(1);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [newProduct, setNewProduct] = useState({
     id: "",
     name: "",
@@ -26,15 +27,14 @@ const RechargeProductList = ({selectedProduct, setSelectedProduct}) => {
     price: "",
   });
 
-
   const game = games.find((g) => g.slug === gamename);
   const gameId = String(game?.id);
 
   const imgGroup = {
     small: game?.small || small,
     medium: game?.medium || small,
-    large:  game?.large || small,
-    weekly: game?.weekly  || small,
+    large: game?.large || small,
+    weekly: game?.weekly || small,
   };
 
   useEffect(() => {
@@ -70,385 +70,288 @@ const RechargeProductList = ({selectedProduct, setSelectedProduct}) => {
       falseRupees: product.falseRupees,
       price: product.price,
       group: product.group,
-      // Add other fields here as needed
     });
+    setShowEditModal(true);
   };
 
   const closeEditModal = () => {
     setEditingProduct(null);
     setEditForm({});
+    setShowEditModal(false);
   };
 
   const saveEdit = async () => {
     if (!editingProduct) return;
-    const editingId = String(editingProduct.id)
-    const ref = doc(db, "products", gameId, gamename,editingId );
+    const editingId = String(editingProduct.id);
+    const ref = doc(db, "products", gameId, gamename, editingId);
     await setDoc(ref, { ...editForm }, { merge: true });
     closeEditModal();
   };
 
   const deleteProduct = async (id) => {
-    const editingId = String(id)
+    const editingId = String(id);
     const ref = doc(db, "products", gameId, gamename, editingId);
     await deleteDoc(ref);
     closeEditModal();
   };
 
-
-  // Filter products by selected group (if any)
   const filteredProducts = groupFilter
     ? products.filter((p) => p.group === groupFilter)
     : products;
 
-return (
-  <div className={`mt-10 relative ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-    {isAdmin && gameId && (
-      <div
-        className={`mb-10 p-4 border shadow-md flex flex-col w-full items-center gap-3 justify-center
-          ${isDarkMode
-            ? "bg-gray-800 border-gray-700"
-            : "bg-gray-50 border-gray-100"
-          }`}
-      >
-        <h1 className="text-xl font-bold">Admin TOOLS ✏️</h1>
-        <p
-          className={`text-sm px-3 py-2 rounded-md border mb-4 shadow-sm
-            ${isDarkMode
-              ? "text-yellow-300 bg-yellow-900 border-yellow-600"
-              : "text-yellow-700 bg-yellow-100 border-yellow-300"
-            }`}
+  return (
+    <div
+      className={`mt-10 px-4 sm:px-8 rounded-xl relative min-h-screen transition-colors duration-300
+        ${isDarkMode ? "bg-webGreen text-webGreenLight" : "bg-webGreenLight text-webGreen"}`}
+    >
+      {isAdmin && gameId && (
+        <div
+          className={`mb-10 p-6 rounded-2xl shadow-lg border max-w-3xl mx-auto text-center flex flex-col items-center gap-4
+            ${isDarkMode ? "bg-webGreen border-webGreen" : "bg-webGreenLight border-webGreenLight"}`}
         >
-          Info: Double-click a product to edit
-        </p>
-        <div className="flex gap-2 items-center">
-          <UploadProductsButton gameId={gameId} gameSlug={gamename} />
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 transition"
+          <h1 className="text-2xl font-extrabold text-webGreenLight">⚔️ Admin Panel</h1>
+          <p
+            className={`text-sm px-3 py-1 rounded-md border shadow-sm
+              ${isDarkMode
+                ? "text-webGreenLight bg-webGreen border-webGreen"
+                : "text-webGreen bg-webGreenLight border-webGreenLight"}`}
           >
-            ➕ Add New
-          </button>
+            Double-click any product to edit it.
+          </p>
+          <div className="flex gap-3 flex-wrap justify-center">
+            <UploadProductsButton gameId={gameId} gameSlug={gamename} />
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-webGreen hover:bg-webGreen/90 text-webGreenLight px-4 py-2 rounded-md shadow transition duration-150 font-semibold"
+            >
+              ➕ Add New Product
+            </button>
+          </div>
+        </div>
+      )}
+
+{/* Group Filter Tabs */}
+<div className="mb-8 flex justify-start gap-3 whitespace-nowrap overflow-x-auto px-2 scroll-pl-4">
+  {[1, 2, 3].map((group) => (
+    <button
+      key={group}
+      onClick={() => setGroupFilter(groupFilter === group ? null : group)}
+      className={`px-5 py-2 rounded-full font-semibold transition shadow-md flex-shrink-0
+        ${
+          groupFilter === group
+            ? "bg-webGreen text-webGreenLight"
+            : isDarkMode
+            ? "bg-webGreen/90 text-webGreenLight/80"
+            : "bg-webGreenLight/90 text-webGreen hover:bg-webGreen"
+        }`}
+    >
+      {group === 1 ? "💎 Diamonds" : group === 2 ? "🔥 First Recharge" : "📦 Weekly Pack"}
+    </button>
+  ))}
+</div>
+
+
+{/* Product Grid */}
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+  {filteredProducts.length > 0 ? (
+    filteredProducts.map((product) => (
+      <div
+        key={product.id}
+        onClick={() => {
+         
+            setSelectedProduct(product);
+        }}
+        className={`cursor-pointer rounded-xl shadow-lg p-5 flex justify-between items-center transition-transform duration-200 border-2
+          ${
+            isDarkMode
+              ? "bg-webGreen border-webGreen text-webGreenLight"
+              : "bg-webGreenLight border-webGreenLight text-webGreen"
+          }
+          ${
+            selectedProduct?.id === product.id
+              ? "border-webGreenLight ring-4 ring-webGreen"
+              : ""
+          }
+          hover:scale-[1.03] hover:shadow-2xl`}
+      >
+        {/* Left side: name and diamonds */}
+        <div className="flex flex-col gap-1 max-w-[65%]">
+          <h3 className="text-lg font-bold truncate">{product.name}</h3>
+        
+        </div>
+
+        {/* Right side: price and falseRupees */}
+        <div className="flex flex-col items-end gap-1 min-w-[80px]">
+          <p className="text-webGreen font-semibold">₹{product.price}</p>
+          {product.falseRupees && (
+            <p className="line-through text-sm text-webGreen/70">₹{product.falseRupees}</p>
+          )}
         </div>
       </div>
-    )}
+    ))
+  ) : (
+    <p className="col-span-full text-center text-webGreenLight/80">No products found.</p>
+  )}
+</div>
 
-    {/* Group filter buttons */}
-    <div className="mb-4 flex gap-3 justify-center">
-      {[1, 2, 3].map((group) => (
-        <button
-          key={group}
-          onClick={() =>
-            setGroupFilter(groupFilter === group ? null : group)
-          }
-          className={`px-3 py-1 rounded transition
-            ${
-              groupFilter === group
-                ? "bg-blue-600 text-white"
-                : isDarkMode
-                ? "bg-gray-700 text-gray-200"
-                : "bg-gray-300 text-gray-700"
-            }`}
-        >
-          {group === 1
-            ? "Diamonds"
-            : group === 2
-            ? "1st Recharge"
-            : "Weekly pass"}
-        </button>
-      ))}
-    </div>
-
-    {/* Product grid */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
+      {/* Edit Product Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 z-50 bg-webGreen bg-opacity-95 flex items-center justify-center">
           <div
-            key={product.id}
-            onClick={() => setSelectedProduct(product)}
-            onDoubleClick={() => {
-              if (!isAdmin) return;
-              openEditModal(product);
-            }}
-            className={`rounded-md shadow-md p-3 gap-2 flex items-center text-center cursor-pointer
-              ${
-                isDarkMode
-                  ? "bg-gray-800 text-white"
-                  : "bg-white text-gray-900"
-              }
-              ${selectedProduct?.id === product.id ? "ring-2 ring-blue-500" : ""}
-            `}
+            className={`rounded-xl p-6 w-full max-w-md mx-auto
+              ${isDarkMode ? "bg-webGreen text-webGreenLight" : "bg-webGreenLight text-webGreen"}`}
           >
-            <div className="w-10 h-10 rounded-md overflow-hidden">
-              <img
-                src={
-                  product.group === 2 ? game?.dd || small : imgGroup[product.img]
-                }
-                alt={product.name}
-                className="w-full object-contain"
-              />
-            </div>
-            <div className="text-left">
-              <p className="font-semibold text-sm">{product.name}</p>
-              <p className="text-blue-600 font-bold text-sm mt-1">
-                ₹{product.rupees} |{" "}
-                <span className="text-red-600 line-through font-bold text-xs">
-                  ₹{product.falseRupees}
-                </span>
-              </p>
-            </div>
-          </div>
-        ))
-      ) : (
-        <p className={`col-span-full text-center ${
-          isDarkMode ? "text-gray-400" : "text-gray-500"
-        }`}>
-          No products found.
-        </p>
-      )}
-    </div>
-
-    {/* Edit Modal */}
-    {editingProduct && (
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        onClick={closeEditModal}
-      >
-        <div
-          className={`rounded-lg p-6 w-full max-w-md shadow-lg
-            ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
-
-          <label className="block mb-2">
-            Name:
+            <h2 className="text-2xl font-bold mb-4 text-webGreenLight">Edit Product</h2>
             <input
               type="text"
+              placeholder="Name"
               value={editForm.name}
-              onChange={(e) =>
-                setEditForm({ ...editForm, name: e.target.value })
-              }
-              className={`border rounded w-full p-2 mt-1
-                ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-              `}
+              onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
             />
-          </label>
-          <label className="block mb-2">
-            Diamonds:
             <input
               type="number"
-              value={editForm.diamonds}
+              placeholder="Diamonds"
+              value={editForm.diamonds || ""}
               onChange={(e) =>
                 setEditForm({ ...editForm, diamonds: Number(e.target.value) })
               }
-              className={`border rounded w-full p-2 mt-1
-                ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-              `}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
             />
-          </label>
-          <label className="block mb-2">
-            Price:
             <input
               type="number"
-              value={editForm.price}
+              placeholder="Price"
+              value={editForm.price || ""}
               onChange={(e) =>
                 setEditForm({ ...editForm, price: Number(e.target.value) })
               }
-              className={`border rounded w-full p-2 mt-1
-                ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-              `}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
             />
-          </label>
-          <label className="block mb-2">
-            Rupees:
             <input
               type="number"
-              value={editForm.rupees}
+              placeholder="Rupees"
+              value={editForm.rupees || ""}
               onChange={(e) =>
                 setEditForm({ ...editForm, rupees: Number(e.target.value) })
               }
-              className={`border rounded w-full p-2 mt-1
-                ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-              `}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
             />
-          </label>
-
-          <label className="block mb-4">
-            False Rupees:
             <input
               type="number"
-              min={0}
-              value={editForm.falseRupees}
+              placeholder="False Rupees"
+              value={editForm.falseRupees || ""}
               onChange={(e) =>
                 setEditForm({ ...editForm, falseRupees: Number(e.target.value) })
               }
-              className={`border rounded w-full p-2 mt-1
-                ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-              `}
+              className="w-full mb-6 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
             />
-          </label>
-          <select
-            value={editForm.group}
-            onChange={(e) =>
-              setEditForm({ ...editForm, group: Number(e.target.value) })
-            }
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          >
-            <option value={1}>Diamonds</option>
-            <option value={2}>1st Recharge</option>
-            <option value={3}>Weekly</option>
-          </select>
-
-          <div className="flex justify-end gap-3 mt-4">
-            <button
-              onClick={() => deleteProduct(editingProduct.id)}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Delete
-            </button>
-            <button
-              onClick={closeEditModal}
-              className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={saveEdit}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-            >
-              Save
-            </button>
+            <div className="flex justify-between gap-3">
+              <button
+                onClick={closeEditModal}
+                className="flex-1 py-3 bg-webGreen hover:bg-webGreen/90 rounded font-semibold text-webGreenLight transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveEdit}
+                className="flex-1 py-3 bg-webGreenLight hover:bg-webGreenLight/90 rounded font-semibold text-webGreen transition"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => deleteProduct(editingProduct.id)}
+                className="flex-1 py-3 bg-red-700 hover:bg-red-800 rounded font-semibold text-webGreenLight transition"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {/* Add Modal */}
-    {showAddModal && (
-      <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
-        <div
-          className={`p-6 rounded-xl shadow-lg w-full max-w-md space-y-4
-            ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
-        >
-          <h2 className="text-lg font-bold text-center">Add New Product</h2>
-          <input
-            type="text"
-            placeholder="ID"
-            value={newProduct.id}
-            onChange={(e) => setNewProduct({ ...newProduct, id: e.target.value })}
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          />
-          <input
-            type="text"
-            placeholder="Name"
-            value={newProduct.name}
-            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          />
-          <input
-            type="number"
-            placeholder="Rupees"
-            value={newProduct.rupees}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, rupees: Number(e.target.value) })
-            }
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          />
-          <input
-            type="number"
-            placeholder="False Rupees"
-            value={newProduct.falseRupees}
-            onChange={(e) =>
-              setNewProduct({
-                ...newProduct,
-                falseRupees: Number(e.target.value),
-              })
-            }
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          />
-          <input
-            type="text"
-            placeholder="Image"
-            value={newProduct.img}
-            onChange={(e) =>
-              setNewProduct({
-                ...newProduct,
-                img: e.target.value,
-              })
-            }
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            value={newProduct.price}
-            onChange={(e) =>
-              setNewProduct({
-                ...newProduct,
-                price: Number(e.target.value),
-              })
-            }
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
-          />
-          <select
-            value={newProduct.group}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, group: Number(e.target.value) })
-            }
-            className={`w-full border rounded p-2
-              ${isDarkMode ? "bg-gray-800 border-gray-700 text-white" : ""}
-            `}
+      {/* Add Product Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 bg-webGreen bg-opacity-95 flex items-center justify-center">
+          <div
+            className={`rounded-xl p-6 w-full max-w-md mx-auto
+              ${isDarkMode ? "bg-webGreen text-webGreenLight" : "bg-webGreenLight text-webGreen"}`}
           >
-            <option value={1}>Diamonds</option>
-            <option value={2}>1st Recharge</option>
-            <option value={3}>Weekly</option>
-          </select>
-
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={() => setShowAddModal(false)}
-              className="bg-gray-400 text-white px-4 py-1 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={async () => {
-                const colRef = collection(db, "products", gameId, gamename);
-                await setDoc(doc(colRef), newProduct);
-                setShowAddModal(false);
-                setNewProduct({
-                  name: "",
-                  rupees: "",
-                  falseRupees: "",
-                  group: 1,
-                  img: "small",
-                });
-              }}
-              className="bg-blue-600 text-white px-4 py-1 rounded"
-            >
-              Add
-            </button>
+            <h2 className="text-2xl font-bold mb-4 text-webGreenLight">Add New Product</h2>
+            <input
+              type="text"
+              placeholder="ID"
+              value={newProduct.id}
+              onChange={(e) => setNewProduct({ ...newProduct, id: e.target.value })}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
+            />
+            <input
+              type="text"
+              placeholder="Name"
+              value={newProduct.name}
+              onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
+            />
+            <input
+              type="number"
+              placeholder="Rupees"
+              value={newProduct.rupees}
+              onChange={(e) => setNewProduct({ ...newProduct, rupees: Number(e.target.value) })}
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
+            />
+            <input
+              type="number"
+              placeholder="False Rupees"
+              value={newProduct.falseRupees}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, falseRupees: Number(e.target.value) })
+              }
+              className="w-full mb-3 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              value={newProduct.price}
+              onChange={(e) => setNewProduct({ ...newProduct, price: Number(e.target.value) })}
+              className="w-full mb-6 p-3 rounded border border-webGreen bg-webGreen text-webGreenLight focus:outline-none focus:ring-2 focus:ring-webGreenLight"
+            />
+            <div className="flex justify-between gap-3">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="flex-1 py-3 bg-webGreen hover:bg-webGreen/90 rounded font-semibold text-webGreenLight transition"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={!newProduct.id || !newProduct.name}
+                onClick={async () => {
+                  const colRef = collection(db, "products", gameId, gamename);
+                  await setDoc(doc(colRef, newProduct.id), newProduct);
+                  setShowAddModal(false);
+                  setNewProduct({
+                    id: "",
+                    name: "",
+                    rupees: "",
+                    falseRupees: "",
+                    group: 1,
+                    img: "small",
+                    price: "",
+                  });
+                }}
+                className={`flex-1 py-3 rounded font-semibold text-webGreenLight transition
+                  ${
+                    !newProduct.id || !newProduct.name
+                      ? "bg-webGreen/50 cursor-not-allowed"
+                      : "bg-webGreenLight hover:bg-webGreenLight/90 text-webGreen"
+                  }`}
+              >
+                Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-  </div>
-);
-
+      )}
+    </div>
+  );
 };
 
 export default RechargeProductList;

@@ -28,74 +28,81 @@ const CustomerSupport = () => {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
-  return (
-    <div
-      className={`mx-auto px-4 sm:px-10 py-10 ${
-        isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
+return (
+  <div
+    className={`mx-auto px-4 sm:px-10 py-10 ${
+      isDarkMode
+        ? "bg-zinc-900 text-white"
+        : "bg-webGreen text-webGreenLight"
+    }`}
+  >
+    <h1 className="text-4xl font-bold mb-4 text-center text-webGreenLight">
+      Customer Support
+    </h1>
+    <p
+      className={`text-center mb-8 ${
+        isDarkMode ? "text-gray-400" : "text-webGreenLight/80"
       }`}
     >
-      <h1 className="text-4xl font-bold mb-4 text-center text-blue-600">
-        Customer Support
-      </h1>
-      <p
-        className={`text-center mb-8 ${
-          isDarkMode ? "text-gray-400" : "text-gray-600"
-        }`}
-      >
-        We're here to help. Check out the FAQ below or contact us directly.
-      </p>
+      We're here to help. Check out the FAQ below or contact us directly.
+    </p>
 
-      {/* FAQ */}
-      <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">Frequently Asked Questions</h2>
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className={`border rounded-lg overflow-hidden ${
+    {/* FAQ */}
+    <div className="mb-12">
+      <h2 className="text-2xl font-semibold mb-4 text-webGreenLight">
+        Frequently Asked Questions
+      </h2>
+      <div className="space-y-4">
+        {faqs.map((faq, index) => (
+          <div
+            key={index}
+            className={`border rounded-lg overflow-hidden ${
+              isDarkMode
+                ? "border-zinc-700 bg-zinc-800"
+                : "border-webGreenLight bg-webGreenLight"
+            }`}
+          >
+            <button
+              onClick={() => toggleFaq(index)}
+              className={`w-full text-left px-4 py-3 font-medium hover:bg-opacity-80 transition ${
                 isDarkMode
-                  ? "border-zinc-700 bg-zinc-800"
-                  : "border-gray-200 bg-gray-50"
+                  ? "bg-zinc-700 hover:bg-zinc-600"
+                  : "bg-webGreenLight  text-black hover:bg-webGreen/70"
               }`}
             >
-              <button
-                onClick={() => toggleFaq(index)}
-                className={`w-full text-left px-4 py-3 font-medium hover:bg-opacity-80 transition ${
+              {faq.question}
+            </button>
+            {activeIndex === index && (
+              <div
+                className={`px-4 py-3 border-t ${
                   isDarkMode
-                    ? "bg-zinc-700 hover:bg-zinc-600"
-                    : "bg-gray-100 hover:bg-gray-200"
+                    ? "border-zinc-700 bg-zinc-900 text-gray-300"
+                    : "border-webGreenLight bg-webGreenLight text-webGreenLight"
                 }`}
               >
-                {faq.question}
-              </button>
-              {activeIndex === index && (
-                <div
-                  className={`px-4 py-3 border-t ${
-                    isDarkMode
-                      ? "border-zinc-700 bg-zinc-900 text-gray-300"
-                      : "border-gray-200 bg-white text-gray-700"
-                  }`}
-                >
-                  {faq.answer}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+                {faq.answer}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-
-      {/* Contact Form */}
-      <CustomerContactForm isDarkMode={isDarkMode} />
-
-      {/* Optional Live Chat */}
-      {/* <div className="text-center mt-10">
-        <p className={`${isDarkMode ? "text-gray-400" : "text-gray-500"} text-sm`}>Need urgent help?</p>
-        <button className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
-          Start Live Chat
-        </button>
-      </div> */}
     </div>
-  );
+
+    {/* Contact Form */}
+    <CustomerContactForm isDarkMode={isDarkMode} />
+
+    {/* Optional Live Chat */}
+    {/* <div className="text-center mt-10">
+      <p className={`${isDarkMode ? "text-gray-400" : "text-webGreenLight/80"} text-sm`}>
+        Need urgent help?
+      </p>
+      <button className="mt-2 bg-webGreen text-webGreenLight px-4 py-2 rounded hover:bg-webGreenLight/90 transition">
+        Start Live Chat
+      </button>
+    </div> */}
+  </div>
+);
+
 };
 
 export default CustomerSupport;
