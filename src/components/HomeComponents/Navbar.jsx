@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import defaultProfile from "../../assets/images/default-profile.jpeg";
 import { IoMdLogOut, IoMdTrophy } from "react-icons/io";
-import { FaHome,FaQuestionCircle } from "react-icons/fa";
+import { FaHome, FaQuestionCircle } from "react-icons/fa";
 import {
   MdManageAccounts,
   MdPrivacyTip,
@@ -24,9 +24,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAdmin, userData, isDarkMode, setIsDarkMode } = useUser();
-  console.log(userData?.photoURL);
-
-
 
   const ulList = [
     { name: "Home", icon: <FaHome />, path: "/" },
@@ -41,9 +38,9 @@ const Navbar = () => {
     { name: "Queries", icon: <FaQuestionCircle />, path: "/queries" },
   ];
 
-  const toggleDarkMode = ()=>{
-    setIsDarkMode(!isDarkMode)
-  }
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   useEffect(() => {
     document.body.style.overflow = showNav ? "hidden" : "";
@@ -81,29 +78,29 @@ const Navbar = () => {
       <aside
         ref={navRef}
         className={clsx(
-          " z-40 w-[75%] sm:w-60 md:w-65 lg:w-80 shadow-xl h-full transition-transform duration-300 ease-in-out",
+          "z-40 w-[75%] sm:w-60 md:w-65 lg:w-80 shadow-xl h-full transition-transform duration-300 ease-in-out",
           isDarkMode ? "bg-zinc-800 text-white" : "bg-white text-black",
           showNav ? "fixed top-0 left-0 translate-x-0" : "fixed top-0 left-0 -translate-x-full",
           "sm:relative sm:translate-x-0 sm:block"
         )}
       >
-        <div className="p-5 space-y-4  h-screen overflow-y-auto">
+        <div className="p-5 space-y-4 h-screen overflow-y-auto">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-zinc-400">Welcome back</p>
               <h1 className="text-lg font-bold">{userData?.username || "No user"}</h1>
             </div>
             <div
-              onClick={() => (user ? navigate('/profile') : navigate("/login"))}
-              className="p-2  text-white rounded-xl shadow-md cursor-pointer"
+              onClick={() => (user ? navigate("/profile") : navigate("/login"))}
+              className="p-2 text-white rounded-xl shadow-md cursor-pointer"
             >
-        <div className="size-12 flex items-center">
-          <img
-            className="w-full h-full object-cover rounded-full border border-blue-500"
-            src={userData?.photoURL || defaultProfile}
-            alt="Profile"
-          />
-        </div>
+              <div className="size-12 flex items-center">
+                <img
+                  className="w-full h-full object-cover rounded-full border border-blue-500"
+                  src={userData?.photoURL || defaultProfile}
+                  alt="Profile"
+                />
+              </div>
             </div>
           </div>
 
@@ -117,10 +114,10 @@ const Navbar = () => {
                 className={clsx(
                   "flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors duration-200",
                   location.pathname === item.path
-                    ? "bg-blue-500 text-white"
+                    ? "bg-green-600 text-white"
                     : isDarkMode
                     ? "hover:bg-zinc-700"
-                    : "hover:bg-zinc-100"
+                    : "hover:bg-green-100"
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -137,71 +134,67 @@ const Navbar = () => {
             <h1 className="text-sm mb-1 text-zinc-400">Quick Links</h1>
             <ul>
               <li
-onClick={() => {
-  if (user) {
-    handleLogout();
-  } else {
-    navigate("/login");
-  }
-}}
-                className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold"
+                onClick={() => {
+                  if (user) {
+                    handleLogout();
+                  } else {
+                    navigate("/login");
+                  }
+                }}
+                className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold hover:bg-green-100"
               >
                 {user ? "Logout" : "Login"}
               </li>
               <li
                 onClick={() => navigate("/signup")}
-                className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold"
+                className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold hover:bg-green-100"
               >
                 Sign up
               </li>
               <li className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold flex items-center justify-between select-none">
-  <span>Dark Mode</span>
-  <label className="relative inline-flex items-center cursor-pointer">
-    <input
-      type="checkbox"
-      checked={isDarkMode}
-      onChange={toggleDarkMode} // your toggle function
-      className="sr-only peer"
-    />
-    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-zinc-700 peer-checked:bg-blue-600 relative transition-colors"></div>
-    <div className="absolute left-1 top-1 bg-white border border-gray-300 rounded-full w-4 h-4 transition-transform peer-checked:translate-x-5"></div>
-  </label>
-</li>
+                <span>Dark Mode</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={isDarkMode}
+                    onChange={toggleDarkMode}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 dark:bg-zinc-700 peer-focus:outline-none rounded-full peer-checked:bg-green-600 relative transition-colors" />
+                  <div className="absolute left-1 top-1 bg-white border border-gray-300 rounded-full w-4 h-4 transition-transform peer-checked:translate-x-5" />
+                </label>
+              </li>
               {user && isAdmin && (
                 <li
                   onClick={() => navigate("/admin")}
-                  className="p-2 rounded-xl bg-orange-500 text-white cursor-pointer transition duration-200 font-semibold"
+                  className="p-2 rounded-xl bg-green-700 text-white cursor-pointer transition duration-200 font-semibold"
                 >
                   Admin
                 </li>
               )}
-<li
-  onClick={() =>
-    window.open("https://wa.me/916009099196", "_blank")
-  }
-  className={`p-3 rounded-xl mt-2 cursor-pointer transition duration-200 font-semibold ${
-    isDarkMode
-      ? "bg-gray-800 text-white hover:bg-zinc-700"
-      : "bg-gray-200 text-black hover:bg-gray-300"
-  }`}
->
-  Contact Developer
-</li>
-
+              <li
+                onClick={() => window.open("https://wa.me/916009099196", "_blank")}
+                className={`p-3 rounded-xl mt-2 cursor-pointer transition duration-200 font-semibold ${
+                  isDarkMode
+                    ? "bg-gray-800 text-white hover:bg-zinc-700"
+                    : "bg-green-100 text-black hover:bg-green-200"
+                }`}
+              >
+                Contact Developer
+              </li>
             </ul>
           </div>
         </div>
       </aside>
 
-<header
-  className={clsx(
-    "fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1 shadow-md",
-    isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-black",
-    "sm:hidden" // <- Move it here
-  )}
->
-
-
+      {/* Header for mobile */}
+      <header
+        className={clsx(
+          "fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1 shadow-md",
+          isDarkMode ? "bg-zinc-900 text-white" : "bg-webGreen text-white",
+          "sm:hidden"
+        )}
+      >
         <div className="size-10 flex items-center">
           <img
             className="w-full h-full object-cover rounded-full border border-blue-500"
@@ -209,12 +202,11 @@ onClick={() => {
             alt="Profile"
           />
         </div>
-
         <div className="flex items-center gap-4">
           {!user && (
             <button
               onClick={() => navigate("/login")}
-              className="bg-blue-500 text-white px-4 py-1 rounded-[24px]"
+              className="bg-green-600 text-white px-4 py-1 rounded-[24px]"
             >
               Sign in
             </button>

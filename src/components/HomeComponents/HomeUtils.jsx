@@ -21,40 +21,28 @@ const HomeUtils = () => {
   return (
     <div
       className={`
-        mt-10
-        grid
-        grid-cols-4
-        lg:grid-cols-8
-        gap-2
-        px-4
-        rounded-xl
-        shadow-md
-        py-6
-        ${isDarkMode ? "bg-zinc-900" : "bg-webGreen"}
+        mt-10 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-md
+        ${isDarkMode ? "bg-zinc-900" : "bg-[#066658]"}
       `}
     >
       {utilList.map((item, i) => (
-        <div
+        <button
           key={i}
           onClick={() => navigate(item.link)}
           className={`
-            flex flex-col items-center gap-2 cursor-pointer
-            transition-colors duration-200
-            rounded-lg p-3
             ${i >= 4 ? "hidden sm:flex" : "flex"}
-            ${isDarkMode ? "bg-zinc-800 hover:bg-zinc-700 text-white" : "bg-green-200 hover:bg-gray-200 text-gray-600"}
+            flex-col items-center gap-2
+            p-3 rounded-lg cursor-pointer transition duration-200 select-none
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+            ${isDarkMode
+              ? "bg-zinc-800 text-white hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
+              : "bg-green-200 text-green-900 hover:bg-green-300 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
           `}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              navigate(item.link);
-            }
-          }}
+          type="button"
         >
           <div className="text-3xl">{item.icon}</div>
-          <p className="text-[9px] font-medium select-none">{item.name}</p>
-        </div>
+          <p className="text-[9px] font-medium">{item.name}</p>
+        </button>
       ))}
     </div>
   );
