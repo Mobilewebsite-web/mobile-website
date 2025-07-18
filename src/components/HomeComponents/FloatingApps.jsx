@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ml from "../../assets/images/mlbb-logo.webp";
+import ml from "../../assets/images/mlbb-logo.jpeg";
 import React, { useRef, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 
@@ -14,22 +14,24 @@ const FloatingApps = () => {
     { name: "Game 3", path: "/recharge/game3", img: ml, tag: "New" },
   ];
 
-  const handleKeyDown = (e, path) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      navigate(path);
-    }
-  };
+  // Prevent body scroll when interacting with the slider
+  useEffect(() => {
+    document.body.style.overflowX = "hidden";
+    return () => {
+      document.body.style.overflowX = "";
+    };
+  }, []);
 
   // Center the second card on mount
   useEffect(() => {
     if (scrollContainerRef.current) {
-      const cardWidth = 192; // w-48 = 192px
+      const cardWidth = 366; // w-[366px] = 366px
       const gap = 16; // gap-x-4 = 16px
       const containerWidth = scrollContainerRef.current.offsetWidth;
-      const secondCardOffset = cardWidth + gap;
-      const scrollPosition = secondCardOffset - (containerWidth - cardWidth) / 2;
-      scrollContainerRef.current.scrollLeft = scrollPosition;
+      const secondCardIndex = 1; // Second card
+      const targetScroll = secondCardIndex * (cardWidth + gap) - (containerWidth - cardWidth) / 2; // Center the card
+      scrollContainerRef.current.scrollLeft = targetScroll;
+      console.log("Initial scroll:", { containerWidth, targetScroll, cardWidth });
     }
   }, []);
 
@@ -39,21 +41,22 @@ const FloatingApps = () => {
     if (!container) return;
 
     const handleScroll = () => {
-      const cardWidth = 192; // w-48 = 192px
+      const cardWidth = 366; // w-[366px] = 366px
       const gap = 16; // gap-x-4 = 16px
       const containerWidth = container.offsetWidth;
       const scrollLeft = container.scrollLeft;
 
-      // Calculate the index of the closest card to the center
-      const centerPoint = scrollLeft + containerWidth / 2;
-      const cardIndex = Math.round((centerPoint - cardWidth / 2) / (cardWidth + gap));
-      const targetScroll = cardIndex * (cardWidth + gap) - (containerWidth - cardWidth) / 2;
+      // Calculate the index of the closest card
+      const cardIndex = Math.round((scrollLeft + containerWidth / 2 - cardWidth / 2) / (cardWidth + gap));
+      const targetScroll = cardIndex * (cardWidth + gap) - (containerWidth - cardWidth) / 2; // Center the card
 
       // Smoothly scroll to the closest card
       container.scrollTo({
         left: targetScroll,
         behavior: "smooth",
       });
+
+      console.log("Snap scroll:", { scrollLeft, cardIndex, targetScroll, containerWidth });
     };
 
     container.addEventListener("scrollend", handleScroll);
@@ -66,6 +69,8 @@ const FloatingApps = () => {
   const scrollLeft = useRef(0);
 
   const handleMouseDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     isDragging.current = true;
     startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
     scrollLeft.current = scrollContainerRef.current.scrollLeft;
@@ -74,28 +79,35 @@ const FloatingApps = () => {
 
   const handleMouseLeave = () => {
     isDragging.current = false;
-    scrollContainerRef.current.style.cursor = "grab";
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.cursor = "grab";
+    }
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     isDragging.current = false;
-    scrollContainerRef.current.style.cursor = "grab";
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.style.cursor = "grab";
+    }
   };
 
   const handleMouseMove = (e) => {
     if (!isDragging.current) return;
     e.preventDefault();
+    e.stopPropagation();
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
     const walk = (x - startX.current) * 2;
     scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   return (
-    <div className="relative mt-10 z-10">
+    <div className="relative mt-10 z-10 w-full overflow-x-hidden">
       <div
         ref={scrollContainerRef}
         className={`
-          relative flex overflow-x-auto
+          relative flex overflow-x-auto min-w-[430px] max-w-full
           snap-x snap-mandatory px-4 py-4 rounded-xl shadow-md gap-x-4
           ${isDarkMode ? "bg-zinc-900 border border-zinc-700" : "bg-[#066658] border border-green-300"}
           scrollbar-hide cursor-grab select-none
@@ -107,8 +119,7 @@ const FloatingApps = () => {
         role="list"
       >
         <div
-          className="flex gap-x-4"
-          style={{ paddingLeft: "calc(50vw - 96px)", paddingRight: "calc(50vw - 96px)" }}
+          className="flex gap-x-4 sm:pl-[calc(50vw-183px)] sm:pr-[calc(50vw-183px)] pl-4 pr-4"
         >
           {floatingList.map((item, i) => (
             <div
@@ -119,13 +130,13 @@ const FloatingApps = () => {
               tabIndex={0}
               aria-label={`Open ${item.name}`}
               className={`
-                snap-center cursor-pointer rounded-xl shadow-lg h-48
-                w-70
+                snap-center cursor-pointer rounded-xl shadow-lg h-[206px] w-[366px]
                 bg-center bg-cover bg-no-repeat transition-transform duration-300
-                hover:scale-110 focus:scale-115 focus:outline-none relative
+                hover:scale-105 focus:scale-105 focus:outline-none relative
+                min-w-[366px] min-h-[206px]
                 ${isDarkMode ? "border border-zinc-700" : "border border-white"}
               `}
-              style={{ backgroundImage: `url(${item.img})` }}
+              style={{ backgroundImage: `url(${item.img || 'https://via.placeholder.com/366x206'})`, backgroundPosition: 'center' }}
               title={item.name}
             >
               <div
@@ -143,13 +154,13 @@ const FloatingApps = () => {
       {/* Vignette overlays */}
       <div
         className={`
-          absolute inset-y-0 left-0 w-16 bg-gradient-to-r z-10
+          absolute inset-y-0 left-0 w-24 bg-gradient-to-r z-10
           ${isDarkMode ? "from-zinc-900 to-transparent" : "from-[#066658] to-transparent"}
         `}
       ></div>
       <div
         className={`
-          absolute inset-y-0 right-0 w-16 bg-gradient-to-l z-10
+          absolute inset-y-0 right-0 w-24 bg-gradient-to-l z-10
           ${isDarkMode ? "from-zinc-900 to-transparent" : "from-[#066658] to-transparent"}
         `}
       ></div>
