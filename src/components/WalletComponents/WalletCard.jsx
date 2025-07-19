@@ -17,7 +17,7 @@ const WalletCard = () => {
       ${
         isDarkMode
           ? "bg-zinc-900 border-zinc-700 text-white"
-          : "bg-white border-gray-200 text-gray-900"
+          : "bg-webGreenLight border-gray-200 text-gray-900"
       }
     `}
     >

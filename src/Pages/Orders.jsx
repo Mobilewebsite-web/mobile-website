@@ -63,7 +63,7 @@ const Orders = () => {
   return (
     <div
       className={`max-w-5xl mx-auto px-4 py-8 ${
-        isDarkMode ? "bg-zinc-900" : "bg-white"
+        isDarkMode ? "bg-zinc-900" : "bg-webGreen"
       } min-h-screen`}
     >
       <h1
@@ -114,7 +114,7 @@ const Orders = () => {
               className={`border rounded-xl p-4 shadow-sm cursor-pointer transition ${
                 isDarkMode
                   ? "bg-zinc-800 border-zinc-700 hover:bg-zinc-700"
-                  : "bg-white border-gray-100 hover:bg-gray-50"
+                  : "bg-webGreenLight border-gray-100 hover:bg-gray-50"
               }`}
             >
               <div className="flex justify-between items-start">

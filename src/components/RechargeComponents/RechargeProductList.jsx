@@ -6,6 +6,9 @@ import { useUser } from "../../context/UserContext";
 import UploadProductsButton from "../../utils/UploadProductsButton";
 import { games } from "../../assets/files/games";
 import small from "../../assets/images/logo-ml.jpg";
+import diamond from '../../assets/images/diamond.webp'
+import weekly from '../../assets/images/weekly.webp'
+import dd from '../../assets/images/dd.webp'
 
 const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
   const { gamename } = useParams();
@@ -101,7 +104,7 @@ const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
 
   return (
     <div
-      className={`mt-10 px-4 sm:px-8 rounded-xl relative min-h-screen transition-colors duration-300
+      className={`mt-10 px-4 py-8 sm:px-8 rounded-xl relative min-h-screen transition-colors duration-300
         ${isDarkMode ? "bg-webGreen text-webGreenLight" : "bg-webGreenLight text-webGreen"}`}
     >
       {isAdmin && gameId && (
@@ -130,69 +133,175 @@ const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
         </div>
       )}
 
-{/* Group Filter Tabs */}
-<div className="mb-8 flex justify-start gap-3 whitespace-nowrap overflow-x-auto px-2 scroll-pl-4">
-  {[1, 2, 3].map((group) => (
-    <button
-      key={group}
-      onClick={() => setGroupFilter(groupFilter === group ? null : group)}
-      className={`px-5 py-2 rounded-full font-semibold transition shadow-md flex-shrink-0
-        ${
-          groupFilter === group
-            ? "bg-webGreen text-webGreenLight"
-            : isDarkMode
-            ? "bg-webGreen/90 text-webGreenLight/80"
-            : "bg-webGreenLight/90 text-webGreen hover:bg-webGreen"
-        }`}
-    >
-      {group === 1 ? "💎 Diamonds" : group === 2 ? "🔥 First Recharge" : "📦 Weekly Pack"}
-    </button>
-  ))}
+<div className="mb-8 grid grid-cols-3 justify-center gap-4">
+  {[1, 2, 3].map((group) => {
+    const isSelected = groupFilter === group;
+    const label =
+      group === 1 ? "Diamonds Topup" : group === 2 ? "Weekly Pass" : "Bonus Diamonds";
+
+      const imgSrc =
+    group === 1 ? diamond : group === 2 ? weekly : dd;
+
+    return (
+      <div
+        key={group}
+        className="relative flex flex-col items-center justify-center text-center"
+      >
+        <button
+          onClick={() => setGroupFilter(isSelected ? null : group)}
+          className={`relative w-28 h-28 flex flex-col items-center justify-center px-2 py-2 rounded-xl text-sm font-medium border shadow-sm break-words text-center
+            transition-colors duration-200 overflow-hidden 
+            ${
+              isSelected
+                ? "bg-[#0089FF] text-white border-2 border-white"
+                : "bg-white text-gray-800 border border-gray-300 hover:bg-gray-100"
+            }`}
+        >
+          <img
+            src={imgSrc}
+            alt=""
+            className="w-12 h-12 object-contain mb-1"
+          />
+
+          <span className="leading-tight text-[13px]">{label}</span>
+{isSelected && (
+  <div className="absolute top-0 right-0 w-6 h-6 bg-webGreenLight border-l-2 border-b-2 border-green-600  rounded-bl-full flex items-center justify-center shadow-sm">
+    <span className="text-green-600 text-xs font-bold leading-none">✓</span>
+  </div>
+)}
+
+        </button>
+      </div>
+    );
+  })}
 </div>
+
 
 
 {/* Product Grid */}
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
   {filteredProducts.length > 0 ? (
-    filteredProducts.map((product) => (
-      <div
-        key={product.id}
-        onClick={() => {
-         
-            setSelectedProduct(product);
-        }}
-        className={`cursor-pointer rounded-xl shadow-lg p-5 flex justify-between items-center transition-transform duration-200 border-2
-          ${
-            isDarkMode
-              ? "bg-webGreen border-webGreen text-webGreenLight"
-              : "bg-webGreenLight border-webGreenLight text-webGreen"
-          }
-          ${
-            selectedProduct?.id === product.id
-              ? "border-webGreenLight ring-4 ring-webGreen"
-              : ""
-          }
-          hover:scale-[1.03] hover:shadow-2xl`}
-      >
-        {/* Left side: name and diamonds */}
-        <div className="flex flex-col gap-1 max-w-[65%]">
-          <h3 className="text-lg font-bold truncate">{product.name}</h3>
-        
-        </div>
+    filteredProducts.map((product) => {
+      const isSelected = selectedProduct?.id === product.id;
+      const imgSrc =
+    product?.group === 1 ? diamond :product?. group === 2 ? weekly : dd;
 
-        {/* Right side: price and falseRupees */}
-        <div className="flex flex-col items-end gap-1 min-w-[80px]">
-          <p className="text-webGreen font-semibold">₹{product.price}</p>
-          {product.falseRupees && (
-            <p className="line-through text-sm text-webGreen/70">₹{product.falseRupees}</p>
+      return (
+        <div
+          key={product.id}
+          onClick={() => setSelectedProduct(product)}
+          className={`relative cursor-pointer flex justify-between overflow-hidden items-center rounded-[10px] shadow-md transition hover:scale-105
+            ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"}
+          `}
+          style={
+            isSelected
+              ? {
+                  // Trick for gradient border: use background + padding + border-radius
+                  background: "linear-gradient(135deg, #ff6ec4, #7873f5, #4ade80, #facc15)",
+                  padding: "2px",
+                  borderRadius: "10px",
+                }
+              : {}
+          }
+        >
+          {/* Inner content wrapper with bg and rounded so gradient shows as border */}
+          <div
+            className={`flex justify-between items-center rounded-lg p-4 px-6 shadow-md
+              ${isDarkMode ? "bg-gray-800" : "bg-white"}
+              w-full
+            `}
+            style={isSelected ? { borderRadius: "0.75rem", backgroundColor:"lightblue" } : {}}
+          >
+            {/* Left section: Diamond count + tag */}
+            <div className="flex items-center gap-3">
+              {/* Diamond Image */}
+                <div className="relative w-12 h-12 flex items-center justify-center rounded-full overflow-visible">
+                  {/* Vertical fading yellow background */}
+                  <div
+                    className="absolute top-0 left-0 w-full h-full rounded-full"
+                    style={{
+                      background:
+                        "linear-gradient(to bottom, rgba(250, 204, 21, 0.8), rgba(250, 204, 21, 0))",
+                      filter: "blur(8px)",
+                      zIndex: 0,
+                    }}
+                  ></div>
+
+                  {/* Diamond image */}
+                  <img src={imgSrc} alt="diamond" className="relative w-10 h-10 z-10 rounded-full" />
+                </div>
+
+              {/* Diamond info */}
+              <div className="flex flex-col">
+                <span className="font-semibold">{product.diamonds} Diamonds</span>
+                {product.label && (
+                  <span
+                    className={`text-xs px-2 py-1 rounded mt-1 w-fit ${
+                      product.label === "Best Seller"
+                        ? "bg-yellow-400 text-white"
+                        : product.label === "Popular"
+                        ? "bg-green-500 text-white"
+                        : "bg-red-500 text-white"
+                    }`}
+                  >
+                    {product.label}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Right section: price */}
+            <div className="text-right">
+              {product.falseRupees && (
+                <div className="text-sm line-through text-gray-500">₹{product.falseRupees}</div>
+              )}
+              <div className="text-green-600 font-bold text-lg">₹{product.price}</div>
+
+              {/* Discount tag */}
+              {product.discount && (
+                <div className="text-xs bg-red-500 text-white px-2 py-1 rounded mt-1 inline-block">
+                  {product.discount}% OFF
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Checkmark quarter circle top-right */}
+          {isSelected && (
+            <div
+              className="absolute top-0 right-0 overflow-hidden"
+              style={{ width: "20px", height: "20px" }}
+            >
+              <div
+                className="bg-red-600 text-white flex items-center justify-center"
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  borderBottomLeftRadius: "40px",
+                }}
+              >
+                {/* Check icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={3}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
           )}
         </div>
-      </div>
-    ))
+      );
+    })
   ) : (
     <p className="col-span-full text-center text-webGreenLight/80">No products found.</p>
   )}
 </div>
+
 
       {/* Edit Product Modal */}
       {showEditModal && (

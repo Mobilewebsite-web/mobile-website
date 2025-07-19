@@ -65,7 +65,7 @@ const WalletHistory = () => {
   return (
     <div
       className={` px-4 py-8 rounded-lg border-1 ${
-        isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
+        isDarkMode ? "bg-zinc-900 text-white" : "bg-webGreenLight text-zinc-900"
       }`}
     >
       <h1 className="text-2xl font-bold mb-4">
