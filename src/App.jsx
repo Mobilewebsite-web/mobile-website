@@ -31,13 +31,14 @@ const AppContent = () => {
 
   return (
 <div
-  className={`${!isAdminPage ? "sm:pt-0 sm:pl-70 lg:pl-85 " : ""} ${
-    isDarkMode ? "bg-zinc-950 text-white" : "bg-webGreen text-white"
+  className={`${!isAdminPage ? "px-4" : ""}
+    ${isDarkMode ? "bg-zinc-950 text-white" : "bg-webGreen text-white"
   } min-h-[100vh]`}
 >
+
       {/* Show Navbar only if not admin */}
       {!isAdminPage && (
-        <div className="block bg-black fixed top-0 bottom-0 z-40 left-0">
+        <div className="block bg-black fixed z-40 top-0 bottom-0 left-0">
           <Navbar />
         </div>
       )}

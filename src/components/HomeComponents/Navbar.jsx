@@ -7,11 +7,14 @@ import {
   MdManageAccounts,
   MdPrivacyTip,
   MdKeyboardArrowRight,
-  MdHistory
+  MdHistory,
 } from "react-icons/md";
 import { IoMdWallet } from "react-icons/io";
 import { BiSupport } from "react-icons/bi";
-import { IoShieldCheckmarkSharp, IoDocumentTextOutline } from "react-icons/io5";
+import {
+  IoShieldCheckmarkSharp,
+  IoDocumentTextOutline,
+} from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import clsx from "clsx";
 import { useUser } from "../../context/UserContext";
@@ -73,22 +76,52 @@ const Navbar = () => {
   };
 
   return (
-    <div className="min-h-screen z-40 fixed flex">
+    <div className="fixed ">
+      {/* Overlay */}
+      {showNav && (
+        <div
+          onClick={() => setShowNav(false)}
+          className="fixed inset-0 bg-black bg-opacity-30 z-30"
+        />
+      )}
+
+      {/* Toggle Button (visible on all screens) */}
+      <button
+        onClick={() => setShowNav(true)}
+        className={clsx(
+          "fixed top-4 left-4 z-50 p-2 rounded-md bg-green-600 text-white shadow-md",
+          showNav && "hidden"
+        )}
+      >
+        <GiHamburgerMenu size={24} />
+      </button>
+
       {/* Sidebar */}
       <aside
         ref={navRef}
         className={clsx(
-          "z-40 w-[75%] sm:w-60 md:w-65 lg:w-80 shadow-xl h-full transition-transform duration-300 ease-in-out",
+          "fixed top-0 left-0 h-full w-[75%] sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out z-40",
           isDarkMode ? "bg-zinc-800 text-white" : "bg-white text-black",
-          showNav ? "fixed top-0 left-0 translate-x-0" : "fixed top-0 left-0 -translate-x-full",
-          "sm:relative sm:translate-x-0 sm:block"
+          showNav ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="p-5 space-y-4 h-screen overflow-y-auto">
+        {/* Close button */}
+        <div className="flex justify-end p-4">
+          <button
+            onClick={() => setShowNav(false)}
+            className="text-2xl text-gray-400 hover:text-red-500"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div className="px-5 pb-10 overflow-y-auto h-full space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-zinc-400">Welcome back</p>
-              <h1 className="text-lg font-bold">{userData?.username || "No user"}</h1>
+              <h1 className="text-lg font-bold">
+                {userData?.username || "No user"}
+              </h1>
             </div>
             <div
               onClick={() => (user ? navigate("/profile") : navigate("/login"))}
@@ -130,28 +163,26 @@ const Navbar = () => {
           </ul>
 
           <hr className={clsx("border", isDarkMode ? "border-zinc-700" : "border-zinc-200")} />
-          <div className="mb-20 mt-3">
+
+          <div className="mt-3">
             <h1 className="text-sm mb-1 text-zinc-400">Quick Links</h1>
             <ul>
               <li
                 onClick={() => {
-                  if (user) {
-                    handleLogout();
-                  } else {
-                    navigate("/login");
-                  }
+                  if (user) handleLogout();
+                  else navigate("/login");
                 }}
-                className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold hover:bg-green-100"
+                className="p-2 rounded-xl cursor-pointer font-semibold hover:bg-green-100"
               >
                 {user ? "Logout" : "Login"}
               </li>
               <li
                 onClick={() => navigate("/signup")}
-                className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold hover:bg-green-100"
+                className="p-2 rounded-xl cursor-pointer font-semibold hover:bg-green-100"
               >
                 Sign up
               </li>
-              <li className="p-2 rounded-xl cursor-pointer transition duration-200 font-semibold flex items-center justify-between select-none">
+              <li className="p-2 rounded-xl cursor-pointer flex items-center justify-between font-semibold select-none">
                 <span>Dark Mode</span>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -167,14 +198,14 @@ const Navbar = () => {
               {user && isAdmin && (
                 <li
                   onClick={() => navigate("/admin")}
-                  className="p-2 rounded-xl bg-green-700 text-white cursor-pointer transition duration-200 font-semibold"
+                  className="p-2 rounded-xl bg-green-700 text-white cursor-pointer font-semibold mt-2"
                 >
                   Admin
                 </li>
               )}
               <li
                 onClick={() => window.open("https://wa.me/916009099196", "_blank")}
-                className={`p-3 rounded-xl mt-2 cursor-pointer transition duration-200 font-semibold ${
+                className={`p-3 rounded-xl mt-2 cursor-pointer font-semibold ${
                   isDarkMode
                     ? "bg-gray-800 text-white hover:bg-zinc-700"
                     : "bg-green-100 text-black hover:bg-green-200"
@@ -186,46 +217,6 @@ const Navbar = () => {
           </div>
         </div>
       </aside>
-
-      {/* Header for mobile */}
-      <header
-        className={clsx(
-          "fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-3 py-1 shadow-md",
-          isDarkMode ? "bg-zinc-900 text-white" : "bg-webGreen text-white",
-          "sm:hidden"
-        )}
-      >
-        <div className="size-10 flex items-center">
-          <img
-            className="w-full h-full object-cover rounded-full border border-blue-500"
-            src={userData?.photoURL || defaultProfile}
-            alt="Profile"
-          />
-        </div>
-        <div className="flex items-center gap-4">
-          {!user && (
-            <button
-              onClick={() => navigate("/login")}
-              className="bg-green-600 text-white px-4 py-1 rounded-[24px]"
-            >
-              Sign in
-            </button>
-          )}
-          <GiHamburgerMenu
-            onClick={() => setShowNav(true)}
-            size={28}
-            className="cursor-pointer sm:hidden"
-          />
-        </div>
-      </header>
-
-      {/* Mobile overlay */}
-      {showNav && (
-        <div
-          onClick={() => setShowNav(false)}
-          className="fixed inset-0 backdrop-blur-xs bg-opacity-30 z-30 sm:hidden"
-        />
-      )}
     </div>
   );
 };

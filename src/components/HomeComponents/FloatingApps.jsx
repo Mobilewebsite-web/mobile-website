@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ml from "../../assets/images/mlbb-logo.jpeg";
+import hok from "../../assets/images/hok.jpeg";
 import React, { useRef, useEffect, useCallback } from "react";
 import { useUser } from "../../context/UserContext";
 
@@ -18,7 +19,7 @@ const FloatingApps = () => {
 
   const floatingList = [
     { name: "Mobile Legends", path: "/recharge/mobile-legends", img: ml },
-    { name: "Game 2", path: "/recharge/game2", img: ml },
+    { name: "Honor of Kings", path: "/recharge/game2", img: hok },
     { name: "Game 3", path: "/recharge/game3", img: ml },
   ];
 
@@ -198,14 +199,14 @@ const onUp = () => {
                 onClick={() => navigate(item.path)}
                 onKeyDown={(e) => e.key === 'Enter' && navigate(item.path)}
                 title={item.name}
-                className={`
+                className={` relative
                   snap-center w-72 h-40 rounded-xl shadow-lg bg-cover bg-center cursor-pointer
                   transition-transform duration-500 hover:scale-105 card
                   ${isDarkMode ? 'border border-zinc-700' : 'border border-white'}
                 `}
                 style={{ backgroundImage: `url(${item.img})` }}
               >
-                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-b from-transparent to-webGreen bg-opacity-50 rounded-b-xl">
+                <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-b from-transparent to-webGreen bg-opacity-90 rounded-b-xl">
                   <p className="text-white font-semibold text-sm text-center truncate">{item.name}</p>
                 </div>
               </div>
@@ -215,8 +216,8 @@ const onUp = () => {
       </div>
 
       {/* Green fade vignette overlays */}
-      <div className="absolute inset-y-0 left-0 w-16 z-30 bg-gradient-to-r from-webGreen to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-32 z-30 bg-gradient-to-l from-webGreen to-transparent pointer-events-none" />
+      <div className="absolute  inset-y-0 left-0 w-16 z-30 bg-gradient-to-r from-webGreen to-transparent pointer-events-none" />
+      <div className="absolute  inset-y-0 right-0 w-32 z-30 bg-gradient-to-l from-webGreen to-transparent pointer-events-none" />
     </div>
   );
 };

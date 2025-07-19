@@ -1,6 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import Button from "../../assets/files/UI/LogIn";
+import SignUp from "../../assets/files/UI/SignUp";
+import LogIn from "../../assets/files/UI/LogIn";
+
 
 const About = () => {
   const navigate = useNavigate();
@@ -14,7 +18,7 @@ const About = () => {
 
   return (
     <footer
-      className={`px-6 py-12 ${
+      className={`px-4 py-6 ${
         isDarkMode
           ? "bg-gradient-to-br from-zinc-800 to-zinc-900 text-gray-200"
           : `bg-gradient-to-br from-sky-600 to-blue-700 text-${webGreenText}`
@@ -26,9 +30,9 @@ const About = () => {
         color: isDarkMode ? undefined : webGreenText,
       }}
     >
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 gap-10">
         {/* Quick Links */}
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <h2
             className={`text-2xl font-bold mb-2 ${
               isDarkMode ? "text-white" : "text-white"
@@ -36,56 +40,11 @@ const About = () => {
           >
             Quick Links
           </h2>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => {
-                if (!user) {
-                  navigate("/login");
-                } else {
-                  navigate("/profile");
-                }
-              }}
-              className={`font-semibold w-1/2 py-2 rounded-md shadow hover:opacity-90 transition-all ${
-                isDarkMode
-                  ? "bg-zinc-700 text-white hover:bg-zinc-600"
-                  : "bg-white text-" + webGreen + " hover:bg-" + webGreenLight
-              }`}
-              style={
-                !isDarkMode
-                  ? {
-                      backgroundColor: "white",
-                      color: webGreen,
-                      // hover styles handled below in tailwind won't apply with inline styles
-                    }
-                  : {}
-              }
-            >
-              Login
-            </button>
-            <button
-              onClick={() => {
-                if (!user) {
-                  navigate("/signup");
-                } else {
-                  navigate("/profile");
-                }
-              }}
-              className={`font-semibold w-1/2 py-2 rounded-md shadow hover:opacity-90 transition-all ${
-                isDarkMode
-                  ? "bg-zinc-700 text-white hover:bg-zinc-600"
-                  : "bg-white text-" + webGreen + " hover:bg-" + webGreenLight
-              }`}
-              style={
-                !isDarkMode
-                  ? {
-                      backgroundColor: "white",
-                      color: webGreen,
-                    }
-                  : {}
-              }
-            >
-              Register
-            </button>
+          <div className="flex gap-4">
+            
+            <LogIn />
+
+            <SignUp />
           </div>
         </div>
 
