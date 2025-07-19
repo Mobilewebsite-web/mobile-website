@@ -1,13 +1,20 @@
+const flowbiteReact = require("flowbite-react/plugin/tailwindcss");
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}"
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    ".flowbite-react\\class-list.json"
   ],
   theme: {
     extend: {
       colors: {
         webGreen: "#066658",
         webGreenLight: "#e6f4f1",
+        bgColor: "#2d3250",
+        elementBg: "#424769",
+        elementColor: "#676fgd",
       },
       spacing: {
         70: '17.5rem', // 70 * 0.25rem = 17.5rem (280px)
@@ -38,6 +45,5 @@ export default {
       // => @media (min-width: 1536px) { ... }
     }
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin'), flowbiteReact],
 }
-

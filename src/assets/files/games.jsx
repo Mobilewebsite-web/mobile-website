@@ -8,7 +8,7 @@ import large from "../images/large-packs.png"
 import dd from "../images/dd.avif"
 import weekly from "../images/weekly.avif"
 import mcgg from "../images/mcgg.avif"
-import mcggDisplay from "../images/mcgg.jpg"
+import mcggDisplay from "../images/mcgg.jpeg"
 import hok from "../images/hok.webp"
 import hokDisplay from "../images/hok-display.jpeg"
   export const games = [

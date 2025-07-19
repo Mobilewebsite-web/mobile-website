@@ -86,15 +86,27 @@ const Navbar = () => {
       )}
 
       {/* Toggle Button (visible on all screens) */}
-      <button
-        onClick={() => setShowNav(true)}
-        className={clsx(
-          "fixed top-4 left-4 z-50 p-2 rounded-md bg-green-600 text-white shadow-md",
-          showNav && "hidden"
-        )}
-      >
-        <GiHamburgerMenu size={24} />
-      </button>
+<div
+  className={clsx(
+    "fixed w-full flex items-center justify-between top-0 left-0 px-4 py-2 shadow-md z-30",
+    isDarkMode ? "bg-zinc-900 text-white" : "bg-[#1a8a72] text-black"
+  )}
+>
+  <button
+    onClick={() => setShowNav(true)}
+    className={clsx(
+      "p-2 h-auto rounded-md bg-webGreen/50 border-gray-600/30 border hover:bg-green-600/60 text-white shadow",
+      showNav && "hidden"
+    )}
+  >
+    <span className="text-lg sm:text-xl md:text-2xl">
+  <GiHamburgerMenu />
+</span>
+
+  </button>
+
+  <span className="font-semibold text-lg">App Name</span> {/* Optional title */}
+</div>
 
       {/* Sidebar */}
       <aside

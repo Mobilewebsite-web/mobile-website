@@ -38,7 +38,7 @@ const HomeUtils = () => {
     <div
       className={`
         mt-10 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-md relative
-        ${isDarkMode ? "bg-zinc-900" : "bg-[#1a8a72]"}
+        ${isDarkMode ? "bg-zinc-900" : "bg:elementColor"}
       `}
     >
       {itemsToShow.map((item, i) => (

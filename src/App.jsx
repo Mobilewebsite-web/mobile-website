@@ -32,7 +32,7 @@ const AppContent = () => {
   return (
 <div
   className={`${!isAdminPage ? "px-4" : ""}
-    ${isDarkMode ? "bg-zinc-950 text-white" : "bg-webGreen text-white"
+    ${isDarkMode ? "bg-zinc-950 text-white" : "bg-gradient-to-tr from-[#2d3250] to-[#424769] text-white"
   } min-h-[100vh]`}
 >
 
