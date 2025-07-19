@@ -17,15 +17,16 @@ export default {
         iconColor: "#5249a3",
         darkBg: "#2d3250",
         darkElementBg: "#424769",
-        darkElements: "#676f9d"
+        darkElements: "#676f9d",
+        webGreenLight: "#c9e3e3",
       },
       spacing: {
         70: '17.5rem', // 70 * 0.25rem = 17.5rem (280px)
         85: '21.25rem', // 85 * 0.25rem = 21.25rem (340px)
       },
       fontFamily: {
-        manrope: ['Manrope', 'sans-serif'], 
-        poppins: ['Poppins', 'sans-serif'], 
+        manrope: ['Manrope', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
       keyframes: {
@@ -57,5 +58,10 @@ export default {
       // => @media (min-width: 1536px) { ... }
     }
   },
-  plugins: [require('flowbite/plugin'), flowbiteReact],
+  plugins: [
+    require('flowbite/plugin'),
+    flowbiteReact,
+    require("tailwind-scrollbar-hide")
+  ],
 }
+

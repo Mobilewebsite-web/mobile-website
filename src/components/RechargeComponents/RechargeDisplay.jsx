@@ -17,7 +17,7 @@ const RechargeDisplay = () => {
   const bgOverlayBrightness = isDarkMode ? "brightness-[0.3]" : "brightness-[0.4]";
 
   return (
-    <div className="relative w-full mt-10 min-h-[180px] flex items-center justify-center p-6">
+    <div className="relative w-full pt-10 min-h-[180px] flex items-center justify-center py-6">
       {/* Background image overlay */}
       <div
         className={`absolute inset-0 bg-cover bg-center ${bgOverlayBrightness} z-0`}

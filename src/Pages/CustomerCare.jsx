@@ -30,7 +30,7 @@ const CustomerSupport = () => {
 
 return (
   <div
-    className={`mx-auto px-4 sm:px-10 py-10 ${
+    className={`mx-auto sm:px-10 py-10 ${
       isDarkMode
         ? "bg-zinc-900 text-white"
         : "bg-webGreen text-webGreenLight"

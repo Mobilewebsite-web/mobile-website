@@ -12,7 +12,7 @@ const LogIn = () => {
 const StyledWrapper = styled.div`
   .button {
     display: inline-block;
-    padding: 8px 64px;
+    padding: 8px;
     border: 1px solid #4f4f4f;
     border-radius: 4px;
     transition: all 0.2s ease-in;

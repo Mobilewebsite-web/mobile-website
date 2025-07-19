@@ -20,9 +20,10 @@ const About = () => {
   return (
     <footer
       className={`px-4 py-4 ${
+      className={` px-4 py-6 my-10 mb-14 rounded-lg w-full ${
         isDarkMode
           ? "bg-gradient-to-br from-zinc-800 to-zinc-900 text-gray-200"
-          : `bg-gradient-to-br from-sky-600 to-blue-700 text-${webGreenText}`
+          : `bg-[#c9e3e3]/90 text-${webGreenText}`
       }`}
       style={{
         background: isDarkMode
@@ -30,18 +31,19 @@ const About = () => {
           : `linear-gradient(to bottom right,elementBg 0%, #0a8376 100%)`,
         color: isDarkMode ? undefined : webGreenText,
       }}
+    
     >
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 gap-10">
+      <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
         {/* Quick Links */}
         <div className="space-y-4 w-full">
           <h2
-            className={`text-2xl font-bold mb-2 ${
-              isDarkMode ? "text-white" : "text-white"
+            className={`text-2xl font-bold mb-2 text-center ${
+              isDarkMode ? "text-white" : "text-zinc-800"
             }`}
           >
             Quick Links
           </h2>
-          <div className="flex gap-4">
+          <div className="flex gap-4 px-4 flex items-center justify-center">
             
             <LogIn />
 
@@ -50,30 +52,29 @@ const About = () => {
         </div>
 
         {/* Stay Updated */}
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <h2
             className={`text-2xl font-bold mb-2 ${
-              isDarkMode ? "text-white" : "text-white"
+              isDarkMode ? "text-white" : "text-zinc-800"
             }`}
           >
             Stay Updated With Us 📬
           </h2>
           <ul
-            className={`space-y-2 text-sm md:text-base ${
-              isDarkMode ? "text-zinc-400" : "text-" + webGreenText
+            className={`space-y-2 text-sm flex flex-col gap-2 w-full  ${
+              isDarkMode ? "text-zinc-100" : "text-zinc-900"
             }`}
-            style={!isDarkMode ? { color: webGreenText } : {}}
           >
-            <li className="hover:text-white transition cursor-pointer">
+            <li className=" transition cursor-pointer bg-white p-3">
               Developers Page
             </li>
-            <li className="hover:text-white transition cursor-pointer">
+            <li className=" transition cursor-pointer bg-white p-3">
               Terms & Conditions
             </li>
-            <li className="hover:text-white transition cursor-pointer">
+            <li className=" transition cursor-pointer bg-white p-3">
               Privacy Policy
             </li>
-            <li className="hover:text-white transition cursor-pointer">
+            <li className=" transition cursor-pointer bg-white p-3">
               Refund Policy
             </li>
             <li

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const SignUp = () => {
   return (
     <StyledWrapper>
-      <button className="button">Sign Up</button>
+      <button className="button font-semibold">Sign Up</button>
     </StyledWrapper>
   );
 }
@@ -12,7 +12,7 @@ const SignUp = () => {
 const StyledWrapper = styled.div`
   .button {
     display: inline-block;
-    padding: 8px 64px;
+    padding: 8px;
     border: 1px solid #4f4f4f;
     border-radius: 4px;
     transition: all 0.2s ease-in;
