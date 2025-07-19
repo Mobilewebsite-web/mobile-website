@@ -19,11 +19,10 @@ const About = () => {
 
   return (
     <footer
-      className={`px-4 py-4 ${
-      className={` px-4 py-6 my-10 mb-14 rounded-lg w-full ${
+      className={`px-4 py-6 my-10 mb-14 rounded-lg w-full ${
         isDarkMode
           ? "bg-gradient-to-br from-zinc-800 to-zinc-900 text-gray-200"
-          : `bg-[#c9e3e3]/90 text-${webGreenText}`
+          : `bg-[#c9e3e3]/90 text-[${webGreenText}]`
       }`}
       style={{
         background: isDarkMode
@@ -31,7 +30,6 @@ const About = () => {
           : `linear-gradient(to bottom right,elementBg 0%, #0a8376 100%)`,
         color: isDarkMode ? undefined : webGreenText,
       }}
-    
     >
       <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
         {/* Quick Links */}

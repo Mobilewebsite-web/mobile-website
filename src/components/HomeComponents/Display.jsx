@@ -5,12 +5,20 @@ import display3 from '../../assets/images/display3.jpg';
 import display4 from '../../assets/images/ling.mp4'; // ideally use a .webm with transparency if needed
 import display5 from '../../assets/images/hok1.mp4';
 import display6 from '../../assets/images/aov.mp4'
+import { useUser } from '../../context/UserContext';
+
+
+
 export default function Display() {
+
+    const { isDarkMode } = useUser();
+
   return (
     <div className="mx-4">
-    <div className="relative h-56 mt-10 sm:h-64 md:h-80 lg:w-[60%] mx-auto  shadow-2xl rounded-lg overflow-hidden">
+    <div className={`relative h-56 mt-10 sm:h-64 md:h-80 lg:w-[60%] mx-auto rounded-lg overflow-hidden
+      ${ isDarkMode ? "shadow-sky-400" : "shadow-sky-400"}`}>
       
-      <div className="relative z-20 h-full">
+      <div className="relative h-full">
         <Carousel slideInterval={3000} pauseOnHover loop>
           <img src={display1} alt="Slide 1" className="w-full h-full object-cover" />
           <img src={display3} alt="Slide 3" className="w-full h-full object-cover" />

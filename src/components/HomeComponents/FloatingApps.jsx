@@ -216,8 +216,8 @@ const onUp = () => {
       </div>
 
       {/* Green fade vignette overlays */}
-      <div className="absolute  inset-y-0 left-0 w-16 z-30 bg-gradient-to-r from-bgColor to-transparent pointer-events-none" />
-      <div className="absolute  inset-y-0 right-0 w-32 z-30 bg-gradient-to-l from-bgColor to-transparent pointer-events-none" />
+      <div className={`absolute  inset-y-0 left-0 w-16 z-30 ${ isDarkMode ? "bg-gradient-to-r from-darkBg to-transparent" : "bg-gradient-to-r from-bgColor to-transparent"} pointer-events-none`}/>
+      <div className={`absolute  inset-y-0 right-0 w-32 z-30 ${ isDarkMode ? "bg-gradient-to-l from-darkBg to-transparent" : "bg-gradient-to-l from-bgColor to-transparent"} pointer-events-none`}/>
     </div>
   );
 };

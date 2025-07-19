@@ -92,7 +92,7 @@ const Navbar = ({ showNav, setShowNav }) => {
         className={clsx(
           "fixed w-full flex items-center justify-between top-0 left-0 px-4 py-2 shadow-md",
           "overflow-y-auto scrollbar-hide",
-          isDarkMode ? "bg-darkElementBg/70 text-white" : "bg-elementBg text-black"
+          isDarkMode ? "bg-transparent backdrop-blur-[5px] text-white" : "bg-elementBg text-black"
         )}
       >
       <button
@@ -117,7 +117,7 @@ const Navbar = ({ showNav, setShowNav }) => {
         ref={navRef}
         className={clsx(
           "fixed top-0 left-0 h-full w-[45%] overflow-hidden sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out",
-          isDarkMode ? "bg-transparent backdrop-blur-md text-white" : "bg-transparent backdrop-blur-md  text-white",
+          isDarkMode ? "bg-transparent backdrop-blur-[24px] text-white" : "bg-transparent backdrop-blur-md  text-white",
           showNav ? "translate-x-0" : "-translate-x-full"
         )}
       >

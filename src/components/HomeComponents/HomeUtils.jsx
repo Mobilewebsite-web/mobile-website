@@ -38,7 +38,7 @@ const HomeUtils = () => {
     <div
       className={`
         mt-10 mx-2 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-2xl relative
-        ${isDarkMode ? "bg-zinc-900" : "bg-elementBg text-white/80"}
+        ${isDarkMode ? "bg-transparent backdrop-blur-sm border-sky-500 shadow-sky-900 " : "bg-elementBg text-white/80"}
       `}
     >
       {itemsToShow.map((item, i) => (
@@ -49,7 +49,7 @@ const HomeUtils = () => {
             flex flex-col items-center gap-2 p-3 rounded-lg cursor-pointer transition duration-200 select-none
             focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
             ${isDarkMode
-              ? "bg-zinc-800 text-bgo hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
+              ? "bg-darkElementBg text-bgo hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
               : "bg-iconColor hover:bg-blue-700 hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
           `}
         >
