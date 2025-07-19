@@ -20,9 +20,9 @@ import clsx from "clsx";
 import { useUser } from "../../context/UserContext";
 import { auth } from "../../configs/firebase";
 import { signOut } from "firebase/auth";
+import MarqueeBox from "../../assets/files/UI/Logo";
 
-const Navbar = () => {
-  const [showNav, setShowNav] = useState(false);
+const Navbar = ({ showNav, setShowNav }) => {
   const navRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -75,59 +75,63 @@ const Navbar = () => {
     }
   };
 
+
+
   return (
-    <div className="fixed ">
+    <div className="fixed top-0 left-0 h-full z-[10] md:mb-20">
       {/* Overlay */}
       {showNav && (
         <div
           onClick={() => setShowNav(false)}
-          className="fixed inset-0 bg-black bg-opacity-30 z-30"
+          className="fixed inset-0 bg-black bg-opacity-30 pointer-events-none "
         />
       )}
 
       {/* Toggle Button (visible on all screens) */}
-<div
-  className={clsx(
-    "fixed w-full flex items-center justify-between top-0 left-0 px-4 py-2 shadow-md z-30",
-    isDarkMode ? "bg-zinc-900 text-white" : "bg-[#1a8a72] text-black"
-  )}
->
-  <button
-    onClick={() => setShowNav(true)}
-    className={clsx(
-      "p-2 h-auto rounded-md bg-webGreen/50 border-gray-600/30 border hover:bg-green-600/60 text-white shadow",
-      showNav && "hidden"
-    )}
-  >
-    <span className="text-lg sm:text-xl md:text-2xl">
-  <GiHamburgerMenu />
-</span>
+      <div
+        className={clsx(
+          "fixed w-full flex items-center justify-between top-0 left-0 px-4 py-2 shadow-md",
+          "overflow-y-auto scrollbar-hide",
+          isDarkMode ? "bg-darkElementBg/70 text-white" : "bg-elementBg text-black"
+        )}
+      >
+      <button
+        onClick={() => setShowNav(true)}
+        className={clsx(
+          "p-2 h-auto rounded-md bg-iconColor border-gray-600/30 border hover:bg-blue-700 text-white shadow",
+          showNav && "hidden"
+        )}
+      >
+        <span className="text-lg sm:text-xl md:text-2xl">
+          <GiHamburgerMenu />
+        </span>
+      </button>
 
-  </button>
-
-  <span className="font-semibold text-lg">App Name</span> {/* Optional title */}
-</div>
+      <span className="font-semibold font-poppins text-lg">
+        <MarqueeBox />
+      </span> {/* Optional title */}
+        </div>
 
       {/* Sidebar */}
       <aside
         ref={navRef}
         className={clsx(
-          "fixed top-0 left-0 h-full w-[75%] sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out z-40",
-          isDarkMode ? "bg-zinc-800 text-white" : "bg-white text-black",
+          "fixed top-0 left-0 h-full w-[45%] overflow-hidden sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out",
+          isDarkMode ? "bg-transparent backdrop-blur-md text-white" : "bg-transparent backdrop-blur-md  text-white",
           showNav ? "translate-x-0" : "-translate-x-full"
         )}
       >
         {/* Close button */}
-        <div className="flex justify-end p-4">
+        <div className="flex justify-end pr-5 py-1">
           <button
             onClick={() => setShowNav(false)}
-            className="text-2xl text-gray-400 hover:text-red-500"
+            className="text-4xl text-gray-800 hover:text-red-500"
           >
             &times;
           </button>
         </div>
 
-        <div className="px-5 pb-10 overflow-y-auto h-full space-y-4">
+        <div className="px-5 pb-20 overflow-y-scroll scrollbar-hide h-full space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-zinc-400">Welcome back</p>
@@ -157,12 +161,12 @@ const Navbar = () => {
                 key={i}
                 onClick={() => handleNavClick(item.path)}
                 className={clsx(
-                  "flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors duration-200",
+                  "flex items-center justify-between p-3 rounded-xl cursor-pointer transition-colors duration-400",
                   location.pathname === item.path
                     ? "bg-green-600 text-white"
                     : isDarkMode
-                    ? "hover:bg-zinc-700"
-                    : "hover:bg-green-100"
+                    ? "hover:bg-gray-500"
+                    : "hover:bg-gray-800/60"
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -184,13 +188,13 @@ const Navbar = () => {
                   if (user) handleLogout();
                   else navigate("/login");
                 }}
-                className="p-2 rounded-xl cursor-pointer font-semibold hover:bg-green-100"
+                className="p-2 rounded-xl cursor-pointer font-semibold hover:bg-gray-600"
               >
                 {user ? "Logout" : "Login"}
               </li>
               <li
                 onClick={() => navigate("/signup")}
-                className="p-2 rounded-xl cursor-pointer font-semibold hover:bg-green-100"
+                className="p-2 rounded-xl cursor-pointer font-semibold hover:bg-gray-500"
               >
                 Sign up
               </li>
@@ -219,7 +223,7 @@ const Navbar = () => {
                 onClick={() => window.open("https://wa.me/916009099196", "_blank")}
                 className={`p-3 rounded-xl mt-2 cursor-pointer font-semibold ${
                   isDarkMode
-                    ? "bg-gray-800 text-white hover:bg-zinc-700"
+                    ? "bg-gray-500 text-white hover:bg-zinc-700"
                     : "bg-green-100 text-black hover:bg-green-200"
                 }`}
               >

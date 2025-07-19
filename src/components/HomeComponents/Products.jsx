@@ -8,7 +8,7 @@ const Products = () => {
   const { isDarkMode } = useUser();
 
   return (
-    <div className={`mt-10 rounded-[8px] p-4 ${isDarkMode ? "bg-zinc-900" : "bg-[#cfbea3]/30"}`}>
+    <div className={`mt-10 rounded-[8px] p-4 ${isDarkMode ? "bg-zinc-900" : "bg-elementBg"} shadow-2xl`}>
       <div
         className={`
           grid 
@@ -42,7 +42,7 @@ const Products = () => {
               focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
               ${isDarkMode
                 ? "bg-zinc-800 border border-zinc-700 text-white focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-                : "bg-[#c9e3e3] text-gray-900 focus-visible:ring-sky-500 focus-visible:ring-offset-white"}
+                : "bg-blue-300 text-gray-900 focus-visible:ring-sky-500 focus-visible:ring-offset-white"}
             `}
           >
             <div

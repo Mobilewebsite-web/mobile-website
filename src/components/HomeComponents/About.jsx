@@ -9,6 +9,7 @@ import LogIn from "../../assets/files/UI/LogIn";
 const About = () => {
   const navigate = useNavigate();
   const { user, isDarkMode } = useUser();
+  
 
   // Define your green shades here for reuse
   const webGreen = "#066658";
@@ -18,7 +19,7 @@ const About = () => {
 
   return (
     <footer
-      className={`px-4 py-6 ${
+      className={`px-4 py-4 ${
         isDarkMode
           ? "bg-gradient-to-br from-zinc-800 to-zinc-900 text-gray-200"
           : `bg-gradient-to-br from-sky-600 to-blue-700 text-${webGreenText}`
@@ -26,7 +27,7 @@ const About = () => {
       style={{
         background: isDarkMode
           ? undefined
-          : `linear-gradient(to bottom right, ${webGreen} 0%, #0a8376 100%)`,
+          : `linear-gradient(to bottom right,elementBg 0%, #0a8376 100%)`,
         color: isDarkMode ? undefined : webGreenText,
       }}
     >

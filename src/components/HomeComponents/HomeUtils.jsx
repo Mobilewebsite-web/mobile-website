@@ -37,8 +37,8 @@ const HomeUtils = () => {
   return (
     <div
       className={`
-        mt-10 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-md relative
-        ${isDarkMode ? "bg-zinc-900" : "bg:elementColor"}
+        mt-10 mx-2 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-2xl relative
+        ${isDarkMode ? "bg-zinc-900" : "bg-elementBg text-white/80"}
       `}
     >
       {itemsToShow.map((item, i) => (
@@ -49,8 +49,8 @@ const HomeUtils = () => {
             flex flex-col items-center gap-2 p-3 rounded-lg cursor-pointer transition duration-200 select-none
             focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
             ${isDarkMode
-              ? "bg-zinc-800 text-white hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-              : "bg-webGreen hover:bg-green-600/40 hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
+              ? "bg-zinc-800 text-bgo hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
+              : "bg-iconColor hover:bg-blue-700 hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
           `}
         >
           <div className="text-3xl">{item.icon}</div>
@@ -63,7 +63,7 @@ const HomeUtils = () => {
         <div className="col-span-4 flex justify-end mt-2">
           <button
             onClick={() => setShowMore(prev => !prev)}
-            className="text-white text-xs underline"
+            className="text-white text-xs font-bold font-manrope"
           >
             {showMore ? "Show Less" : "Show More"}
           </button>

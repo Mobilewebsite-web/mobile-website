@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './Pages/Home';
 import Shortcut from './Pages/Shortcut';
@@ -25,23 +25,26 @@ import Privacy from './Pages/Privacy';
 const AppContent = () => {
   const location = useLocation();
   const { loading, isDarkMode } = useUser();
+  const [showNav, setShowNav] = useState(false); // ✅ LIFTED STATE
+
 
   // Check if path starts with /admin
   const isAdminPage = location.pathname.startsWith('/admin');
 
   return (
 <div
-  className={`${!isAdminPage ? "px-4" : ""}
-    ${isDarkMode ? "bg-zinc-950 text-white" : "bg-gradient-to-tr from-[#2d3250] to-[#424769] text-white"
+  className={`relative z-0 overflow-visible ${
+    isDarkMode ? "bg-darkBg text-white" : "bg-bgColor text-iconColor"
   } min-h-[100vh]`}
 >
 
       {/* Show Navbar only if not admin */}
-      {!isAdminPage && (
-        <div className="block bg-black fixed z-40 top-0 bottom-0 left-0">
-          <Navbar />
-        </div>
-      )}
+{!isAdminPage && (
+  <>
+    <Navbar showNav={showNav} setShowNav={setShowNav} />
+    {!showNav && <Shortcut />} {/* ✅ Hide shortcut when nav open */}
+  </>
+)}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -64,9 +67,7 @@ const AppContent = () => {
         <Route path="/privacy&policy" element={<Privacy />} />
       </Routes>
 
-      <div className="relative h-12">
-        <Shortcut />
-      </div>
+
     </div>
   );
 };
