@@ -1,13 +1,14 @@
-import { useState } from "react";
 import { MdHistory, MdCreditCard, MdSupport, MdAccountCircle } from "react-icons/md";
 import { FaQuestionCircle, FaPlus, FaUserShield, FaTools } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { useState, useEffect } from "react";
 
 const HomeUtils = () => {
   const { isDarkMode } = useUser();
   const navigate = useNavigate();
-  const [showAll, setShowAll] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   const utilList = [
     { name: "Add coin", link: "/wallet", icon: <FaPlus /> },
@@ -20,46 +21,54 @@ const HomeUtils = () => {
     { name: "Settings", link: "/settings", icon: <FaTools /> },
   ];
 
+  // Track screen size
+  useEffect(() => {
+    const checkScreen = () => {
+      setIsLargeScreen(window.innerWidth >= 1024); // lg breakpoint in Tailwind
+    };
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
+  // Determine items to show
+  const itemsToShow = isLargeScreen || showMore ? utilList : utilList.slice(0, 4);
+
   return (
     <div
       className={`
-        mt-10 px-4 py-6 rounded-xl shadow-md
+        mt-10 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 rounded-xl shadow-md relative
         ${isDarkMode ? "bg-zinc-900" : "bg-[#1a8a72]"}
       `}
     >
-      <div className="grid grid-cols-4 lg:grid-cols-8 gap-2">
-        {utilList.map((item, i) => {
-          const shouldShow = showAll || i < 4;
-          return (
-            <button
-              key={i}
-              onClick={() => navigate(item.link)}
-              className={`
-                ${shouldShow ? "flex" : "hidden"} flex-col items-center gap-2
-                p-3 rounded-lg cursor-pointer transition duration-200 select-none
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-                ${isDarkMode
-                  ? "bg-zinc-800 text-white hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-                  : "bg-webGreen hover:bg-green-600/40 hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
-              `}
-              type="button"
-            >
-              <div className="text-3xl">{item.icon}</div>
-              <p className="text-[9px] font-medium">{item.name}</p>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Toggle Button */}
-      <div className="flex justify-end z-160 mt-2">
+      {itemsToShow.map((item, i) => (
         <button
-          onClick={() => setShowAll(!showAll)}
-          className={`text-xs font-semibold underline text-white transition hover:opacity-80`}
+          key={i}
+          onClick={() => navigate(item.link)}
+          className={`
+            flex flex-col items-center gap-2 p-3 rounded-lg cursor-pointer transition duration-200 select-none
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+            ${isDarkMode
+              ? "bg-zinc-800 text-white hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
+              : "bg-webGreen hover:bg-green-600/40 hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
+          `}
         >
-          {showAll ? "Show less" : "Show more"}
+          <div className="text-3xl">{item.icon}</div>
+          <p className="text-[9px] font-medium">{item.name}</p>
         </button>
-      </div>
+      ))}
+
+      {/* Show More button: only show if not on lg+ screens */}
+      {!isLargeScreen && (
+        <div className="col-span-4 flex justify-end mt-2">
+          <button
+            onClick={() => setShowMore(prev => !prev)}
+            className="text-white text-xs underline"
+          >
+            {showMore ? "Show Less" : "Show More"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
