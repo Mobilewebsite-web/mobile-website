@@ -179,7 +179,7 @@ const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
 
 
 {/* Product Grid */}
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
   {filteredProducts.length > 0 ? (
     filteredProducts.map((product) => {
       const isSelected = selectedProduct?.id === product.id;
@@ -190,7 +190,7 @@ const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
         <div
           key={product.id}
           onClick={() => setSelectedProduct(product)}
-          className={`relative cursor-pointer flex justify-between overflow-hidden items-center rounded-[10px] shadow-md transition hover:scale-105
+          className={`relative cursor-pointer flex p-[2px] justify-between overflow-hidden items-center rounded-[10px] shadow-md transition
             ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"}
           `}
           style={
@@ -198,7 +198,7 @@ const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
               ? {
                   // Trick for gradient border: use background + padding + border-radius
                   background: "linear-gradient(135deg, #ff6ec4, #7873f5, #4ade80, #facc15)",
-                  padding: "2px",
+
                   borderRadius: "10px",
                 }
               : {}
@@ -213,7 +213,7 @@ const RechargeProductList = ({ selectedProduct, setSelectedProduct }) => {
             style={isSelected ? { borderRadius: "0.75rem", backgroundColor:"lightblue" } : {}}
           >
             {/* Left section: Diamond count + tag */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {/* Diamond Image */}
                 <div className="relative w-12 h-12 flex items-center justify-center rounded-full overflow-visible">
                   {/* Vertical fading yellow background */}
