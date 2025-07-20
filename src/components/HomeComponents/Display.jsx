@@ -19,7 +19,7 @@ const Display = () => {
   ];
 
   return (
-    <div className="overflow-hidden w-full mt-10">
+    <div className="overflow-hidden mt-10 mx-4 rounded-lg overflow-hiddn">
       <div
         className={`flex w-max animate-scroll-left gap-2 px-4 ${
           isDarkMode ? 'bg-darkBg' : 'bg-webGreen'

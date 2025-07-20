@@ -209,7 +209,7 @@ const Navbar = ({ showNav, setShowNav }) => {
               >
                 Sign up
               </li>
-              <li className="p-2 rounded-xl cursor-pointer flex items-center justify-between font-semibold select-none">
+              {/* <li className="p-2 rounded-xl cursor-pointer flex items-center justify-between font-semibold select-none">
                 <span>Dark Mode</span>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -221,7 +221,7 @@ const Navbar = ({ showNav, setShowNav }) => {
                   <div className="w-11 h-6 bg-gray-200 dark:bg-zinc-700 peer-focus:outline-none rounded-full peer-checked:bg-green-600 relative transition-colors" />
                   <div className="absolute left-1 top-1 bg-white border border-gray-300 rounded-full w-4 h-4 transition-transform peer-checked:translate-x-5" />
                 </label>
-              </li>
+              </li> */}
               {user && isAdmin && (
                 <li
                   onClick={() => navigate("/admin")}
