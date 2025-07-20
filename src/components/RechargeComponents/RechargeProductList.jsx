@@ -157,7 +157,7 @@ const saveEdit = async () => {
 
   return (
     <div
-      className={`mt-10 px-4 py-8 sm:px-8 rounded-xl relative min-h-screen transition-colors duration-300
+      className={`mt-10 px-4 py-8 sm:px-8 rounded-xl z-0 min-h-screen transition-colors duration-300
         ${isDarkMode ? "bg-webGreen text-webGreenLight" : "bg-webGreenLight text-webGreen"}`}
     >
       {isAdmin && gameId && (
@@ -210,7 +210,7 @@ const saveEdit = async () => {
             {/* Yellow glow fade background behind icon */}
             <div className="relative mb-1 w-12 h-12 flex items-center justify-center">
               <div
-                className="absolute top-0 left-0 w-full h-full rounded-full"
+                className="absolute z-0 top-0 left-0 w-full h-full rounded-full"
                 style={{
                   background:
                     "linear-gradient(to bottom, rgba(250,204,21,0.8), rgba(250,204,21,0))",
@@ -228,7 +228,7 @@ const saveEdit = async () => {
             <span className="leading-tight text-[13px]">{groupItem.label}</span>
 
             {isSelected && (
-              <div className="absolute top-0 right-0 w-6 h-6 bg-webGreenLight border-l-2 border-b-2 border-green-600 rounded-bl-full flex items-center justify-center shadow-sm">
+              <div className="absolute z-0 top-0 right-0 w-6 h-6 bg-webGreenLight border-l-2 border-b-2 border-green-600 rounded-bl-full flex items-center justify-center shadow-sm">
                 <span className="text-green-600 text-xs font-bold leading-none">
                   ✓
                 </span>
@@ -282,7 +282,7 @@ const imgSrc = product.group === 1 ? currentGameConfig?.Icon1 :product?.group ==
                 <div className="relative w-12 h-12 flex items-center justify-center rounded-full overflow-visible">
                   {/* Vertical fading yellow background */}
                   <div
-                    className="absolute top-0 left-0 w-full h-full rounded-full"
+                    className="absolute z-0 top-0 left-0 w-full h-full rounded-full"
                     style={{
                       background:
                         "linear-gradient(to bottom, rgba(250, 204, 21, 0.8), rgba(250, 204, 21, 0))",
@@ -333,7 +333,7 @@ const imgSrc = product.group === 1 ? currentGameConfig?.Icon1 :product?.group ==
           {/* Checkmark quarter circle top-right */}
           {isSelected && (
             <div
-              className="absolute top-0 right-0 overflow-hidden"
+              className="absolute z-0 top-0 right-0 overflow-hidden"
               style={{ width: "20px", height: "20px" }}
             >
               <div

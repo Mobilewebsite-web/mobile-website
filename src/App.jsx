@@ -33,17 +33,17 @@ const AppContent = () => {
 
   return (
 <div
-  className={`relative h-[100%] z-0 overflow-visible ${
-    isDarkMode ? "bg-darkBg text-white" : " bg-bgColor text-iconColor"
+  className={`  overflow-visible ${
+    isDarkMode ? "bg-darkBg text-white" : "bg-bgColor text-iconColor"
   } min-h-[100vh]`}
 >
 
       {/* Show Navbar only if not admin */}
 {!isAdminPage && (
-  <>
+  <div className='z-20 fixed'>
     <Navbar showNav={showNav} setShowNav={setShowNav} />
     {!showNav && <Shortcut />} {/* ✅ Hide shortcut when nav open */}
-  </>
+  </div>
 )}
 
       <Routes>

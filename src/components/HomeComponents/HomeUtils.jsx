@@ -59,16 +59,7 @@ const HomeUtils = () => {
       ))}
 
       {/* Show More button: only show if not on lg+ screens */}
-      {!isLargeScreen && (
-        <div className="col-span-4 flex justify-end mt-2">
-          <button
-            onClick={() => setShowMore(prev => !prev)}
-            className="text-white text-xs font-bold font-manrope"
-          >
-            {showMore ? "Show Less" : "Show More"}
-          </button>
-        </div>
-      )}
+   
     </div>
   );
 };

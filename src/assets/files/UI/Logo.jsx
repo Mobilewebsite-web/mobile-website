@@ -1,6 +1,6 @@
 export default function MarqueeBox() {
   return (
-    <div className="absolute top-2 right-3 flex scale-90">
+    <div className="absolute top-2 left-3 flex scale-90">
       {/* Left half */}
       <div className="relative w-[80px] h-[30px] lg:w-[90px] lg:h-[35px] leading-[30px] lg:leading-[30px] text-[1rem] lg:text-[1.3rem] font-bold font-sans whitespace-nowrap overflow-hidden bg-[indianred] text-[darkred]">
         <div
