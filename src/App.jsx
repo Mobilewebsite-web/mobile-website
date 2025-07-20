@@ -33,8 +33,8 @@ const AppContent = () => {
 
   return (
 <div
-  className={`relative z-0 overflow-visible ${
-    isDarkMode ? "bg-darkBg text-white" : "bg-bgColor text-iconColor"
+  className={`relative h-[100%] z-0 overflow-visible ${
+    isDarkMode ? "bg-darkBg text-white" : " bg-bgColor text-iconColor"
   } min-h-[100vh]`}
 >
 

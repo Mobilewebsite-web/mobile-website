@@ -9,16 +9,17 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'green-gradient': 'linear-gradient(355deg, rgba(1,133,88,1) 0%, rgba(157,237,83,1) 100%)',
+      },
       colors: {
         webGreen: "#066658",
         webGreenLight: "#e6f4f1",
-        bgColor: "#B3D4F0",
-        elementBg: "#96abeb",
-        iconColor: "#5249a3",
-        darkBg: "#2d3250",
-        darkElementBg: "#424769",
-        darkElements: "#676f9d",
-        webGreenLight: "#c9e3e3",
+        bgColor: "#09bd57",
+        lightGreen: "#09bd57",
+        darkGreen: "#018558",
+        elementBg: "#dae2cb",
+        icons: "09bd57"
       },
       spacing: {
         70: '17.5rem', // 70 * 0.25rem = 17.5rem (280px)
@@ -37,6 +38,15 @@ export default {
       },
       animation: {
         marquee: 'marquee 6s linear infinite',
+      },
+      animation: {
+        'scroll-left': 'scrollLeft 25s linear infinite',
+      },
+      keyframes: {
+        scrollLeft: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
     screens: {
       'smm': '240px',
