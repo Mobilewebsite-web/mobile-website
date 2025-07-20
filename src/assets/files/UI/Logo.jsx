@@ -2,7 +2,7 @@ export default function MarqueeBox() {
   return (
     <div className="absolute top-2 left-3 flex scale-90">
       {/* Left half */}
-      <div className="relative w-[80px] h-[30px] lg:w-[90px] lg:h-[35px] leading-[30px] lg:leading-[30px] text-[1rem] lg:text-[1.3rem] font-bold font-sans whitespace-nowrap overflow-hidden bg-[indianred] text-[darkred]">
+      <div className="relative w-[80px] h-[30px] lg:w-[90px] lg:h-[35px] leading-[30px] lg:leading-[30px] text-[1rem] lg:text-[1.3rem] font-bold font-sans whitespace-nowrap overflow-hidden bg-[green] text-[white]">
         <div
           className="absolute w-full h-full"
           style={{
@@ -17,7 +17,7 @@ export default function MarqueeBox() {
       </div>
 
       {/* Right half */}
-      <div className="relative w-[80px] h-[30px] lg:w-[90px] lg:h-[35px] leading-[30px] lg:leading-[30px] lg:text-[1.3rem] text-[1rem] font-bold font-sans whitespace-nowrap overflow-hidden bg-[lightcoral] text-[antiquewhite]">
+      <div className="relative w-[80px] h-[30px] lg:w-[90px] lg:h-[35px] leading-[30px] lg:leading-[30px] lg:text-[1.3rem] text-[1rem] font-bold font-sans whitespace-nowrap overflow-hidden bg-green-100 text-black">
         <div
           className="absolute w-full h-full"
           style={{
