@@ -78,7 +78,7 @@ const Navbar = ({ showNav, setShowNav }) => {
 
 
   return (
-    <div className="fixed top-0 left-0 h-full z-[10] md:mb-20">
+    <div className="fixed top-0 left-0 h-full z-10 md:mb-20">
       {/* Overlay */}
       {showNav && (
         <div
@@ -95,28 +95,39 @@ const Navbar = ({ showNav, setShowNav }) => {
           isDarkMode ? "bg-transparent backdrop-blur-[5px] text-white" : "bg-elementBg text-black"
         )}
       >
-      <button
+
+
+      <span onClick={()=>navigate('/')} className="font-semibold font-poppins text-lg">
+        <MarqueeBox />
+      </span> 
+     <div className="flex flex-row items-center gap-5">
+    {!user && (
+       <div className={`flex flex-row ${showNav && 'hidden'}  p-2 py-1 rounded-2xl ${isDarkMode ? "bg-black" : "bg-white"}`}>
+      <p>Sign in</p>
+     </div>
+    )}
+    
+
+            <button
         onClick={() => setShowNav(true)}
         className={clsx(
           "p-2 h-auto rounded-md bg-iconColor border-gray-600/30 border hover:bg-blue-700 text-white shadow",
           showNav && "hidden"
         )}
       >
+
         <span className="text-lg sm:text-xl md:text-2xl">
           <GiHamburgerMenu />
         </span>
       </button>
-
-      <span className="font-semibold font-poppins text-lg">
-        <MarqueeBox />
-      </span> {/* Optional title */}
+ </div>
         </div>
 
       {/* Sidebar */}
       <aside
         ref={navRef}
         className={clsx(
-          "fixed top-0 left-0 h-full w-[45%] overflow-hidden sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out",
+          "fixed top-0 z-10 left-0 h-full w-[60%] overflow-hidden sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out",
           isDarkMode ? "bg-transparent backdrop-blur-[24px] text-white" : "bg-transparent backdrop-blur-md  text-white",
           showNav ? "translate-x-0" : "-translate-x-full"
         )}

@@ -62,7 +62,7 @@ const Orders = () => {
 
   return (
     <div
-      className={`max-w-5xl mx-auto px-4 py-8 ${
+      className={`max-w-5xl mx-auto px-4 py-8 mt-10 ${
         isDarkMode ? "bg-zinc-900" : "bg-webGreen"
       } min-h-screen`}
     >

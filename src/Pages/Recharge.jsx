@@ -19,7 +19,7 @@ const Recharge = ()=>{
                     };
 
           return (
-                    <div className="  pt-25 sm:pt-5 py-16">
+                    <div className="z-0  pt-25 sm:pt-5 py-16">
                               <div>
                                         <RechargeDisplay/> 
                                         <RechargeForm userId={userId} setUserId={setUserId} zoneId={zoneId} setZoneId={setZoneId} mlUsername={mlUsername} setMlUsername={setMlUsername}/> 
