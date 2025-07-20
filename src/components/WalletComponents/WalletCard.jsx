@@ -13,7 +13,7 @@ const WalletCard = () => {
 
   return (
     <div
-      className={` rounded-2xl shadow-lg p-6 mb-10 border
+      className={` rounded-2xl mt-8 mx-4 shadow-lg p-6 mb-10 border
       ${
         isDarkMode
           ? "bg-zinc-900 border-zinc-700 text-white"
@@ -28,15 +28,15 @@ const WalletCard = () => {
           className="w-16 h-16 rounded-full object-cover border-2 border-blue-600"
         />
         <div>
-          <p className="text-lg font-bold">{userData?.username || "Guest"}</p>
+          <p className="text-xl font-manrope font-bold">{userData?.username || "Guest"}</p>
           <p
             className={`text-sm ${
-              isDarkMode ? "text-gray-400" : "text-gray-500"
+              isDarkMode ? "text-gray-400" : "text-gray-600 font-semibold font-manrope"
             }`}
           >
             Balance
           </p>
-          <p className="mt-1 text-3xl font-extrabold text-blue-600">
+          <p className="mt-0 font-poppins text-3xl font-extrabold text-blue-600">
             ₹{userData?.balance?.toFixed(2) || "0.00"}
           </p>
         </div>
@@ -51,7 +51,7 @@ const WalletCard = () => {
               ? isDarkMode
                 ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-blue-600 hover:bg-blue-700 text-white"
-              : "bg-gray-400 cursor-not-allowed text-gray-700"
+              : "bg-gray-300 cursor-not-allowed text-gray-800"
           }
         `}
         onClick={() => {

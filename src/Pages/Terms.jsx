@@ -5,7 +5,7 @@ const Terms = () => {
 
   return (
     <div
-      className={`max-w-4xl min-h-screen mx-auto px-4 sm:px-8 py-8 rounded-lg ${
+      className={`max-w-4xl mt-8 min-h-screen mx-auto px-4 sm:px-8 py-8 rounded-lg ${
         isDarkMode ? "bg-zinc-900 text-zinc-100" : "bg-white text-zinc-800"
       }`}
     >

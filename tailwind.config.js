@@ -7,47 +7,42 @@ export default {
     "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
     ".flowbite-react\\class-list.json"
   ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        'green-gradient': 'linear-gradient(355deg, rgba(1,133,88,1) 0%, rgba(157,237,83,1) 100%)',
-      },
+      theme: {
+        extend: {
       colors: {
         webGreen: "#066658",
-        webGreenLight: "#e6f4f1",
+        webGreenLight: "#29AB87",
         bgColor: "#09bd57",
         lightGreen: "#09bd57",
         darkGreen: "#018558",
         elementBg: "#dae2cb",
-        icons: "09bd57"
+        icons: "#09bd57",
+        darkBg: "#00171f"
       },
       spacing: {
-        70: '17.5rem', // 70 * 0.25rem = 17.5rem (280px)
-        85: '21.25rem', // 85 * 0.25rem = 21.25rem (340px)
+        70: '17.5rem',
+        85: '21.25rem',
       },
       fontFamily: {
         manrope: ['Manrope', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
       },
-    },
       keyframes: {
         marquee: {
           from: { left: '100%' },
           to: { left: '-150%' },
         },
-      },
-      animation: {
-        marquee: 'marquee 6s linear infinite',
-      },
-      animation: {
-        'scroll-left': 'scrollLeft 25s linear infinite',
-      },
-      keyframes: {
         scrollLeft: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
       },
+      animation: {
+        marquee: 'marquee 6s linear infinite',
+        'scroll-left': 'scrollLeft 25s linear infinite',
+      },
+    },
+
     screens: {
       'smm': '240px',
       // => @media (min-width: 640px) { ... }

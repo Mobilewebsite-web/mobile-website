@@ -30,18 +30,18 @@ const CustomerSupport = () => {
 
 return (
   <div
-    className={`mx-auto sm:px-10 py-10 ${
+    className={`mx-4 my-4 sm:px-10 py-10 ${
       isDarkMode
         ? "bg-zinc-900 text-white"
-        : "bg-webGreen text-webGreenLight"
+        : "bg-webGreen text-white"
     }`}
   >
-    <h1 className="text-4xl font-bold mb-4 text-center text-webGreenLight">
+    <h1 className="text-4xl font-bold mb-4 text-center text-white/80">
       Customer Support
     </h1>
     <p
       className={`text-center mb-8 ${
-        isDarkMode ? "text-gray-400" : "text-webGreenLight/80"
+        isDarkMode ? "text-gray-400" : "text-white/80"
       }`}
     >
       We're here to help. Check out the FAQ below or contact us directly.
@@ -49,7 +49,7 @@ return (
 
     {/* FAQ */}
     <div className="mb-12">
-      <h2 className="text-2xl font-semibold mb-4 text-webGreenLight">
+      <h2 className="text-2xl font-semibold mb-4 text-white/80">
         Frequently Asked Questions
       </h2>
       <div className="space-y-4">
@@ -59,7 +59,7 @@ return (
             className={`border rounded-lg overflow-hidden ${
               isDarkMode
                 ? "border-zinc-700 bg-zinc-800"
-                : "border-webGreenLight bg-webGreenLight"
+                : "border-white/80 bg-white/80"
             }`}
           >
             <button
@@ -67,7 +67,7 @@ return (
               className={`w-full text-left px-4 py-3 font-medium hover:bg-opacity-80 transition ${
                 isDarkMode
                   ? "bg-zinc-700 hover:bg-zinc-600"
-                  : "bg-webGreenLight  text-black hover:bg-webGreen/70"
+                  : "bg-white/80  text-black hover:bg-webGreen/60"
               }`}
             >
               {faq.question}
@@ -77,7 +77,7 @@ return (
                 className={`px-4 py-3 border-t ${
                   isDarkMode
                     ? "border-zinc-700 bg-zinc-900 text-gray-300"
-                    : "border-webGreenLight bg-webGreenLight text-webGreenLight"
+                    : "border-white/80 bg-webGreen/80 text-white/80"
                 }`}
               >
                 {faq.answer}
@@ -93,10 +93,10 @@ return (
 
     {/* Optional Live Chat */}
     {/* <div className="text-center mt-10">
-      <p className={`${isDarkMode ? "text-gray-400" : "text-webGreenLight/80"} text-sm`}>
+      <p className={`${isDarkMode ? "text-gray-400" : "text-white/80/80"} text-sm`}>
         Need urgent help?
       </p>
-      <button className="mt-2 bg-webGreen text-webGreenLight px-4 py-2 rounded hover:bg-webGreenLight/90 transition">
+      <button className="mt-2 bg-webGreen text-white/80 px-4 py-2 rounded hover:bg-white/80/90 transition">
         Start Live Chat
       </button>
     </div> */}

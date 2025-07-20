@@ -41,7 +41,7 @@ const About = () => {
           >
             Quick Links
           </h2>
-          <div className="flex gap-4 px-4 flex items-center justify-center">
+          <div className="flex gap-4 px-4 items-center justify-center">
             
             <LogIn />
 

@@ -1,10 +1,10 @@
 import { useUser } from '../../context/UserContext';
 import display1 from '../../assets/images/mcgg.jpeg';
-import display2 from '../../assets/images/gus.mp4';
+import display2 from '../../assets/images/gus-compressed.mp4';
 import display3 from '../../assets/images/display3.jpg';
-import display4 from '../../assets/images/ling.mp4';
-import display5 from '../../assets/images/hok1.mp4';
-import display6 from '../../assets/images/aov.mp4';
+import display4 from '../../assets/images/ling-compressed.mp4';
+import display5 from '../../assets/images/hok1-compressed.mp4';
+import display6 from '../../assets/images/aov-compressed.mp4';
 
 const Display = () => {
   const { isDarkMode } = useUser();
@@ -21,8 +21,8 @@ const Display = () => {
   return (
     <div className="overflow-hidden w-full mt-10">
       <div
-        className={`flex w-max animate-scroll-left bg-lightGreen gap-2 px-4 ${
-          isDarkMode ? 'bg-darkBg' : 'bg-white'
+        className={`flex w-max animate-scroll-left gap-2 px-4 ${
+          isDarkMode ? 'bg-darkBg' : 'bg-webGreen'
         }`}
       >
         {[...items, ...items].map((item, i) => (

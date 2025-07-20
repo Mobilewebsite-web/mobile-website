@@ -88,7 +88,7 @@ const Queries = () => {
   };
 
   return (
-    <div className={`max-w-xl mx-auto p-4 ${isDarkMode ? "bg-gray-900" : "bg-white"}`}>
+    <div className={`max-w-xl mt-8 mx-auto p-4 ${isDarkMode ? "bg-gray-900" : "bg-white"}`}>
       <h1 className={`text-xl font-bold mb-4 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
         🔥 Queries Board
       </h1>

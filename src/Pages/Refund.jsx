@@ -4,7 +4,7 @@ const Refund = () => {
           const {isDarkMode} = useUser()
   return (
     <div
-      className={`max-w-4xl mx-auto px-4 sm:px-6 py-8 min-h-screen ${
+      className={`max-w-4xl mt-8 mx-auto px-4 sm:px-6 py-8 min-h-screen ${
         isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
       }`}
     >

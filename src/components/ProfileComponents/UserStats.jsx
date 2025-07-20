@@ -48,7 +48,7 @@ const UserStats = () => {
   const labelText = isDarkMode ? "text-gray-400" : "text-gray-600";
 
   return (
-    <div className="grid p-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-6  gap-7 mt-10">
+    <div className="grid p-4 mb-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-6  gap-7 mt-10">
       {[
         { label: "Completed", value: counts.completed },
         { label: "Pending", value: counts.pending },

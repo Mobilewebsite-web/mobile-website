@@ -8,7 +8,7 @@ const Products = () => {
   const { isDarkMode } = useUser();
 
   return (
-    <div className={`mt-10 mx-5 rounded-[8px] p-4 ${isDarkMode ? "bg-transparent shadow-blue-800" : "bg-elementBg"} shadow-2xl`}>
+    <div className={`mt-10 mx-5 rounded-[8px] p-4 ${isDarkMode ? "bg-transparent shadow-blue-800" : "bg-darkGreen"} shadow-xl`}>
       <div
         className={`
           grid 
@@ -17,7 +17,8 @@ const Products = () => {
           md:grid-cols-4
           lg:grid-cols-6
           xl:grid-cols-8
-          gap-4
+          gap-2
+          lg:gap-4
           
         `}
       >
@@ -35,14 +36,14 @@ const Products = () => {
               p-1 
               rounded-md 
               flex flex-col items-center 
-              shadow-md 
+              shadow-sm
               cursor-pointer 
               hover:shadow-xl 
               transition-all duration-300
               focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
               ${isDarkMode
                 ? "bg-black border border-zinc-700 text-white focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-                : "bg-blue-300 text-gray-900 focus-visible:ring-sky-500 focus-visible:ring-offset-white"}
+                : "bg-white text-gray-900 focus-visible:ring-sky-500 focus-visible:ring-offset-white"}
             `}
           >
             <div

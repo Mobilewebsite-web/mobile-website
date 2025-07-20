@@ -34,8 +34,8 @@ const AppContent = () => {
   return (
 <div
   className={`  overflow-visible ${
-    isDarkMode ? "bg-darkBg text-white" : "bg-bgColor text-iconColor"
-  } min-h-[100vh]`}
+    isDarkMode ? "bg-darkBg text-white" : "bg-webGreen"
+  } min-h-[100vh`}
 >
 
       {/* Show Navbar only if not admin */}

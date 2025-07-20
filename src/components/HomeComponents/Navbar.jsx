@@ -92,7 +92,7 @@ const Navbar = ({ showNav, setShowNav }) => {
         className={clsx(
           "fixed w-full flex items-center justify-between top-0 left-0 px-4 py-2 shadow-md",
           "overflow-y-auto scrollbar-hide",
-          isDarkMode ? "bg-transparent backdrop-blur-[5px] text-white" : "bg-lightGreen text-black"
+          isDarkMode ? "bg-transparent backdrop-blur-[5px] text-white" : "bg-webGreen text-black"
         )}
       >
 
@@ -102,7 +102,7 @@ const Navbar = ({ showNav, setShowNav }) => {
       </span> 
      <div className="flex flex-row items-center gap-5">
     {!user && (
-       <div className={`flex flex-row ${showNav && 'hidden'}  p-2 py-1 rounded-2xl ${isDarkMode ? "bg-black" : "bg-white"}`}>
+       <div className={`flex flex-row ${showNav && 'hidden'}  p-3 py-1 rounded-md ${isDarkMode ? "bg-black" : "bg-white cursor-pointer font-semibold text-[14px] border border-black font-manrope"}`}>
       <p>Sign in</p>
      </div>
     )}
@@ -111,7 +111,7 @@ const Navbar = ({ showNav, setShowNav }) => {
             <button
         onClick={() => setShowNav(true)}
         className={clsx(
-          "p-2 h-auto rounded-md border-gray-600/30 border bg-red-500 hover:bg-red-600 text-white shadow",
+          "p-2 h-auto rounded-md border-gray-600/30 border bg-red-600 hover:bg-red-700 text-white shadow",
           showNav && "hidden"
         )}
       >
@@ -127,7 +127,7 @@ const Navbar = ({ showNav, setShowNav }) => {
       <aside
         ref={navRef}
         className={clsx(
-          "fixed top-0 z-10 left-0 h-full w-[60%] overflow-hidden sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out",
+          "fixed top-0 left-0 h-full w-[45%] overflow-hidden sm:w-60 md:w-65 lg:w-72 shadow-xl transition-transform duration-300 ease-in-out",
           isDarkMode ? "bg-transparent backdrop-blur-[24px] text-white" : "bg-transparent backdrop-blur-md  text-white",
           showNav ? "translate-x-0" : "-translate-x-full"
         )}

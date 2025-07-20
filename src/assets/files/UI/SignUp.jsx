@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const SignUp = () => {
   return (
     <StyledWrapper>
-      <button className="button font-semibold">Sign Up</button>
+      <button className="button w-[35vw] font-semibold">Sign Up</button>
     </StyledWrapper>
   );
 }

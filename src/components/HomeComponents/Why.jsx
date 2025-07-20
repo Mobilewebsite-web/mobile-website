@@ -20,7 +20,7 @@ const Why = () => {
   return (
     <section z-40>
     <div
-      className={`py-6 mt-10 px-4 rounded-md bg-transparent backdrop-blur-sm mx-3 mb-4 border border-black shadow-2xl ${
+      className={`py-6 mt-10 px-4 rounded-md bg-white backdrop-blur-sm mx-3 mb-4 border border-black shadow-xl ${
         isDarkMode ? 'bg-darkElementBg text-white' : 'bg-[#c9e3e3]/90 text-zinc-800'
       }`}
     >
@@ -29,11 +29,11 @@ const Why = () => {
         {reasons.map((item, i) => (
           <div
   key={i}
-  className={`p-4 rounded-md shadow transition-transform transform hover:scale-105 hover:shadow-xl
+  className={`p-4 rounded-md border-neutral-600 shadow-sm shadow-lime-900 transition-transform transform hover:scale-105 hover:shadow-3xl
  duration-300 ease-in-out ${
     isDarkMode
       ? 'bg-darkElementBg text-white/80'
-      : 'bg-transparent text-zinc-800'
+      : 'bg-white text-zinc-800'
   }`}
 >
   <h3 className="text-xs font-bold mb-2">{item.title}</h3>

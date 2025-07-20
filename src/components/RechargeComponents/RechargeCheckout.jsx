@@ -29,7 +29,7 @@ const RechargeCheckout = ({
   const cardBase = "p-6 max-w-md mx-auto mt-10 rounded-xl shadow-md border transition";
   const cardColor = isDarkMode
     ? "bg-zinc-900 text-white border-zinc-700"
-    : "bg-webGreenLight text-black border-webGreen/30"; // uses light green
+    : "bg-white/90 text-black border-webGreen/30"; // uses light green
   const lineColor = isDarkMode ? "border-zinc-700" : "border-webGreen/50";
   const mutedText = isDarkMode ? "text-gray-400" : "text-gray-700";
 
@@ -51,7 +51,7 @@ const RechargeCheckout = ({
 
   return (
     <div className={`${cardBase} ${cardColor}`}>
-      <h2 className="text-xl font-semibold mb-4 text-webGreen">Checkout</h2>
+      <h2 className="text-xl font-semibold mb-4 text-black">Checkout</h2>
 
       <div className="flex justify-between mb-2">
         <span className="font-medium">{selectedProduct?.name}</span>

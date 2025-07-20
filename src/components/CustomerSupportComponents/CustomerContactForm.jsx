@@ -20,20 +20,20 @@ const CustomerContactForm = () => {
 
   // Light mode changed to use your custom green colors
   const inputLight =
-    "border border-webGreenLight bg-webGreenLight text-webGreen placeholder-webGreen/70";
+    "border border-webGreenLight bg-white text-webGreen placeholder-webGreen/70";
 
   // For readonly inputs in light mode, use slightly different bg so user sees it's disabled
   const readOnlyLight = "bg-webGreen cursor-not-allowed";
 
   return (
     <div
-      className={`rounded-lg p-6 shadow-md border ${
-        isDarkMode ? "bg-zinc-900 border-zinc-700" : "bg-webGreen  border-webGreenLight"
+      className={`rounded-lg mb-6 p-6 shadow-md border ${
+        isDarkMode ? "bg-zinc-900 border-zinc-700" : "bg-webGreen  border-white"
       }`}
     >
       <h2
         className={`text-2xl font-semibold mb-4 ${
-          isDarkMode ? "text-white" : "text-webLightGreen"
+          isDarkMode ? "text-white" : "text-white"
         }`}
       >
         Contact Us
@@ -49,7 +49,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-webLightGreen"
+              isDarkMode ? "text-gray-300" : "text-white"
             }`}
           >
             Username
@@ -147,7 +147,7 @@ const CustomerContactForm = () => {
         <div className="mb-4">
           <label
             className={`block mb-1 font-medium ${
-              isDarkMode ? "text-gray-300" : "text-webLightGreen"
+              isDarkMode ? "text-gray-300" : "text-white"
             }`}
           >
             Message
@@ -164,7 +164,7 @@ const CustomerContactForm = () => {
 
         <button
           type="submit"
-          className="bg-webGreenLight text-webGreen px-5 py-2 rounded-md hover:bg-webGreen/90 transition font-semibold"
+          className="bg-white text-black px-5 py-2 rounded-md hover:bg-green-500/90 hover:text-white/90 transition font-semibold"
         >
           Send Message
         </button>

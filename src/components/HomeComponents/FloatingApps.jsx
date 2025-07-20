@@ -174,7 +174,7 @@ const onUp = () => {
           ref={scrollRef}
           className={`
             relative flex overflow-x-auto snap-x snap-mandatory gap-x-4 px-4 py-4 rounded-xl shadow-md
-            ${isDarkMode ? 'bg-zinc-900 border border-zinc-700' : 'bg-elementBg border border-iconColor'}
+            ${isDarkMode ? 'bg-zinc-900 border border-zinc-700' : 'bg-darkGreen border border-darkGreen'}
             cursor-grab select-none scrollbar-none
           `}
           onMouseDown={onDown}
@@ -216,8 +216,8 @@ const onUp = () => {
       </div>
 
       {/* Green fade vignette overlays */}
-      <div className={`absolute  inset-y-0 left-0 w-16 z-30 ${ isDarkMode ? "bg-gradient-to-r from-darkBg to-transparent" : "bg-gradient-to-r from-bgColor to-transparent"} pointer-events-none`}/>
-      <div className={`absolute  inset-y-0 right-0 w-32 z-30 ${ isDarkMode ? "bg-gradient-to-l from-darkBg to-transparent" : "bg-gradient-to-l from-bgColor to-transparent"} pointer-events-none`}/>
+      <div className={`absolute  inset-y-0 left-0 w-16 z-30 ${ isDarkMode ? "bg-gradient-to-r from-darkBg to-transparent" : "bg-gradient-to-r from-webGreen to-transparent"} pointer-events-none`}/>
+      <div className={`absolute  inset-y-0 right-0 w-32 z-30 ${ isDarkMode ? "bg-gradient-to-l from-darkBg to-transparent" : "bg-gradient-to-l from-webGreen to-transparent"} pointer-events-none`}/>
     </div>
   );
 };

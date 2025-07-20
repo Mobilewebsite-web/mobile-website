@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const LogIn = () => {
   return (
     <StyledWrapper>
-      <button className="button">Log in</button>
+      <button className="button w-[35vw]">Log in</button>
     </StyledWrapper>
   );
 }

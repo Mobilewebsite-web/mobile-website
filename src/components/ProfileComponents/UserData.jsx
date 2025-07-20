@@ -34,7 +34,7 @@ const UserData = () => {
   const mutedText = isDarkMode ? "text-gray-400" : "text-gray-500";
 
   return (
-    <div className={`max-w-xl mx-auto  p-6 shadow-md border-2 rounded-2xl transition-colors ${bgClass}`}>
+    <div className={`max-w-xl mt-12 mx-auto  p-6 shadow-md border-2 rounded-2xl transition-colors ${bgClass}`}>
       <div className="flex items-center gap-4">
         <img
           src={userData?.photoURL || defaultProfile}
@@ -53,7 +53,7 @@ const UserData = () => {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold">{username || "User"}</h1>
+              <h1 className="text-2xl font-bold font-manrope">{username || "User"}</h1>
             </div>
           )}
           <p className={`${mutedText}`}>{userData?.email || "demo@gmail.com"}</p>
@@ -95,7 +95,7 @@ const UserData = () => {
         ) : (
           <button
             onClick={() => setEditMode(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+            className="bg-blue-600 font-manrope font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
           >
             Edit Profile
           </button>

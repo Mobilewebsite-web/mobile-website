@@ -37,8 +37,8 @@ const HomeUtils = () => {
   return (
     <div
       className={`
-        mt-10 grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 shadow-md relative
-        ${isDarkMode ? "bg-transparent backdrop-blur-sm border-sky-500 shadow-sky-900 " : "bg-lightGreen text-icons"}
+        mt-10 mx-4 rounded-md grid grid-cols-4 lg:grid-cols-8 gap-2 px-4 py-6 shadow-md relative
+        ${isDarkMode ? "bg-transparent backdrop-blur-sm border-sky-500 shadow-sky-900 " : "bg-webGreenLight/60 backdrop-blur-md"}
       `}
     >
       {itemsToShow.map((item, i) => (
@@ -50,10 +50,10 @@ const HomeUtils = () => {
             focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
             ${isDarkMode
               ? "bg-darkElementBg text-bgo hover:bg-zinc-700 focus-visible:ring-blue-500 focus-visible:ring-offset-zinc-900"
-              : "bg-white hover:shadow-xl text-darkGreen  hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
+              : "bg-webGreen hover:shadow-xl text-white  hover:border-blue-500 focus-visible:ring-green-500 focus-visible:ring-offset-[#066658]"}
           `}
         >
-          <div className="text-3xl text-icons">{item.icon}</div>
+          <div className="text-3xl text-white">{item.icon}</div>
           <p className="text-[9px] font-medium">{item.name}</p>
         </button>
       ))}
