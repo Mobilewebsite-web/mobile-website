@@ -33,7 +33,7 @@ const AppContent = () => {
 
   return (
 <div
-  className={`  overflow-visible ${
+  className={`  overflow-visible max-w-6xl mx-auto ${
     isDarkMode ? "bg-darkBg text-white" : "bg-bgColor text-iconColor"
   } min-h-[100vh]`}
 >
